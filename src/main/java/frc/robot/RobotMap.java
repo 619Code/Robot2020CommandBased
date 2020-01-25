@@ -37,12 +37,12 @@ public class RobotMap {
   // PATHS
   // pid values
   public static final double HEADING_P = 0.01; //0.64
-  public static final double HEADING_D = 0;
   public static final double HEADING_I = 0;
+  public static final double HEADING_D = 0;
 
   public static final double DISTANCE_P = 0.5; //5
-  public static final double DISTANCE_D = 0; //8
-  public static final double DISTANCE_I = 0;
+  public static final double DISTANCE_I = 0; //8
+  public static final double DISTANCE_D = 0;
 
   public static final double SHOOTER_P = -1;
   public static final double SHOOTER_I = -1;
@@ -51,6 +51,10 @@ public class RobotMap {
   public static final double ANGLE_P = -1;
   public static final double ANGLE_I = -1;
   public static final double ANGLE_D = -1;
+
+  public static final double TARGET_P = 0.12; //0.64
+  public static final double TARGET_I = 0;
+  public static final double TARGET_D = 1.2;
 
   // DifferentialDrive Kinematics
   public static final double kTrackwidthInches = 21;

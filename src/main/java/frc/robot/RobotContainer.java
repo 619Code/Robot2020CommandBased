@@ -7,27 +7,32 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.paths.TestPath;
 import frc.robot.commands.CurveDrive;
-import frc.robot.commands.PathFollower;
 import frc.robot.commands.TestReverse;
+import frc.robot.helpers.Limelight;
+import frc.robot.helpers.TargetInfo;
 import frc.robot.subsystems.ShiftingWCD;
 
 public class RobotContainer {
     private final ShiftingWCD drive;
     private final XboxController primaryJoystick, secondaryJoystick;
+    private final Limelight limelight;
+    private final TargetInfo targetInfo;
+
     public RobotContainer(){
+
         drive = new ShiftingWCD();
         primaryJoystick = new XboxController(0);
         secondaryJoystick = new XboxController(1);
+        targetInfo = new TargetInfo();
+        limelight = new Limelight();
 
         drive.setDefaultCommand(new CurveDrive(drive, primaryJoystick));
 
     }
     public Command getAutoCommand(){
-        return new TestReverse(drive);
+        return new TestReverse(drive, limelight);
     }
 }

@@ -29,7 +29,7 @@ public class Shooter extends Subsystem {
   }
 
   public double calculateAngle(double position){
-    //
+    //calculate position, can't yet because build
     return position;
   }
 
