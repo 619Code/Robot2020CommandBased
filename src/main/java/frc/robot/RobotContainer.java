@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.paths.TestPath;
 import frc.robot.commands.CurveDrive;
 import frc.robot.commands.PathFollower;
+import frc.robot.commands.TestReverse;
 import frc.robot.subsystems.ShiftingWCD;
 
 public class RobotContainer {
@@ -27,6 +28,6 @@ public class RobotContainer {
 
     }
     public Command getAutoCommand(){
-        return new PathFollower(new TestPath(), drive);
+        return new TestReverse(drive);
     }
 }

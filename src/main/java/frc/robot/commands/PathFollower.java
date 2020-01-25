@@ -15,8 +15,11 @@ public class PathFollower extends HelixFollower {
     private PIDController distanceController = new PIDController(RobotMap.DISTANCE_P, RobotMap.DISTANCE_I,
             RobotMap.DISTANCE_D, 0.001);
 
-    public PathFollower(Path path, ShiftingWCD drive) {
+    public PathFollower(Path path, ShiftingWCD drive, boolean isReverse, boolean isMirror) {
         super(path);
+        if (isReverse) reverse();
+        if (isMirror) mirror();
+        //mirror();
         this.drive = drive;
         requires(drive);
     }

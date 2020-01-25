@@ -17,8 +17,8 @@ public class SparkMaxDriveMotors
     public SparkMaxDriveMotors(final int canId1, final int canId2, final int canId3) {
         motors = new CANSparkMax[3];
         motors[0] = CreateNeoSparkMax(canId1);
-        motors[1] = CreateNeoSparkMax(canId1);
-        motors[2] = CreateNeoSparkMax(canId1);
+        motors[1] = CreateNeoSparkMax(canId2);
+        motors[2] = CreateNeoSparkMax(canId3);
 
         motors[1].follow(motors[0]);
         motors[2].follow(motors[0]);
