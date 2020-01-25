@@ -16,15 +16,18 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.RobotMap;
+import frc.robot.helpers.SparkMaxDriveMotors;
 
 public class ShiftingWCD extends Subsystem {
 
-  CANSparkMax leftMaster, leftSlave0, leftSlave1, rightMaster, rightSlave0, rightSlave1;
+  //CANSparkMax leftMaster, leftSlave0, leftSlave1, rightMaster, rightSlave0, rightSlave1;
   DifferentialDrive drive;
   DoubleSolenoid shifter;
+  SparkMaxDriveMotors leftMotors;
+  SparkMaxDriveMotors rightMotors;
 
   AHRS navx;
-  CANEncoder leftEncoder, rightEncoder;
+  //CANEncoder leftEncoder, rightEncoder;
   DifferentialDriveKinematics m_kinematics;
   DifferentialDriveOdometry m_odometry;
   Pose2d pose;
@@ -41,45 +44,21 @@ public class ShiftingWCD extends Subsystem {
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   private void initMotors() {
-    leftMaster = new CANSparkMax(10, MotorType.kBrushless);
-    leftSlave0 = new CANSparkMax(11, MotorType.kBrushless);
-    leftSlave1 = new CANSparkMax(12, MotorType.kBrushless);
 
-    leftSlave0.follow(leftMaster);
-    leftSlave1.follow(leftMaster);
-
-    rightMaster = new CANSparkMax(13, MotorType.kBrushless);
-    rightSlave0 = new CANSparkMax(14, MotorType.kBrushless);
-    rightSlave1 = new CANSparkMax(15, MotorType.kBrushless);
-
-    rightSlave0.follow(rightMaster);
-    rightSlave1.follow(rightMaster);
-
-    leftMaster.setSmartCurrentLimit(RobotMap.NEO_LIMIT);
-    leftSlave0.setSmartCurrentLimit(RobotMap.NEO_LIMIT);
-    leftSlave1.setSmartCurrentLimit(RobotMap.NEO_LIMIT);
-    rightMaster.setSmartCurrentLimit(RobotMap.NEO_LIMIT);
-    rightSlave0.setSmartCurrentLimit(RobotMap.NEO_LIMIT);
-    rightSlave1.setSmartCurrentLimit(RobotMap.NEO_LIMIT);
-
-    brakeMode(leftMaster);
-    brakeMode(leftSlave0);
-    brakeMode(leftSlave1);
-    brakeMode(rightMaster);
-    brakeMode(rightSlave0);
-    brakeMode(rightSlave1);
+    leftMotors = new SparkMaxDriveMotors(10, 11, 12);
+    rightMotors = new SparkMaxDriveMotors(13, 14, 15);
 
   }
 
   private void initDrive() {
-    drive = new DifferentialDrive(leftMaster, rightMaster);
+    drive = new DifferentialDrive(this.leftMotors.getMasterMotor(), this.rightMotors.getMasterMotor());
     drive.setSafetyEnabled(false);
   }
 
   private void initSensors() {
     navx = new AHRS(SPI.Port.kMXP);
-    leftEncoder = leftMaster.getEncoder();
-    rightEncoder = rightMaster.getEncoder();
+    //leftEncoder = leftMaster.getEncoder();
+    //rightEncoder = rightMaster.getEncoder();
     resetGyro();
     resetEncoders();
     m_kinematics= new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.kTrackwidthInches));
@@ -93,26 +72,27 @@ public class ShiftingWCD extends Subsystem {
   }
 
   public void resetEncoders() {
-    leftEncoder.setPosition(0);
-    rightEncoder.setPosition(0);
+    this.leftMotors.ResetEncoder();
+    this.rightMotors.ResetEncoder();
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   public double getLeftEncoderInches() {
-    return -(leftEncoder.getPosition()/RobotMap.DRIVE_RATIO)*(RobotMap.WHEEL_DIAMETER*Math.PI);
+
+    return this.leftMotors.getEncoderDistanceInInches(true);
   }
 
   public double getRightEncoderInches() {
-    return (rightEncoder.getPosition()/RobotMap.DRIVE_RATIO)*(RobotMap.WHEEL_DIAMETER*Math.PI);
+    return this.rightMotors.getEncoderDistanceInInches(false);
   }
 
   public double getLeftEncoderFeet() {
-    return getLeftEncoderInches() / 12.0;
+    return this.leftMotors.getEncoderDistanceInFeet(true);
   }
 
   public double getRightEncoderFeet() {
-    return getRightEncoderInches() / 12.0;
+    return this.rightMotors.getEncoderDistanceInFeet(false);
   }
 
   public double getHeadingDegrees() {
@@ -153,9 +133,5 @@ public class ShiftingWCD extends Subsystem {
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  private void brakeMode(CANSparkMax mc) {
-    mc.setIdleMode(IdleMode.kBrake);
-  }
 
 }
