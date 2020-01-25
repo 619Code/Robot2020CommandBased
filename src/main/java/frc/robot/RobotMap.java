@@ -19,6 +19,10 @@ public class RobotMap {
   // CAN ID
   public static final int CLIMB1 = -1;
   public static final int CLIMB2 = -1;
+  public static final int INDEXING = -1;
+  public static final int LOADING = -1;
+  public static final int FEEDER1 = -1;
+  public static final int FEEDER2 = -1;
 
   // Climb Constants
   public static final double PULLEY_RATIO = -1;

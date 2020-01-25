@@ -14,8 +14,10 @@ public class Climber {
     }
 
     public void extend() {
-        //liftOne.set();
-        //liftTwo.set();
+        while(true) {
+            //liftOne.set();
+            //liftTwo.set();
+        }
     }
 
     public void ascend() {
