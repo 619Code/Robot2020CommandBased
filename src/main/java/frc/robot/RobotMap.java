@@ -8,14 +8,22 @@
 package frc.robot;
 
 public class RobotMap {
-
-  //Talon ID
+  // Talon ID
   public static final int LEFTMASTER = 10;
   public static final int RIGHTMASTER = 13;
   public static final int LEFTSLAVE0 = 11;
   public static final int LEFTSLAVE1 = 12;
   public static final int RIGHTSLAVE0 = 14;
   public static final int RIGHTSLAVE1 = 15;
+
+  // CAN ID
+  public static final int CLIMB1 = -1;
+  public static final int CLIMB2 = -1;
+
+  // Climb Constants
+  public static final double PULLEY_RATIO = -1;
+  public static final double GEAR_RATIO = -1;
+  public static final double DISTANCE = -1;
 
   // DRIVE
   public static final double WHEEL_DIAMETER = 4;

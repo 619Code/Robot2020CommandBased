@@ -14,13 +14,16 @@ import frc.paths.TestPath;
 import frc.robot.commands.CurveDrive;
 import frc.robot.commands.PathFollower;
 import frc.robot.commands.TestReverse;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ShiftingWCD;
 
 public class RobotContainer {
     private final ShiftingWCD drive;
+    private final Climber climber;
     private final XboxController primaryJoystick, secondaryJoystick;
     public RobotContainer(){
         drive = new ShiftingWCD();
+        climber = new Climber();
         primaryJoystick = new XboxController(0);
         secondaryJoystick = new XboxController(1);
 
