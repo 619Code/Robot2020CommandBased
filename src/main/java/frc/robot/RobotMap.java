@@ -27,12 +27,12 @@ public class RobotMap {
 
   // PATHS
   // pid values
-  public static final double HEADING_P = 0.64;
+  public static final double HEADING_P = 0; //0.64
   public static final double HEADING_D = 0;
   public static final double HEADING_I = 0;
 
-  public static final double DISTANCE_P = 5;
-  public static final double DISTANCE_D = 8;
+  public static final double DISTANCE_P = 0; //5
+  public static final double DISTANCE_D = 0; //8
   public static final double DISTANCE_I = 0;
 
   // DifferentialDrive Kinematics

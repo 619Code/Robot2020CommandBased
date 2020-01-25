@@ -16,6 +16,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    Scheduler.getInstance().run();
   }
 
   @Override
@@ -24,7 +25,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    Scheduler.getInstance().run();
   }
 
   @Override
@@ -37,19 +37,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    Scheduler.getInstance().run();
+
   }
 
   @Override
   public void teleopInit() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+    Scheduler.getInstance().removeAll();
   }
 
   @Override
   public void teleopPeriodic() {
-    Scheduler.getInstance().run();
+
   }
 
   @Override

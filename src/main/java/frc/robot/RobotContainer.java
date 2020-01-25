@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.paths.TestPath;
 import frc.robot.commands.CurveDrive;
@@ -16,11 +17,11 @@ import frc.robot.subsystems.ShiftingWCD;
 
 public class RobotContainer {
     private final ShiftingWCD drive;
-    private final Joystick primaryJoystick, secondaryJoystick;
+    private final XboxController primaryJoystick, secondaryJoystick;
     public RobotContainer(){
         drive = new ShiftingWCD();
-        primaryJoystick = new Joystick(0);
-        secondaryJoystick = new Joystick(1);
+        primaryJoystick = new XboxController(0);
+        secondaryJoystick = new XboxController(1);
 
         drive.setDefaultCommand(new CurveDrive(drive, primaryJoystick));
 
