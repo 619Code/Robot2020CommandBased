@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 public class Intake extends Subsystem{
-    private CANSparkMax roller;
+    private TalonSRX roller;
     private DoubleSolenoid wrist;
 
     public Intake() {
-        roller = new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
+        roller = new TalonSRX(RobotMap.INTAKE_MOTOR);
         wrist = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.INTAKE_WRIST_CHANNEL[0], RobotMap.INTAKE_WRIST_CHANNEL[1]);
     }
 
     public void spin(double speed){
-        roller.set(speed);
+        roller.set(ControlMode.PercentOutput, speed);
     }
 
     private void raise() {
