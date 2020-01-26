@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.drive;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -16,8 +16,8 @@ import frc.robot.helpers.SparkMaxDriveMotors;
 
 public class ShiftingWCD extends Subsystem {
 
-  //CANSparkMax leftMaster, leftSlave0, leftSlave1, rightMaster, rightSlave0, rightSlave1;
-  DifferentialDrive drive;
+  //CANSparkMax leftMaster, leftSlavCatsparagus e0, leftSlave1, rightMaster, rightSlave0, rightSlave1;
+  CavalierDrive drive;
   DoubleSolenoid shifter;
   SparkMaxDriveMotors leftMotors;
   SparkMaxDriveMotors rightMotors;
@@ -40,14 +40,14 @@ public class ShiftingWCD extends Subsystem {
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   private void initMotors() {
-
     leftMotors = new SparkMaxDriveMotors(10, 11, 12);
     rightMotors = new SparkMaxDriveMotors(13, 14, 15);
 
   }
+  
 
   private void initDrive() {
-    drive = new DifferentialDrive(this.leftMotors.getMasterMotor(), this.rightMotors.getMasterMotor());
+    drive = new CavalierDrive(this.leftMotors.getMasterMotor(), this.rightMotors.getMasterMotor());
     drive.setSafetyEnabled(false);
   }
 
@@ -57,7 +57,7 @@ public class ShiftingWCD extends Subsystem {
     //rightEncoder = rightMaster.getEncoder();
     resetGyro();
     resetEncoders();
-    m_kinematics= new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.kTrackwidthInches));
+    m_kinematics= new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.TRACKWIDTH_INCHES));
     m_odometry = new DifferentialDriveOdometry(getAngle());
   }
 
@@ -106,7 +106,7 @@ public class ShiftingWCD extends Subsystem {
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   public void curve(double speed, double rotation) {
-    drive.curvatureDrive(speed, rotation, true);
+    drive.curvatureVelDrive(speed, rotation, true);
   }
 
   public void arcade(double speed, double rotation) {

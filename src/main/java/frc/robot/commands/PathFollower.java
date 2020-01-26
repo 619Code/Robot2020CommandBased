@@ -5,7 +5,7 @@ import com.team2363.controller.PIDController;
 import com.team319.trajectory.Path;
 
 import frc.robot.RobotMap;
-import frc.robot.subsystems.ShiftingWCD;;
+import frc.robot.subsystems.drive.ShiftingWCD;;
 
 public class PathFollower extends HelixFollower {
     private ShiftingWCD drive;

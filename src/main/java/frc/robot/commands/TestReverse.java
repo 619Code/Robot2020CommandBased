@@ -3,8 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.paths.TestPath;
 import frc.robot.helpers.Limelight;
-import frc.robot.helpers.TargetInfo;
-import frc.robot.subsystems.ShiftingWCD;
+import frc.robot.subsystems.drive.ShiftingWCD;
 
 public class TestReverse extends CommandGroup {
   private ShiftingWCD drive;

@@ -14,7 +14,7 @@ import frc.robot.commands.TestReverse;
 import frc.robot.helpers.Limelight;
 import frc.robot.helpers.TargetInfo;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.ShiftingWCD;
+import frc.robot.subsystems.drive.ShiftingWCD;
 
 public class RobotContainer {
     private final ShiftingWCD drive;

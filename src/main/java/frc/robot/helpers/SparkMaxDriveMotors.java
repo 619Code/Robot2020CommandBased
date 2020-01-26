@@ -4,12 +4,17 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.RobotMap;
 
 public class SparkMaxDriveMotors 
 {
     public CANSparkMax[] motors;  
     public CANEncoder encoder;
+    public PIDController motorPID;
+
     public CANSparkMax getMasterMotor() {
         return motors[0];
     } 
@@ -23,7 +28,9 @@ public class SparkMaxDriveMotors
         motors[1].follow(motors[0]);
         motors[2].follow(motors[0]);
 
-        this.encoder = this.motors[0].getEncoder();        
+        motorPID = new PIDController(RobotMap.VEL_P, RobotMap.VEL_P, RobotMap.VEL_D);
+
+        this.encoder = this.motors[0].getEncoder();
     }
 
     private CANSparkMax CreateNeoSparkMax(final int canId) {
@@ -31,6 +38,10 @@ public class SparkMaxDriveMotors
         sparkMax.setIdleMode(IdleMode.kBrake);
         sparkMax.setSmartCurrentLimit(RobotMap.NEO_LIMIT);
         return sparkMax;
+    }
+
+    public void velControl(double targetVel) {
+
     }
 
     public CANEncoder getEncoder() {
