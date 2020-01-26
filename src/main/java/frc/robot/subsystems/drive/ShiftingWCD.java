@@ -4,17 +4,17 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.helpers.SparkMaxDriveMotors;
 
-public class ShiftingWCD extends Subsystem {
+public class ShiftingWCD extends SubsystemBase {
 
   //CANSparkMax leftMaster, leftSlavCatsparagus e0, leftSlave1, rightMaster, rightSlave0, rightSlave1;
   CavalierDrive drive;
@@ -123,10 +123,6 @@ public class ShiftingWCD extends Subsystem {
   public void periodic() {
     pose = m_odometry.update(getAngle(), Units.inchesToMeters(getLeftEncoderInches()), Units.inchesToMeters(getRightEncoderInches()));
   } 
-
-  @Override
-  protected void initDefaultCommand() {
-  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
