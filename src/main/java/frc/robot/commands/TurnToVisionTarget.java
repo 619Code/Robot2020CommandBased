@@ -8,11 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
-<<<<<<< HEAD
-=======
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShiftingWCD;
->>>>>>> 9193f18e2e7b937088c4bec477b3eb395b5747cb
 import frc.robot.RobotMap;
 import frc.robot.helpers.Limelight;
 import frc.robot.helpers.TargetInfo;

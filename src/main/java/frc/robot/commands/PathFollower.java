@@ -6,12 +6,8 @@ import com.team319.trajectory.Path;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-<<<<<<< HEAD
-import frc.robot.subsystems.drive.ShiftingWCD;;
-=======
+import frc.robot.subsystems.drive.ShiftingWCD;
 import frc.robot.helpers.HelixFollowerAltBase;
-import frc.robot.subsystems.ShiftingWCD;
->>>>>>> 9193f18e2e7b937088c4bec477b3eb395b5747cb
 
 
 public class PathFollower extends HelixFollowerAltBase {
