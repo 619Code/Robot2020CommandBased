@@ -12,7 +12,6 @@ import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.Sendable;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase;
@@ -409,7 +408,6 @@ public class CavalierDrive extends RobotDriveBase implements Sendable, AutoClose
     double leftTargetVelocity = RobotMap.MAX_VELOCITY * (leftMotorOutput * m_maxOutput);
     double rightTargetVelocity = RobotMap.MAX_VELOCITY * (rightMotorOutput * m_maxOutput * m_rightSideInvertMultiplier);  
 
-    double targetVelocity = xSpeed == 0 ? 0 : RobotMap.MAX_VELOCITY / xSpeed;
     leftVoltageOutput = leftPID.calculate(leftVel, leftTargetVelocity);
     rightVoltageOutput = rightPID.calculate(rightVel, rightTargetVelocity);
 

@@ -50,9 +50,9 @@ public class RobotMap {
   // PATHS
   
   // pid values
-  public static final double VEL_P = 0.05;
+  public static final double VEL_P = 0.25;
   public static final double VEL_I = 0.00;
-  public static final double VEL_D = 0.01;
+  public static final double VEL_D = 0.00;
 
   public static final double HEADING_P = 0.01; //0.64
   public static final double HEADING_I = 0;
