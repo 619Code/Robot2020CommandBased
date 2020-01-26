@@ -1,6 +1,7 @@
 package frc.robot.helpers;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.helpers.HelixFollowerAltBase;
 
 public class HelixFollowerCommandWrapper extends CommandBase {
@@ -10,6 +11,7 @@ public class HelixFollowerCommandWrapper extends CommandBase {
     public HelixFollowerCommandWrapper(HelixFollowerAltBase follower)
     {
         this.follower = follower;
+        this.addRequirements(this.follower.m_requirements.toArray(new Subsystem[this.follower.m_requirements.size()]));
     }
 
     @Override
