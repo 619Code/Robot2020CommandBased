@@ -12,6 +12,6 @@ public class TestReverse extends SequentialCommandGroup {
     this.drive = drive;
     this.addRequirements(drive);
     this.addCommands(HelixFollowerCommandWrapper.wrap(new PathFollower(new TestPath(), drive, false, false)),
-                     HelixFollowerCommandWrapper.wrap(new PathFollower(new TestPath(), drive, false, false)));
+                     HelixFollowerCommandWrapper.wrap(new PathFollower( new TestPath(), drive, true, false)));
   }
 }
