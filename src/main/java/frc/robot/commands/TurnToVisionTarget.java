@@ -7,14 +7,14 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShiftingWCD;
 import frc.robot.RobotMap;
 import frc.robot.helpers.Limelight;
 import frc.robot.helpers.TargetInfo;
 
-public class TurnToVisionTarget extends Command {
+public class TurnToVisionTarget extends CommandBase {
   private ShiftingWCD drive;
   private TargetInfo targetInfo;
   private PIDController targetPID;
@@ -24,29 +24,25 @@ public class TurnToVisionTarget extends Command {
     this.limelight = limelight;
     targetInfo = limelight.GetTargetInfo();
     targetPID = new PIDController(RobotMap.TARGET_P, RobotMap.TARGET_I, RobotMap.TARGET_D);
-    requires(drive);
+    this.addRequirements(drive);
   }
 
   @Override
-  protected void initialize() {
+  public void initialize() {
   }
 
   @Override
-  protected void execute() {
+  public void execute() {
     targetInfo = limelight.GetTargetInfo();
     drive.curve(0,targetPID.calculate(targetInfo.getTargetX(), 0));
   }
 
   @Override
-  protected boolean isFinished() {
+  public boolean isFinished() {
     return false;
   }
 
   @Override
-  protected void end() {
-  }
-
-  @Override
-  protected void interrupted() {
+  public void end(boolean interrupted) {
   }
 }

@@ -4,10 +4,13 @@ import com.team2363.commands.HelixFollower;
 import com.team2363.controller.PIDController;
 import com.team319.trajectory.Path;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.ShiftingWCD;;
+import frc.robot.helpers.HelixFollowerAltBase;
+import frc.robot.subsystems.ShiftingWCD;
 
-public class PathFollower extends HelixFollower {
+
+public class PathFollower extends HelixFollowerAltBase {
     private ShiftingWCD drive;
     
     private PIDController headingController = new PIDController(RobotMap.HEADING_P, RobotMap.HEADING_I,
@@ -20,8 +23,7 @@ public class PathFollower extends HelixFollower {
         if (isReverse) reverse();
         if (isMirror) mirror();
         //mirror();
-        this.drive = drive;
-        requires(drive);
+        this.drive = drive;        
     }
 
     @Override

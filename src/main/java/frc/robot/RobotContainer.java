@@ -8,7 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.paths.TestPath;
 import frc.robot.commands.CurveDrive;
 import frc.robot.commands.TestReverse;
 import frc.robot.helpers.Limelight;

@@ -3,25 +3,25 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShiftingWCD;
 
-public class CurveDrive extends Command {
+public class CurveDrive extends CommandBase {
   private ShiftingWCD drive;
   private XboxController joystick;
   private double speed, rotation;
   public CurveDrive(ShiftingWCD drive, XboxController joystick) {
     this.drive = drive;
     this.joystick = joystick;
-    requires(drive);
+    this.addRequirements(drive);
   }
 
   @Override
-  protected void initialize() {
+  public void initialize() {
   }
 
   @Override
-  protected void execute() {
+  public void execute() {
     speed = joystick.getY(Hand.kLeft);
     rotation = -joystick.getX(Hand.kRight);
     setVals();
@@ -42,19 +42,14 @@ public class CurveDrive extends Command {
   }
 
   @Override
-  protected boolean isFinished() {
+  public boolean isFinished() {
     return false;
   }
 
   @Override
-  protected void end() {
+  public void end(boolean interrupted) {
   }
-
-
-  @Override
-  protected void interrupted() {
-  }
-
+  
   public void adjustVals() {
     
   }
