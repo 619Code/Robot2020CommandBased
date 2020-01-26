@@ -126,9 +126,6 @@ public class CavalierDrive extends RobotDriveBase implements Sendable, AutoClose
     m_leftMotor = leftMotor;
     m_rightMotor = rightMotor;
 
-    leftPID = new PIDController(RobotMap.VEL_P, RobotMap.VEL_I, RobotMap.VEL_D);
-    rightPID = new PIDController(RobotMap.VEL_P, RobotMap.VEL_I, RobotMap.VEL_D);
-
     SendableRegistry.addChild(this, m_leftMotor);
     SendableRegistry.addChild(this, m_rightMotor);
     instances++;
@@ -337,6 +334,8 @@ public class CavalierDrive extends RobotDriveBase implements Sendable, AutoClose
    */
   @SuppressWarnings({"ParameterName", "PMD.CyclomaticComplexity"})
   public void curvatureVelDrive(double xSpeed, double zRotation, boolean isQuickTurn) {
+    leftPID = new PIDController(RobotMap.VEL_P, RobotMap.VEL_I, RobotMap.VEL_D);
+    rightPID = new PIDController(RobotMap.VEL_P, RobotMap.VEL_I, RobotMap.VEL_D);
     if (!m_reported) {
       HAL.report(tResourceType.kResourceType_RobotDrive,
                  tInstances.kRobotDrive2_DifferentialCurvature, 2);
@@ -408,10 +407,10 @@ public class CavalierDrive extends RobotDriveBase implements Sendable, AutoClose
     double leftTargetVelocity = RobotMap.MAX_VELOCITY * (leftMotorOutput * m_maxOutput);
     double rightTargetVelocity = RobotMap.MAX_VELOCITY * (rightMotorOutput * m_maxOutput * m_rightSideInvertMultiplier);  
 
-    leftVoltageOutput = leftPID.calculate(leftVel, leftTargetVelocity);
-    rightVoltageOutput = rightPID.calculate(rightVel, rightTargetVelocity);
+    leftVoltageOutput += leftPID.calculate(leftVel, leftTargetVelocity) * (12.0/132.0); //convert to voltage
+    rightVoltageOutput += rightPID.calculate(rightVel, rightTargetVelocity) * (12.0/132.0); //convert to voltage
 
-    System.out.println(leftVoltageOutput);
+    //System.out.println(leftVoltageOutput);
 
     //System.out.println("current: " + leftVel + " target: " + leftTargetVelocity);
 

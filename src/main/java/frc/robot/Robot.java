@@ -3,15 +3,23 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.networktables.NetworkTableEntry;
 
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer;
-  
   private Command m_autonomousCommand;
+  NetworkTableEntry pVel, iVel, dVel;
+  ShuffleboardTab tab;
 
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();
+    tab = Shuffleboard.getTab("2020 Settings");
+    pVel = tab.add("P Velocity", 0).getEntry();
+    iVel = tab.add("I Velocity", 0).getEntry();
+    dVel = tab.add("D Velocity", 0).getEntry();
   }
 
   @Override
@@ -44,11 +52,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     CommandScheduler.getInstance().cancelAll();
+    // RobotMap.VEL_P = pVel.getDouble(0);
+    // RobotMap.VEL_I = iVel.getDouble(0);
+    // RobotMap.VEL_D = dVel.getDouble(0);
   }
 
   @Override
   public void teleopPeriodic() {
-
   }
 
   @Override

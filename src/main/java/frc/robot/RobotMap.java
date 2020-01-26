@@ -47,12 +47,14 @@ public class RobotMap {
 
   public static final double MAX_VOLTAGE = 12;
 
+  public static final double FEET_TO_V = 12.0/132.0;
+
   // PATHS
   
   // pid values
-  public static final double VEL_P = 0.25;
-  public static final double VEL_I = 0.00;
-  public static final double VEL_D = 0.00;
+  public static double VEL_P = 0.2;
+  public static double VEL_I = 0.0;
+  public static double VEL_D = 0.0;
 
   public static final double HEADING_P = 0.01; //0.64
   public static final double HEADING_I = 0;
