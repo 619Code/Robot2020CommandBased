@@ -9,10 +9,10 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShiftingWCD;
 import frc.robot.RobotMap;
 import frc.robot.helpers.Limelight;
 import frc.robot.helpers.TargetInfo;
+import frc.robot.subsystems.drive.ShiftingWCD;
 
 public class TurnToVisionTarget extends CommandBase {
   private ShiftingWCD drive;

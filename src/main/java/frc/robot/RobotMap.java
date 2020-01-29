@@ -45,9 +45,17 @@ public class RobotMap {
   public static final int NEO_LIMIT = 45;
   public static final double DRIVE_RATIO = 6.87;
 
+  public static final double MAX_VOLTAGE = 12;
+
+  public static final double FEET_TO_V = 12.0/132.0;
+
   // PATHS
   
   // pid values
+  public static double VEL_P = 0.2;
+  public static double VEL_I = 0.0;
+  public static double VEL_D = 0.0;
+
   public static final double HEADING_P = 0.01; //0.64
   public static final double HEADING_I = 0;
   public static final double HEADING_D = 0;
@@ -69,8 +77,9 @@ public class RobotMap {
   public static final double TARGET_D = 1.2;
 
   // DifferentialDrive Kinematics
-  public static final double kTrackwidthInches = 21;
+  public static final double TRACKWIDTH_INCHES = 21;
 
   // Max Trajectory Velocity/Acceleration
-  public static final double kMaxAccelerationFeetPerSecondSquared = 1.5;
+  public static final double MAX_ACCELERATION_FEET_PER_SECOND_SQUARED = 1.5;
+  public static final double MAX_VELOCITY = 132; //i/s
 }
