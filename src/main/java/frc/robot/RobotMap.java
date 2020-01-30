@@ -8,6 +8,11 @@
 package frc.robot;
 
 public class RobotMap {
+
+  // Intake Stuff
+  public static double INTAKE_MOTOR_PERCENTAGE = 50;
+  public static double INTAKE_MOTOR_BELT = 0.3;
+
   // Talon ID
   public static final int INTAKE_MOTOR = -1;
   
