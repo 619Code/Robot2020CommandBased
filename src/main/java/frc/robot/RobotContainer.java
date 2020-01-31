@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.CurveDrive;
 import frc.robot.commands.TestReverse;
+import frc.robot.commands.TurnToVisionTarget;
 import frc.robot.helpers.Limelight;
 import frc.robot.helpers.TargetInfo;
 import frc.robot.subsystems.Climber;
@@ -20,7 +21,7 @@ public class RobotContainer {
     private final ShiftingWCD drive;
     private final Climber climber;
     private final XboxController primaryJoystick, secondaryJoystick;
-    private final Limelight limelight;
+    public final Limelight limelight;
     private final TargetInfo targetInfo;
 
     public RobotContainer() {
@@ -33,9 +34,8 @@ public class RobotContainer {
         limelight = new Limelight();
 
         drive.setDefaultCommand(new CurveDrive(drive, primaryJoystick));
-
     }
     public Command getAutoCommand(){
-        return new TestReverse(drive, limelight);
+        return new TurnToVisionTarget(drive, limelight); //new TestReverse(drive, limelight);
     }
 }
