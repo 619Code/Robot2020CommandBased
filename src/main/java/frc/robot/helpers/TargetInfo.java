@@ -27,7 +27,7 @@ public class TargetInfo {
 
     public double getDistanceX() {
         double h1 = 39;
-        double h2 = 52;
+        double h2 = 63;
         double a1 = Math.toRadians(6.9);
         double a2 = Math.toRadians(Y);
         double d = ((h2-h1) / Math.tan(a1+a2));
