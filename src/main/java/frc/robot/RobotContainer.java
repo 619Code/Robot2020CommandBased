@@ -9,12 +9,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.CurveDriveCommand;
-import frc.robot.commands.ReverseCommand;
-import frc.robot.commands.AimCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.*;
 import frc.robot.helpers.Limelight;
-import frc.robot.helpers.TargetInfo;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.*;
 import frc.robot.subsystems.drive.ShiftingWCDSubsystem;
 
 public class RobotContainer {
@@ -22,6 +20,7 @@ public class RobotContainer {
     private final ClimberSubsystem climber;
     private final XboxController primaryJoystick, secondaryJoystick;
     public final Limelight limelight;
+    private final IntakeSubsystem intakeSubsystem;
 
     public RobotContainer() {
 
@@ -30,9 +29,20 @@ public class RobotContainer {
         primaryJoystick = new XboxController(0);
         secondaryJoystick = new XboxController(1);
         limelight = new Limelight();
+        intakeSubsystem = new IntakeSubsystem();
 
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
     }
+
+    public void ConfigureControllers() {
+        
+        var intakeButton = new JoystickButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value);
+        intakeButton.toggleWhenPressed(new ExtendoExtendCommand(intakeSubsystem));
+        intakeButton.whenReleased(new ExtendoContractCommand(intakeSubsystem));
+
+
+    }
+
     public Command getAutoCommand(){
         return new AimCommand(drive, limelight); //new TestReverse(drive, limelight);
     }
