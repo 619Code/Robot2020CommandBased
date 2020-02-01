@@ -22,7 +22,6 @@ public class RobotContainer {
     private final Climber climber;
     private final XboxController primaryJoystick, secondaryJoystick;
     public final Limelight limelight;
-    private final TargetInfo targetInfo;
 
     public RobotContainer() {
 
@@ -30,7 +29,6 @@ public class RobotContainer {
         climber = new Climber();
         primaryJoystick = new XboxController(0);
         secondaryJoystick = new XboxController(1);
-        targetInfo = new TargetInfo();
         limelight = new Limelight();
 
         drive.setDefaultCommand(new CurveDrive(drive, primaryJoystick));
