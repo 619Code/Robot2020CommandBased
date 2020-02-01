@@ -1,6 +1,8 @@
 package frc.robot.helpers;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Units;
+import frc.robot.RobotMap;
 
 public class TargetInfo {
 
@@ -22,5 +24,11 @@ public class TargetInfo {
     }
     public double getTargetY(){
         return Y;
+    }
+
+    public double getDistanceX() {
+        double a2 = Math.toRadians(Y);
+        double d = ((RobotMap.TARGET_HEIGHT-RobotMap.LIMELIGHT_HEIGHT) / Math.tan(RobotMap.LIMELIGHT_ANGLE+a2));
+        return d;
     }
 }
