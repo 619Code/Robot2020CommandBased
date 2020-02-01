@@ -13,7 +13,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   NetworkTableEntry pVel, iVel, dVel;
   ShuffleboardTab tab;
-  public Limelight limelight;
 
   @Override
   public void robotInit() {
@@ -57,12 +56,12 @@ public class Robot extends TimedRobot {
     // RobotMap.VEL_P = pVel.getDouble(0);
     // RobotMap.VEL_I = iVel.getDouble(0);
     // RobotMap.VEL_D = dVel.getDouble(0);
-    limelight = new Limelight();
   }
 
   @Override
   public void teleopPeriodic() {
-    System.out.println(limelight.GetTargetInfo().getDistanceX());
+    double distanceX = robotContainer.limelight.GetTargetInfo().getDistanceX();
+    System.out.println(distanceX);
   }
 
   @Override

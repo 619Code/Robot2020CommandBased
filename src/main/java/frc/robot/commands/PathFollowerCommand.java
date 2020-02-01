@@ -23,7 +23,8 @@ public class PathFollowerCommand extends HelixFollowerAltBase {
         if (isReverse) reverse();
         if (isMirror) mirror();
         //mirror();
-        this.drive = drive;        
+        this.drive = drive;   
+        this.addRequirements(this.drive);     
     }
 
     @Override

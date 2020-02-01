@@ -8,6 +8,11 @@
 package frc.robot;
 
 public class RobotMap {
+
+  // Intake Stuff
+  public static double INTAKE_MOTOR_PERCENTAGE = 50;
+  public static double INTAKE_MOTOR_BELT = 0.3;
+
   // Talon ID
   public static final int INTAKE_MOTOR = -1;
   
@@ -82,4 +87,14 @@ public class RobotMap {
   // Max Trajectory Velocity/Acceleration
   public static final double MAX_ACCELERATION_FEET_PER_SECOND_SQUARED = 1.5;
   public static final double MAX_VELOCITY = 132; //i/s
+
+  //Field constants
+  public static final double TARGET_HEIGHT = 52;
+
+  //Shooter constants
+  public static final double MAX_SHOOTER_VELOCITY = -1;
+  public static final double SHOOTER_X_OFFSET = -1;
+  public static final double SHOOTER_Y_OFFSET = -1;
+  public static final double LIMELIGHT_HEIGHT = 39;
+  public static final double LIMELIGHT_ANGLE = Math.toRadians(-1);
 }

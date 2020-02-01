@@ -33,6 +33,13 @@ public class ShooterSubsystem extends Subsystem {
     return position;
   }
 
+  public double findVelocity(double targetA, double distanceX) {
+    double time = Math.sqrt((2*(RobotMap.TARGET_HEIGHT-RobotMap.SHOOTER_Y_OFFSET))/-(32.2*12));
+    double velocityX = (2*distanceX-RobotMap.SHOOTER_X_OFFSET)/time;
+    double velocity = velocityX/Math.cos(Math.toRadians(targetA) + RobotMap.LIMELIGHT_ANGLE);
+    return velocity;
+  }
+
   @Override
   public void initDefaultCommand() {
   }
