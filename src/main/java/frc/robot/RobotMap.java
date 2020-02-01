@@ -9,6 +9,13 @@ package frc.robot;
 
 public class RobotMap {
 
+  // Magazine
+  public static int MAG_POS_SENSOR_lOADED = 0;
+  public static int MAG_POS_SENSOR_1 = 1;
+  public static int MAG_POS_SENSOR_2 = 2;
+  public static int MAG_POS_SENSOR_3 = 3;
+  public static int MAG_POS_SENSOR_4 = 4; 
+
   // Intake Stuff
   public static double INTAKE_MOTOR_PERCENTAGE = 50;
   public static double INTAKE_MOTOR_BELT = 0.3;
