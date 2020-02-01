@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.helpers.SparkMaxDriveMotors;
 
-public class ShiftingWCD extends SubsystemBase {
+public class ShiftingWCDSubsystem extends SubsystemBase {
 
   //CANSparkMax leftMaster, leftSlavCatsparagus e0, leftSlave1, rightMaster, rightSlave0, rightSlave1;
   CavalierDrive drive;
@@ -29,7 +29,7 @@ public class ShiftingWCD extends SubsystemBase {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  public ShiftingWCD() {
+  public ShiftingWCDSubsystem() {
     initMotors();
     initDrive();
     initSensors();

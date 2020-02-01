@@ -6,19 +6,19 @@ import com.team319.trajectory.Path;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.drive.ShiftingWCD;
+import frc.robot.subsystems.drive.ShiftingWCDSubsystem;
 import frc.robot.helpers.HelixFollowerAltBase;
 
 
-public class PathFollower extends HelixFollowerAltBase {
-    private ShiftingWCD drive;
+public class PathFollowerCommand extends HelixFollowerAltBase {
+    private ShiftingWCDSubsystem drive;
     
     private PIDController headingController = new PIDController(RobotMap.HEADING_P, RobotMap.HEADING_I,
             RobotMap.HEADING_D, 0.001);
     private PIDController distanceController = new PIDController(RobotMap.DISTANCE_P, RobotMap.DISTANCE_I,
             RobotMap.DISTANCE_D, 0.001);
 
-    public PathFollower(Path path, ShiftingWCD drive, boolean isReverse, boolean isMirror) {
+    public PathFollowerCommand(Path path, ShiftingWCDSubsystem drive, boolean isReverse, boolean isMirror) {
         super(path);
         if (isReverse) reverse();
         if (isMirror) mirror();
