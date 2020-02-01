@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
-public class Intake extends Subsystem{
+public class IntakeSubsystem extends Subsystem{
     private TalonSRX roller;
     private DoubleSolenoid wrist;
 
-    public Intake() {
+    public IntakeSubsystem() {
         roller = new TalonSRX(RobotMap.INTAKE_MOTOR);
         wrist = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.INTAKE_WRIST_CHANNEL[0], RobotMap.INTAKE_WRIST_CHANNEL[1]);
     }

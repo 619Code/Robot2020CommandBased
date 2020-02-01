@@ -12,14 +12,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 import frc.robot.helpers.Limelight;
 import frc.robot.helpers.TargetInfo;
-import frc.robot.subsystems.drive.ShiftingWCD;
+import frc.robot.subsystems.drive.ShiftingWCDSubsystem;
 
-public class TurnToVisionTarget extends CommandBase {
-  private ShiftingWCD drive;
+public class AimCommand extends CommandBase {
+  private ShiftingWCDSubsystem drive;
   private TargetInfo targetInfo;
   private PIDController targetPID;
   private Limelight limelight;
-  public TurnToVisionTarget(ShiftingWCD drive, Limelight limelight) {
+  public AimCommand(ShiftingWCDSubsystem drive, Limelight limelight) {
     this.drive = drive;
     this.limelight = limelight;
     targetInfo = limelight.GetTargetInfo();

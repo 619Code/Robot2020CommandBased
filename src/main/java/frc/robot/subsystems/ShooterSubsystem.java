@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.RobotMap;
 
-public class Shooter extends Subsystem {
+public class ShooterSubsystem extends Subsystem {
   private CANSparkMax shooterMotor, angleMotor;
   private PIDController shooterPID, anglePID;
 
-  public Shooter(){
+  public ShooterSubsystem(){
     shooterMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
     shooterPID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
 

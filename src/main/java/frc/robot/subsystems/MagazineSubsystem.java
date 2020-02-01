@@ -6,12 +6,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.RobotMap;
 import frc.robot.hardware.LimitSwitch;
 
-public class Magazine {
+public class MagazineSubsystem {
     CANSparkMax indexing, loading, feeder1, feeder2;
     LimitSwitch feederSwitch;
     int ballsInMag, ballsInFeeder, ballsInShooter;
 
-    public Magazine() {
+    public MagazineSubsystem() {
         indexing = new CANSparkMax(RobotMap.INDEXING, MotorType.kBrushless);
         loading = new CANSparkMax(RobotMap.LOADING, MotorType.kBrushless);
         feeder1 = new CANSparkMax(RobotMap.FEEDER1, MotorType.kBrushless);

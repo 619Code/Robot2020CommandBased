@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.drive.ShiftingWCD;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class CurveDrive extends CommandBase {
+public class CurveDriveCommand extends CommandBase {
   private ShiftingWCD drive;
   private XboxController joystick;
   private double speed, rotation;
-  public CurveDrive(ShiftingWCD drive, XboxController joystick) {
+  public CurveDriveCommand(ShiftingWCD drive, XboxController joystick) {
     this.drive = drive;
     this.joystick = joystick;
     this.addRequirements(drive);
