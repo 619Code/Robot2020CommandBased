@@ -4,6 +4,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
@@ -33,7 +34,7 @@ public class ShiftingWCDSubsystem extends SubsystemBase {
     initMotors();
     initDrive();
     initSensors();
-    // shifter = new DoubleSolenoid(0, 1);
+    shifter = new DoubleSolenoid(0, 1);
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +42,6 @@ public class ShiftingWCDSubsystem extends SubsystemBase {
   private void initMotors() {
     leftMotors = new SparkMaxDriveMotors(10, 11, 12);
     rightMotors = new SparkMaxDriveMotors(13, 14, 15);
-
   }
   
 
@@ -116,6 +116,16 @@ public class ShiftingWCDSubsystem extends SubsystemBase {
     drive.tankDrive(-left, -right);
   }
 
+  public void setShift(boolean state){
+    if(state){
+      shifter.set(Value.kForward);
+    }
+    else{
+      shifter.set(Value.kReverse);
+    }
+  }
+  
+    
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   @Override

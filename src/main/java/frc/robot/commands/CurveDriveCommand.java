@@ -10,6 +10,7 @@ public class CurveDriveCommand extends CommandBase {
   private ShiftingWCDSubsystem drive;
   private XboxController joystick;
   private double speed, rotation;
+  private boolean state;
   public CurveDriveCommand(ShiftingWCDSubsystem drive, XboxController joystick) {
     this.drive = drive;
     this.joystick = joystick;
@@ -24,8 +25,10 @@ public class CurveDriveCommand extends CommandBase {
   public void execute() {
     speed = joystick.getY(Hand.kLeft);
     rotation = -joystick.getX(Hand.kRight);
+    state = joystick.getXButtonPressed();
     setVals();
     drive.curve(speed, rotation);
+    drive.setShift(state);
   }
 
   public void setVals() {

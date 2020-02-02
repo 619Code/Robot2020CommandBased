@@ -19,7 +19,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer;
   private Command m_autonomousCommand;
-  private TalonSRX shooterMotor;
   PIDController velPID;
   NetworkTableEntry pVel, iVel, dVel;
   ShuffleboardTab tab;
@@ -27,7 +26,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();
-    shooterMotor = new TalonSRX(20);
     tab = Shuffleboard.getTab("2020 Settings");
     pVel = tab.add("P Velocity", 0).getEntry();
     iVel = tab.add("I Velocity", 0).getEntry();
@@ -76,32 +74,16 @@ public class Robot extends TimedRobot {
     System.out.println(distanceX);
   }
 
-  double out;
-  final double maxVel = -17000.0;
-  double targetRPM = 120;
-  double targetVel;
   @Override
   public void testInit(){
-    //targetVel = (targetRPM * 1024.0 * 7.0)/600.0;
-    targetVel = -17000;
-    out = targetVel/maxVel;
-    //System.out.println("HEY A GAG SHKLFSJDKF SDKG: " + out);
+    
   }
+
+  public double targetVelocity = 31.3457 * 12;
+  public double targetRPM; //60*(targetVelocity/(4*Math.PI));
 
   @Override
   public void testPeriodic() {
-    double change = velPID.calculate(shooterMotor.getSelectedSensorVelocity(), targetVel);
-    out += -change;
-    //shooterMotor.set(ControlMode.PercentOutput, out);
-    shooterMotor.set(ControlMode.PercentOutput, 1.0);
-    //double vel = shooterMotor.getSelectedSensorVelocity()*600 / 7 / 1024;
-    //System.out.println("vel: " + shooterMotor.getSelectedSensorVelocity() + " targetVel: " + targetVel);
-    //shooterMotor.set(ControlMode.PercentOutput, 1);
-    //double targetVelocityRPM = 100;
-    //double targetEnocoderTicksPer100ms = (targetVelocityRPM * 1024 * 7)/600;
-    //double change = (velPID.calculate(vel, targetVelocityRPM)+1)/2;
-    //System.out.println(change);
-    //out += change;
-    //shooterMotor.set(ControlMode.PercentOutput, out);
+    
   }
 }
