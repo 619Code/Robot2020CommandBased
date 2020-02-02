@@ -7,12 +7,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class ShooterSubsystem extends Subsystem {
-  private CANSparkMax shooterMotor, angleMotor;
+  private CANSparkMax angleMotor;
+  private TalonSRX shooterMotor;
   private PIDController shooterPID, anglePID;
 
   public ShooterSubsystem(){
-    shooterMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
+    shooterMotor = new TalonSRX(20);
     shooterPID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
 
     angleMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
@@ -20,12 +23,7 @@ public class ShooterSubsystem extends Subsystem {
   }
 
   public void setVelocity(double targetRPM){
-    double currentRPM = shooterMotor.getEncoder().getVelocity();
-    shooterMotor.set(shooterPID.calculate(currentRPM, targetRPM));
-  }
-  public void setAngle(double targetAngle){
-    double currentAngle = calculateAngle(shooterMotor.getEncoder().getPosition());
-    angleMotor.set(anglePID.calculate(currentAngle, targetAngle));
+    
   }
 
   public double calculateAngle(double position){
