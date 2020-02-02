@@ -3,11 +3,11 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
-public class ShooterSubsystem extends Subsystem {
+public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax shooterMotor, angleMotor;
   private PIDController shooterPID, anglePID;
 
@@ -38,9 +38,5 @@ public class ShooterSubsystem extends Subsystem {
     double velocityX = (2*distanceX-RobotMap.SHOOTER_X_OFFSET)/time;
     double velocity = velocityX/Math.cos(Math.toRadians(targetA) + RobotMap.LIMELIGHT_ANGLE);
     return velocity;
-  }
-
-  @Override
-  public void initDefaultCommand() {
   }
 }

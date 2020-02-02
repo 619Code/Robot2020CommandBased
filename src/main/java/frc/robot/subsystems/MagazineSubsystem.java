@@ -1,68 +1,75 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.RobotMap;
 import frc.robot.hardware.LimitSwitch;
+import frc.robot.helpers.SparkMaxSetPointHelper;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class MagazineSubsystem {
-    CANSparkMax indexing, loading;
+public class MagazineSubsystem extends SubsystemBase {
+    SparkMaxSetPointHelper indexing;
+    SparkMaxSetPointHelper loading;
+    
     LimitSwitch feederSwitch;
 
     DigitalInput positionLoaded;
+    DigitalInput position0;
     DigitalInput position1;
     DigitalInput position2;
     DigitalInput position3;
-    DigitalInput position4;
+
+    DigitalInput[] positions;
     
     boolean isLoaded;
 
     public MagazineSubsystem() {
-        indexing = new CANSparkMax(RobotMap.INDEXING, MotorType.kBrushless);
-        loading = new CANSparkMax(RobotMap.LOADING, MotorType.kBrushless);
+        indexing = new SparkMaxSetPointHelper(RobotMap.INDEXING, ControlType.kPosition);
+        loading = new SparkMaxSetPointHelper(RobotMap.LOADING, ControlType.kPosition);
         positionLoaded = new DigitalInput(RobotMap.MAG_POS_SENSOR_lOADED);
-        position1 = new DigitalInput(RobotMap.MAG_POS_SENSOR_1);
-        position2 = new DigitalInput(RobotMap.MAG_POS_SENSOR_2);
-        position3 = new DigitalInput(RobotMap.MAG_POS_SENSOR_3);
-        position4 = new DigitalInput(RobotMap.MAG_POS_SENSOR_4);        
+        position0 = new DigitalInput(RobotMap.MAG_POS_SENSOR_1);
+        position1 = new DigitalInput(RobotMap.MAG_POS_SENSOR_2);
+        position2 = new DigitalInput(RobotMap.MAG_POS_SENSOR_3);
+        position3 = new DigitalInput(RobotMap.MAG_POS_SENSOR_4);
+        this.positions = new DigitalInput[] {position0, position1, position2,position3};        
     }
 
-    public void indexerMoveBallIn() {
+    public int nextEmptyIndex() {
+        for (int i = 0; i < 4; i++) {
+            if (this.positions[i].get() == false)
+                return i;
+        }
 
+        //Indicates no free slots
+        return -1;
     }
 
-    public void indexerMoveBallOut() {
+    public boolean HasBallAtIndex(int index)
+    {
+        return this.positions[index].get();
+    }
 
+    public void LoadChamber() {
+        //Advanced loader motor
+    }
+
+    public void LoadMagazine() {
+        //Advanced magazine motor
     }
 
     public boolean isFilled() {
-        //return position1.
-        return false;
+        return this.position0.get() && 
+            this.position1.get() &&
+            this.position2.get() &&
+            this.position3.get() &&
+            this.isLoaded();        
     }
 
-
-
-
-    // public void index() {
-    //     //indexing.set();
-    //     if(ballsInShooter == 0) {
-    //         //call feed without loading
-    //     } else if(ballsInFeeder == 0) {
-    //         //stop the ball
-    //     } else {
-    //         //go to mag
-    //     }
-    // }
-
-    // public void feed() {
-    //     if(feederSwitch.get() == false) {
-    //         //loading.set();
-    //     } else {
-    //         //feeder1.set();
-    //         //feeder2.set();
-    //     }
-    // }
+    public boolean isLoaded() {
+        return this.positionLoaded.get();
+    }
 }
 
