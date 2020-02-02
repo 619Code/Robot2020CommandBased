@@ -38,7 +38,7 @@ public class RobotMap {
   public static final int LOADING = -1;
   public static final int FEEDER1 = -1;
   public static final int FEEDER2 = -1;
-  public static final int SHOOTER_MOTOR = -1;
+  public static final int SHOOTER_MOTOR = 20;
 
   //Solenoids
   public static final int PCM_CAN_ID = -1;

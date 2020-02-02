@@ -20,7 +20,7 @@ public class RobotContainer {
     private final ClimberSubsystem climber;
     private final XboxController primaryJoystick, secondaryJoystick;
     public final Limelight limelight;
-    private final IntakeSubsystem intakeSubsystem;
+    private final IntakeSubsystem intakeSubsystem = null;
 
     public RobotContainer() {
 
@@ -29,7 +29,7 @@ public class RobotContainer {
         primaryJoystick = new XboxController(0);
         secondaryJoystick = new XboxController(1);
         limelight = new Limelight();
-        intakeSubsystem = new IntakeSubsystem();
+        //intakeSubsystem = new IntakeSubsystem();
 
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
     }
