@@ -1,16 +1,15 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import frc.robot.RobotMap;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-public class ShooterSubsystem extends Subsystem {
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
+public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax angleMotor;
   private TalonSRX shooterMotor;
   private PIDController shooterPID, anglePID;
@@ -57,9 +56,4 @@ public class ShooterSubsystem extends Subsystem {
     double velocity = velocityX/Math.cos(Math.toRadians(targetA) + RobotMap.LIMELIGHT_ANGLE);
     return velocity;
   }
-
-  @Override
-  public void initDefaultCommand() {
-  }
-  
 }

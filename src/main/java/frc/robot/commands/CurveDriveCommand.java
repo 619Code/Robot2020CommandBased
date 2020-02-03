@@ -2,9 +2,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.drive.ShiftingWCDSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.drive.ShiftingWCDSubsystem;
 
 public class CurveDriveCommand extends CommandBase {
   private ShiftingWCDSubsystem drive;
@@ -25,10 +24,9 @@ public class CurveDriveCommand extends CommandBase {
   public void execute() {
     speed = joystick.getY(Hand.kLeft);
     rotation = -joystick.getX(Hand.kRight);
-    state = joystick.getXButtonPressed();
+    state = joystick.getXButton();
     setVals();
-    drive.curve(speed, rotation);
-    drive.setShift(state);
+    drive.curve(speed, rotation, state);
   }
 
   public void setVals() {
