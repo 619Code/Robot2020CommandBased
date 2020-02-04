@@ -6,25 +6,28 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.helpers.TalonSRXClosedLoopControllerHelper;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-
 public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax angleMotor;
-  private TalonSRX shooterMotor;
-  private PIDController shooterPID, anglePID;
+  //private TalonSRX shooterMotor;
+  //private PIDController shooterPID;
+  private PIDController anglePID;
+  public TalonSRXClosedLoopControllerHelper shooterMotor;
 
   public ShooterSubsystem(){
-    shooterMotor = new TalonSRX(20);
-    shooterPID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
+    shooterMotor = new TalonSRXClosedLoopControllerHelper("Shooter", 20, ControlMode.Velocity);
+    //shooterPID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
 
-    angleMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
-    anglePID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
+    //angleMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
+    //anglePID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
   }
 
   public void setVelocity(double targetRPM){
-    
+    this.shooterMotor.setPoint(targetRPM);    
   }
 
   public double calculateAngle(double position){

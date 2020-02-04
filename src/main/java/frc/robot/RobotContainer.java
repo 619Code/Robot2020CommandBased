@@ -21,6 +21,7 @@ public class RobotContainer {
     private final XboxController primaryJoystick, secondaryJoystick;
     public final Limelight limelight;
     private final IntakeSubsystem intakeSubsystem = null;
+    private final ShooterSubsystem shooterSubsystem;
 
     public RobotContainer() {
 
@@ -29,6 +30,9 @@ public class RobotContainer {
         primaryJoystick = new XboxController(0);
         secondaryJoystick = new XboxController(1);
         limelight = new Limelight();
+
+        shooterSubsystem = new ShooterSubsystem();
+
         //intakeSubsystem = new IntakeSubsystem();
 
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
@@ -45,5 +49,9 @@ public class RobotContainer {
 
     public Command getAutoCommand(){
         return new AimCommand(drive, limelight); //new TestReverse(drive, limelight);
+    }
+
+    public Command getTestShooterCommand() {
+        return new TestShooterCommand(this.shooterSubsystem);
     }
 }

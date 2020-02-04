@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.helpers.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -83,25 +84,28 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit(){
     //targetVel = (targetRPM * 1024.0 * 7.0)/600.0;
-    targetVel = -17000;
-    out = targetVel/maxVel;
+    // targetVel = -17000;
+    // out = targetVel/maxVel;
     //System.out.println("HEY A GAG SHKLFSJDKF SDKG: " + out);
+
+    var command = this.robotContainer.getTestShooterCommand();
+    command.schedule();
   }
 
   @Override
   public void testPeriodic() {
-    double change = velPID.calculate(shooterMotor.getSelectedSensorVelocity(), targetVel);
-    out += -change;
-    //shooterMotor.set(ControlMode.PercentOutput, out);
-    shooterMotor.set(ControlMode.PercentOutput, 1.0);
-    //double vel = shooterMotor.getSelectedSensorVelocity()*600 / 7 / 1024;
-    //System.out.println("vel: " + shooterMotor.getSelectedSensorVelocity() + " targetVel: " + targetVel);
-    //shooterMotor.set(ControlMode.PercentOutput, 1);
-    //double targetVelocityRPM = 100;
-    //double targetEnocoderTicksPer100ms = (targetVelocityRPM * 1024 * 7)/600;
-    //double change = (velPID.calculate(vel, targetVelocityRPM)+1)/2;
-    //System.out.println(change);
-    //out += change;
-    //shooterMotor.set(ControlMode.PercentOutput, out);
+    // double change = velPID.calculate(shooterMotor.getSelectedSensorVelocity(), targetVel);
+    // out += -change;
+    // //shooterMotor.set(ControlMode.PercentOutput, out);
+    // shooterMotor.set(ControlMode.PercentOutput, 1.0);
+    // //double vel = shooterMotor.getSelectedSensorVelocity()*600 / 7 / 1024;
+    // //System.out.println("vel: " + shooterMotor.getSelectedSensorVelocity() + " targetVel: " + targetVel);
+    // //shooterMotor.set(ControlMode.PercentOutput, 1);
+    // //double targetVelocityRPM = 100;
+    // //double targetEnocoderTicksPer100ms = (targetVelocityRPM * 1024 * 7)/600;
+    // //double change = (velPID.calculate(vel, targetVelocityRPM)+1)/2;
+    // //System.out.println(change);
+    // //out += change;
+    // //shooterMotor.set(ControlMode.PercentOutput, out);
   }
 }
