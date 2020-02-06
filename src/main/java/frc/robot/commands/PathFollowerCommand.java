@@ -1,13 +1,11 @@
 package frc.robot.commands;
 
-import com.team2363.commands.HelixFollower;
 import com.team2363.controller.PIDController;
 import com.team319.trajectory.Path;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.drive.ShiftingWCDSubsystem;
 import frc.robot.helpers.HelixFollowerAltBase;
+import frc.robot.subsystems.drive.ShiftingWCDSubsystem;
 
 
 public class PathFollowerCommand extends HelixFollowerAltBase {

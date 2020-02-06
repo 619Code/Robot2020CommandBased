@@ -13,26 +13,34 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.CurveDriveCommand;
 import frc.robot.commands.ReverseCommand;
 import frc.robot.commands.AimCommand;
+import frc.robot.commands.CurveDriveCommand;
+import frc.robot.commands.ExtendoContractCommand;
+import frc.robot.commands.ExtendoExtendCommand;
 import frc.robot.helpers.Limelight;
-import frc.robot.helpers.TargetInfo;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.drive.ShiftingWCDSubsystem;
 
 public class RobotContainer {
     private final ShiftingWCDSubsystem drive;
     private final ClimberSubsystem climber;
+    private final ShooterSubsystem shooter;
     private final XboxController primaryJoystick, secondaryJoystick;
     public final Limelight limelight;
+    private final IntakeSubsystem intakeSubsystem;
 
     public RobotContainer() {
 
         drive = new ShiftingWCDSubsystem();
         climber = new ClimberSubsystem();
+        shooter = new ShooterSubsystem();
         primaryJoystick = new XboxController(0);
         secondaryJoystick = new XboxController(1);
         limelight = new Limelight();
+        intakeSubsystem = new IntakeSubsystem();
 
-        drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick, limelight));
+        drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick, limelight, shooter));
 
         ConfigureControllers();
         AimCommand.initializeShuffleBoard();
@@ -40,13 +48,14 @@ public class RobotContainer {
 
     public void ConfigureControllers() {
         var turnButton = new JoystickButton(primaryJoystick, XboxController.Button.kA.value);
-        turnButton.toggleWhenPressed(new AimCommand(drive, limelight));
-        //var intakeButton = new JoystickButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value);
-        //intakeButton.toggleWhenPressed(new ExtendoExtendCommand(intakeSubsystem));
-        //intakeButton.whenReleased(new ExtendoContractCommand(intakeSubsystem));
+        turnButton.toggleWhenPressed(new AimCommand(drive, limelight, shooter));
+        var intakeButton = new JoystickButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value);
+        intakeButton.toggleWhenPressed(new ExtendoExtendCommand(intakeSubsystem));
+        intakeButton.whenReleased(new ExtendoContractCommand(intakeSubsystem));
+        intakeSubsystem.setDefaultCommand(new ExtendoContractCommand(intakeSubsystem));
     }
 
     public Command getAutoCommand(){
-        return new AimCommand(drive, limelight); //new TestReverse(drive, limelight);
+        return new AimCommand(drive, limelight, shooter); //new TestReverse(drive, limelight);
     }
 }

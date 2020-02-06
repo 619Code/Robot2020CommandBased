@@ -4,22 +4,27 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.helpers.Limelight;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.drive.ShiftingWCDSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.RobotContainer;
 
 public class CurveDriveCommand extends CommandBase {
   private ShiftingWCDSubsystem drive;
   private XboxController joystick;
   private Limelight limelight;
+  private ShooterSubsystem shooter;
   private Command turnCommand;
   private double speed, rotation;
-  public CurveDriveCommand(ShiftingWCDSubsystem drive, XboxController joystick, Limelight limelight) {
+  private boolean state;
+  public CurveDriveCommand(ShiftingWCDSubsystem drive, XboxController joystick, Limelight limelight, ShooterSubsystem shooter) {
     this.drive = drive;
     this.joystick = joystick;
     this.limelight = limelight;
+    this.shooter = shooter;
     this.addRequirements(drive);
-    this.turnCommand = new AimCommand(drive, limelight);
+    this.turnCommand = new AimCommand(drive, limelight, shooter);
   }
 
   @Override
@@ -30,8 +35,9 @@ public class CurveDriveCommand extends CommandBase {
   public void execute() {
     speed = joystick.getY(Hand.kLeft);
     rotation = -joystick.getX(Hand.kRight);
+    state = joystick.getXButton();
     setVals();
-    drive.curve(speed, rotation);
+    drive.curve(speed, rotation, state);
   }
 
   public void setVals() {

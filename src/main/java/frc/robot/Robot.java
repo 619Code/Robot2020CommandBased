@@ -1,16 +1,18 @@
 package frc.robot;
 
+import com.team2363.controller.PIDController;
+
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.helpers.Limelight;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer;
   private Command m_autonomousCommand;
+  PIDController velPID;
   NetworkTableEntry pVel, iVel, dVel;
   ShuffleboardTab tab;
 
@@ -21,6 +23,7 @@ public class Robot extends TimedRobot {
     pVel = tab.add("P Velocity", 0).getEntry();
     iVel = tab.add("I Velocity", 0).getEntry();
     dVel = tab.add("D Velocity", 0).getEntry(); */
+    velPID = new PIDController(0.0000005, 0, 0);
   }
 
   @Override
@@ -65,6 +68,15 @@ public class Robot extends TimedRobot {
   }
 
   @Override
+  public void testInit(){
+    
+  }
+
+  public double targetVelocity = 31.3457 * 12;
+  public double targetRPM; //60*(targetVelocity/(4*Math.PI));
+
+  @Override
   public void testPeriodic() {
+    
   }
 }

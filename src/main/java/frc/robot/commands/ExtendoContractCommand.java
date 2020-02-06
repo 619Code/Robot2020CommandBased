@@ -8,47 +8,41 @@ package frc.robot.commands;
 /*----------------------------------------------------------------------------*/
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotMap;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class ExtendoExtend extends CommandBase {
+public class ExtendoContractCommand extends CommandBase {
 
     private IntakeSubsystem intakeSubsystem;
 
-    public ExtendoExtend(IntakeSubsystem intakeSubsytem) {
+    public ExtendoContractCommand(IntakeSubsystem intakeSubsytem) {
         this.intakeSubsystem = intakeSubsytem;
         this.addRequirements(this.intakeSubsystem);
     }
 
   @Override
   public void initialize() {
-      if (!this.intakeSubsystem.isExtended())
+      if (this.intakeSubsystem.isExtended())
       {
-          this.intakeSubsystem.extend();
-          this.intakeSubsystem.spin(RobotMap.INTAKE_MOTOR_PERCENTAGE);
-          this.intakeSubsystem.intakeBeltOn(RobotMap.INTAKE_MOTOR_BELT);
+          this.intakeSubsystem.contract();
+          this.intakeSubsystem.stop();
       }    
   }
 
   @Override
   public void execute() {
-      if (this.intakeSubsystem.isExtended())
-      {
-        this.intakeSubsystem.spin(RobotMap.INTAKE_MOTOR_PERCENTAGE);
-        this.intakeSubsystem.intakeBeltOn(RobotMap.INTAKE_MOTOR_BELT);
-      }
   }
 
   @Override
   public boolean isFinished()
   {
     if (this.intakeSubsystem.isExtended())
-        return true;
-    else
         return false;
+    else
+        return true;
   }
 
   @Override
   public void end(boolean interrupted) {
+
   }
 }
