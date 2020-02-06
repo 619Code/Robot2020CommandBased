@@ -34,10 +34,17 @@ public class ShooterSubsystem extends Subsystem {
   }
 
   public double findVelocity(double targetA, double distanceX) {
-    double time = Math.sqrt((2*(RobotMap.TARGET_HEIGHT-RobotMap.SHOOTER_Y_OFFSET))/-(32.2*12));
-    double velocityX = (2*distanceX-RobotMap.SHOOTER_X_OFFSET)/time;
-    double velocity = velocityX/Math.cos(Math.toRadians(targetA) + RobotMap.LIMELIGHT_ANGLE);
+    double velocityX = (distanceX/RobotMap.FALL_TIME);
+    System.out.println("Vel X: " + velocityX);
+    System.out.println("Vel Y: " + RobotMap.VELOCITY_Y);
+    double velocity = Math.sqrt(Math.pow(velocityX, 2) + Math.pow(RobotMap.VELOCITY_Y, 2));
     return velocity;
+  }
+
+  public double findAngle(double targetA, double distanceX) {
+    double velocityX = (distanceX/RobotMap.FALL_TIME);
+    double angle = Math.toDegrees(Math.atan(RobotMap.VELOCITY_Y/velocityX));
+    return angle;
   }
 
   @Override

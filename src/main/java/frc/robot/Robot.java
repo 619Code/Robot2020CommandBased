@@ -17,10 +17,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();
-    tab = Shuffleboard.getTab("2020 Settings");
+    /* tab = Shuffleboard.getTab("2020 Settings");
     pVel = tab.add("P Velocity", 0).getEntry();
     iVel = tab.add("I Velocity", 0).getEntry();
-    dVel = tab.add("D Velocity", 0).getEntry();
+    dVel = tab.add("D Velocity", 0).getEntry(); */
   }
 
   @Override
@@ -60,8 +60,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    double distanceX = robotContainer.limelight.GetTargetInfo().getDistanceX();
-    System.out.println(distanceX);
+    //double distanceX = robotContainer.limelight.GetTargetInfo().getDistanceX();
+    //System.out.println(distanceX);
   }
 
   @Override

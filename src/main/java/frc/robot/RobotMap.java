@@ -43,7 +43,7 @@ public class RobotMap {
   public static final double DISTANCE = -1;
 
   // DRIVE
-  public static final double WHEEL_DIAMETER = 4;
+  public static final double WHEEL_DIAMETER = 4; //6
   public static final double ENCODER_TICK_PER_REV = 6;
   public static final double MAX_AUTO_SPEED = 6;
 
@@ -53,6 +53,20 @@ public class RobotMap {
   public static final double MAX_VOLTAGE = 12;
 
   public static final double FEET_TO_V = 12.0/132.0;
+
+  // Low gear
+  public static final double LOW_DRIVING_GEAR = 24;
+  public static final double LOW_DRIVEN_GEAR = 60;
+  public static final double LOW_FREE_SPEED = 8.11; //ft/s
+  public static final double LOW_REAL_LIFE_SPEED = 6.57; //ft/s
+  public static final double LOW_CURRENT_DRAW = 23.96; //amps
+
+  // High gear
+  public static final double HIGH_DRIVING_GEAR = 40;
+  public static final double HIGH_DRIVEN_GEAR = 44;
+  public static final double HIGH_FREE_SPEED = 18.42; //ft/s
+  public static final double HIGH_REAL_LIFE_SPEED = 14.92; //ft/s
+  public static final double HIGH_CURRENT_DRAW = 52.16; //amps
 
   // PATHS
   
@@ -90,6 +104,7 @@ public class RobotMap {
 
   //Field constants
   public static final double TARGET_HEIGHT = 52;
+  public static final double FALL_TIME = 0.71314;
 
   //Shooter constants
   public static final double MAX_SHOOTER_VELOCITY = -1;
@@ -97,4 +112,5 @@ public class RobotMap {
   public static final double SHOOTER_Y_OFFSET = -1;
   public static final double LIMELIGHT_HEIGHT = 39;
   public static final double LIMELIGHT_ANGLE = Math.toRadians(-1);
+  public static final double VELOCITY_Y = 22.96317;
 }
