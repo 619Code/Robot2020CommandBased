@@ -20,7 +20,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer;
   private Command m_autonomousCommand;
-  private TalonSRX shooterMotor;
+  //private TalonSRX shooterMotor;
   PIDController velPID;
   NetworkTableEntry pVel, iVel, dVel;
   ShuffleboardTab tab;
@@ -28,12 +28,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();
-    shooterMotor = new TalonSRX(20);
-    tab = Shuffleboard.getTab("2020 Settings");
-    pVel = tab.add("P Velocity", 0).getEntry();
-    iVel = tab.add("I Velocity", 0).getEntry();
-    dVel = tab.add("D Velocity", 0).getEntry();
-    velPID = new PIDController(0.0000005, 0, 0);
+    // shooterMotor = new TalonSRX(20);
+    // tab = Shuffleboard.getTab("2020 Settings");
+    // pVel = tab.add("P Velocity", 0).getEntry();
+    // iVel = tab.add("I Velocity", 0).getEntry();
+    // dVel = tab.add("D Velocity", 0).getEntry();
+    // velPID = new PIDController(0.0000005, 0, 0);
   }
 
   @Override
@@ -88,8 +88,8 @@ public class Robot extends TimedRobot {
     // out = targetVel/maxVel;
     //System.out.println("HEY A GAG SHKLFSJDKF SDKG: " + out);
 
-    var command = this.robotContainer.getTestShooterCommand();
-    command.schedule();
+    //var command = this.robotContainer.getTestShooterCommand();
+    //command.schedule();
   }
 
   @Override

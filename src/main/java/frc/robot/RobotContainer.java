@@ -20,8 +20,8 @@ public class RobotContainer {
     private final ClimberSubsystem climber;
     private final XboxController primaryJoystick, secondaryJoystick;
     public final Limelight limelight;
-    private final IntakeSubsystem intakeSubsystem = null;
-    private final ShooterSubsystem shooterSubsystem;
+    private IntakeSubsystem intakeSubsystem = null;
+    private ShooterSubsystem shooterSubsystem = null;
 
     public RobotContainer() {
 
@@ -31,11 +31,13 @@ public class RobotContainer {
         secondaryJoystick = new XboxController(1);
         limelight = new Limelight();
 
-        shooterSubsystem = new ShooterSubsystem();
+        //shooterSubsystem = new ShooterSubsystem();
 
         //intakeSubsystem = new IntakeSubsystem();
 
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
+
+        //ConfigureControllers();
     }
 
     public void ConfigureControllers() {
@@ -43,15 +45,13 @@ public class RobotContainer {
         var intakeButton = new JoystickButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value);
         intakeButton.toggleWhenPressed(new ExtendoExtendCommand(intakeSubsystem));
         intakeButton.whenReleased(new ExtendoContractCommand(intakeSubsystem));
-
-
     }
 
     public Command getAutoCommand(){
         return new AimCommand(drive, limelight); //new TestReverse(drive, limelight);
     }
 
-    public Command getTestShooterCommand() {
-        return new TestShooterCommand(this.shooterSubsystem);
-    }
+    // public Command getTestShooterCommand() {
+    //     return new TestShooterCommand(this.shooterSubsystem);        
+    // }
 }
