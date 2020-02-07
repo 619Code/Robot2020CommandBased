@@ -39,9 +39,10 @@ public class AimCommand extends CommandBase {
     var i = SmartDashboard.putNumber("LimelightTarget I", RobotMap.TARGET_I);
     var d = SmartDashboard.putNumber("LimelightTarget D", RobotMap.TARGET_D); */
     
-    targetPID = new PIDController(RobotMap.TARGET_P, RobotMap.TARGET_I, RobotMap.TARGET_D);
+    targetPID = new PIDController(RobotMap.TARGET_P, RobotMap.TARGET_I, RobotMap.TARGET_D);    
     this.addRequirements(drive, shooter);
-    }
+    
+  }
 
   public static void initializeShuffleBoard() {
     tab = Shuffleboard.getTab("Aim Command");

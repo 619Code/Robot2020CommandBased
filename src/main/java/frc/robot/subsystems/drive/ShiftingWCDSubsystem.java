@@ -105,7 +105,7 @@ public class ShiftingWCDSubsystem extends SubsystemBase {
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   public void curve(double speed, double rotation, boolean state) {
-    drive.curvatureVelDrive(speed, rotation, true);
+    drive.curvatureVelDrive(0.5*speed, 0.5*rotation, true);
     setShift(state);
   }
 

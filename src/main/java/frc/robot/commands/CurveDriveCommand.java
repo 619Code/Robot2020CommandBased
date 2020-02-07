@@ -35,7 +35,7 @@ public class CurveDriveCommand extends CommandBase {
   public void execute() {
     speed = joystick.getY(Hand.kLeft);
     rotation = -joystick.getX(Hand.kRight);
-    state = joystick.getXButton();
+    state= joystick.getXButton();
     setVals();
     drive.curve(speed, rotation, state);
   }
@@ -47,9 +47,9 @@ public class CurveDriveCommand extends CommandBase {
     if(Math.abs(rotation) < 0.075) {
       rotation = 0;
     }
-    if(joystick.getTriggerAxis(Hand.kRight) < 0.5) {
-      speed *= 0.5;
-      rotation *= 0.5;
+    if(joystick.getTriggerAxis(Hand.kRight)<0.5){
+      speed= speed * 0.5;
+      rotation = rotation * 0.5;
     }
   }
 
