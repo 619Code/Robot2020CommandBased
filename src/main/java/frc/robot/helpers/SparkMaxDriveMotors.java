@@ -13,6 +13,7 @@ public class SparkMaxDriveMotors
     public CANSparkMax[] motors;  
     public CANEncoder encoder;
     public PIDController motorPID;
+    public boolean isLowGear = false;
 
     public CANSparkMax getMasterMotor() {
         return motors[0];
@@ -39,6 +40,13 @@ public class SparkMaxDriveMotors
         return sparkMax;
     }
 
+    public void setIdleMode(IdleMode mode)
+    {
+        for (CANSparkMax canSparkMax : motors) {
+            canSparkMax.setIdleMode(mode);            
+        }                
+    }
+
     public void velControl(double targetVel) {
 
     }
@@ -47,13 +55,17 @@ public class SparkMaxDriveMotors
         return this.encoder;
     }
 
+    public double getDriveRatio() {
+        return this.isLowGear ? RobotMap.LG_DRIVE_RATIO : RobotMap.HG_DRIVE_RATIO;
+     }
+
     public double getWheelSpeedInInchesPerSecond() {
-        return this.encoder.getVelocity()/RobotMap.DRIVE_RATIO * RobotMap.WHEEL_DIAMETER/60;
+        return this.encoder.getVelocity()/this.getDriveRatio() * RobotMap.WHEEL_DIAMETER/60;
     }
 
     public double getEncoderDistanceInInches(boolean inverse) {
         var modifier = inverse ? -1 : 1;
-        return modifier * (encoder.getPosition()/RobotMap.DRIVE_RATIO)*(RobotMap.WHEEL_DIAMETER*Math.PI);
+        return modifier * (encoder.getPosition()/this.getDriveRatio())*(RobotMap.WHEEL_DIAMETER*Math.PI);
     }
 
     public double getEncoderDistanceInFeet(boolean inverse) {

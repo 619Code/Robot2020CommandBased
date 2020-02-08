@@ -1,6 +1,7 @@
 package frc.robot.subsystems.drive;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
@@ -74,7 +75,6 @@ public class ShiftingWCDSubsystem extends SubsystemBase {
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   public double getLeftEncoderInches() {
-
     return this.leftMotors.getEncoderDistanceInInches(true);
   }
 
@@ -104,9 +104,9 @@ public class ShiftingWCDSubsystem extends SubsystemBase {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  public void curve(double speed, double rotation, boolean state) {
-    drive.curvatureVelDrive(RobotMap.SPEED_ADJUST*speed, RobotMap.SPEED_ADJUST*rotation, true);
-    setShift(state);
+  public void curve(double speed, double rotation, boolean isLowGear) {
+    drive.curvatureVelDrive(RobotMap.SPEED_ADJUST*speed, -RobotMap.SPEED_ADJUST*rotation, true);
+    setShift(isLowGear);
   }
 
   public void arcade(double speed, double rotation) {
@@ -117,15 +117,22 @@ public class ShiftingWCDSubsystem extends SubsystemBase {
     drive.tankDrive(-left, -right);
   }
 
-  public void setShift(boolean state){
-    if(state){
+  public void setShift(boolean isLowGear){
+    this.leftMotors.isLowGear = isLowGear;
+    this.rightMotors.isLowGear = isLowGear;
+    if(isLowGear){
       shifter.set(Value.kForward);
     }
     else{
-      shifter.set(Value.kReverse);
+      shifter.set(Value.kReverse); 
     }
   }
-  
+
+  public void setIdleMode(IdleMode mode)
+  {
+    this.leftMotors.setIdleMode(mode);
+    this.rightMotors.setIdleMode(mode);
+  }
     
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 

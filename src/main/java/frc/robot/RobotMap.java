@@ -56,12 +56,14 @@ public class RobotMap {
 
   public static final int NEO_LIMIT = 55;
   public static final double DRIVE_RATIO = 6.87;
+  public static final double HG_DRIVE_RATIO = 8;
+  public static final double LG_DRIVE_RATIO = 18;
 
   public static final double MAX_VOLTAGE = 12;
 
   public static final double FEET_TO_V = 12.0/132.0;
 
-  public static final double SPEED_ADJUST = 0.6;
+  public static final double SPEED_ADJUST = 1;
 
   // Low gear
   public static final double LOW_DRIVING_GEAR = 24;
@@ -84,11 +86,13 @@ public class RobotMap {
   public static double VEL_I = 0.0;
   public static double VEL_D = 0.0;
 
-  public static final double HEADING_P = 0.01; //0.64
+  // path following heading pid
+  public static final double HEADING_P = 0; //0.64
   public static final double HEADING_I = 0;
   public static final double HEADING_D = 0;
 
-  public static final double DISTANCE_P = 0.5; //5
+  // path following distance pid
+  public static final double DISTANCE_P = 0; //5
   public static final double DISTANCE_I = 0; //8
   public static final double DISTANCE_D = 0;
 

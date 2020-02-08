@@ -17,7 +17,7 @@ public class CurveDriveCommand extends CommandBase {
   private ShooterSubsystem shooter;
   private Command turnCommand;
   private double speed, rotation;
-  private boolean state;
+  private boolean isLowGear;
 
   public CurveDriveCommand(ShiftingWCDSubsystem drive, XboxController joystick) { //, Limelight limelight, ShooterSubsystem shooter) {
     this.drive = drive;
@@ -35,10 +35,9 @@ public class CurveDriveCommand extends CommandBase {
   @Override
   public void execute() {
     speed = joystick.getY(Hand.kLeft);
-    rotation = -joystick.getX(Hand.kRight);
-    state = joystick.getXButton();
+    rotation = joystick.getX(Hand.kRight);
     setVals();
-    drive.curve(speed, rotation, state);
+    drive.curve(speed, rotation, isLowGear);
   }
 
   public void setVals() {
@@ -48,9 +47,13 @@ public class CurveDriveCommand extends CommandBase {
     if (Math.abs(rotation) < 0.075) {
       rotation = 0;
     }
-    if (joystick.getTriggerAxis(Hand.kRight) < 0.5) {
+    if (joystick.getTriggerAxis(Hand.kLeft) > 0.5){
+      isLowGear = true;
+    }
+    else if (joystick.getTriggerAxis(Hand.kRight) < 0.5){
       speed = speed * 0.5;
       rotation = rotation * 0.5;
+      isLowGear = false;
     }
   }
 

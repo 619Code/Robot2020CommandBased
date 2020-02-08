@@ -1,5 +1,6 @@
 package frc.robot;
 
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.team2363.controller.PIDController;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -30,15 +31,23 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    CommandScheduler.getInstance().cancelAll();
+
+    this.robotContainer.drive.setIdleMode(IdleMode.kCoast);
+
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.end(true);
+    }    
   }
 
   @Override
   public void disabledPeriodic() {
+    // CommandScheduler.getInstance().cancelAll();
+    // CommandScheduler.getInstance().cancel(m_autonomousCommand);
   }
 
   @Override
   public void autonomousInit() {
+    this.robotContainer.drive.setIdleMode(IdleMode.kBrake);
     m_autonomousCommand = robotContainer.getAutoCommand();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -52,10 +61,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    this.robotContainer.drive.setIdleMode(IdleMode.kBrake);
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.end(true);
+    }    
+
     /*if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }*/
-    CommandScheduler.getInstance().cancelAll();
+    /*CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().cancel(m_autonomousCommand);*/
+    
+    
     //CommandScheduler.getInstance().disable();
 
     // RobotMap.VEL_P = pVel.getDouble(0);
@@ -68,11 +85,15 @@ public class Robot extends TimedRobot {
     //double distanceX = robotContainer.limelight.GetTargetInfo().getDistanceX();
     //System.out.println(distanceX);
     //CommandScheduler.getInstance().run();
+    
   }
 
   @Override
   public void testInit(){
-    
+    this.robotContainer.drive.setIdleMode(IdleMode.kBrake);
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.end(true);
+    }
   }
 
   public double targetVelocity = 31.3457 * 12;
@@ -80,11 +101,5 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().disable();
-
   }
 }

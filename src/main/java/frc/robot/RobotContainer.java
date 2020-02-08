@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.CurveDriveCommand;
 import frc.robot.commands.ReverseCommand;
 import frc.paths.CirclePath;
+import frc.paths.DistanceCalib;
 import frc.paths.TestPath;
 import frc.robot.commands.AimCommand;
 import frc.robot.commands.CurveDriveCommand;
@@ -27,7 +28,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.drive.ShiftingWCDSubsystem;
 
 public class RobotContainer {
-    private final ShiftingWCDSubsystem drive;
+    public final ShiftingWCDSubsystem drive;
     //private final ClimberSubsystem climber;
     //private final ShooterSubsystem shooter;
     private final XboxController primaryJoystick, secondaryJoystick;
@@ -62,6 +63,6 @@ public class RobotContainer {
 
     public Command getAutoCommand(){
         //return new AimCommand(drive, limelight, shooter); //new TestReverse(drive, limelight);
-        return HelixFollowerCommandWrapper.wrap(new PathFollowerCommand(new TestPath(), this.drive, false, false));
+        return HelixFollowerCommandWrapper.wrap(new PathFollowerCommand(new DistanceCalib(), this.drive, false, false));
     }
 }
