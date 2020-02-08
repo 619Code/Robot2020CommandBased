@@ -28,32 +28,32 @@ import frc.robot.subsystems.drive.ShiftingWCDSubsystem;
 
 public class RobotContainer {
     private final ShiftingWCDSubsystem drive;
-    private final ClimberSubsystem climber;
-    private final ShooterSubsystem shooter;
+    //private final ClimberSubsystem climber;
+    //private final ShooterSubsystem shooter;
     private final XboxController primaryJoystick, secondaryJoystick;
-    public final Limelight limelight;
-    private final IntakeSubsystem intakeSubsystem;
+    //public final Limelight limelight;
+    //private final IntakeSubsystem intakeSubsystem;
 
     public RobotContainer() {
 
         drive = new ShiftingWCDSubsystem();
-        climber = new ClimberSubsystem();
-        shooter = new ShooterSubsystem();
+        //climber = new ClimberSubsystem();
+        //shooter = new ShooterSubsystem();
         primaryJoystick = new XboxController(0);
         secondaryJoystick = new XboxController(1);
-        limelight = new Limelight();
+        //limelight = new Limelight();
         //intakeSubsystem = new IntakeSubsystem();
-        intakeSubsystem = null;
+        //intakeSubsystem = null;
 
-        drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick, limelight, shooter));
+        drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick)); //, limelight, shooter));
 
         ConfigureControllers();
         //AimCommand.initializeShuffleBoard();
     }
 
     public void ConfigureControllers() {
-        var turnButton = new JoystickButton(primaryJoystick, XboxController.Button.kA.value);
-        turnButton.toggleWhenPressed(new AimCommand(drive, limelight, shooter));
+        // var turnButton = new JoystickButton(primaryJoystick, XboxController.Button.kA.value);
+        // turnButton.toggleWhenPressed(new AimCommand(drive, limelight, shooter));
         // var intakeButton = new JoystickButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value);
         // intakeButton.toggleWhenPressed(new ExtendoExtendCommand(intakeSubsystem));
         // intakeButton.whenReleased(new ExtendoContractCommand(intakeSubsystem));

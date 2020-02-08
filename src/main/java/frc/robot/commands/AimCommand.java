@@ -26,8 +26,8 @@ public class AimCommand extends CommandBase {
   private PIDController targetPID;
   private Limelight limelight;
 
-  public static NetworkTableEntry pVel, iVel, dVel;
-  public static ShuffleboardTab tab;
+  /*public static NetworkTableEntry pVel, iVel, dVel;
+  public static ShuffleboardTab tab;*/
 
   public AimCommand(ShiftingWCDSubsystem drive, Limelight limelight, ShooterSubsystem shooter) {
     this.drive = drive;
@@ -44,19 +44,19 @@ public class AimCommand extends CommandBase {
     
   }
 
-  public static void initializeShuffleBoard() {
+  /*public static void initializeShuffleBoard() {
     tab = Shuffleboard.getTab("Aim Command");
     
     pVel = tab.add("vP", RobotMap.TARGET_P).getEntry();
     iVel = tab.add("vI", RobotMap.TARGET_I).getEntry();
     dVel = tab.add("vD", RobotMap.TARGET_D).getEntry();
-  }
+  }*/
 
   @Override
   public void execute() {
     targetInfo = limelight.GetTargetInfo();
 
-    targetPID.setPID(this.pVel.getDouble(0), this.iVel.getDouble(0), this.dVel.getDouble(0));
+    //targetPID.setPID(this.pVel.getDouble(0), this.iVel.getDouble(0), this.dVel.getDouble(0));
     drive.curve(0,targetPID.calculate(targetInfo.getTargetX(), 0), false);
     shooter.setVelocity(500);
   }

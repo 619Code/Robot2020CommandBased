@@ -2,10 +2,7 @@ package frc.robot;
 
 import com.team2363.controller.PIDController;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -13,8 +10,8 @@ public class Robot extends TimedRobot {
   private RobotContainer robotContainer;
   private Command m_autonomousCommand;
   PIDController velPID;
-  NetworkTableEntry pVel, iVel, dVel;
-  ShuffleboardTab tab;
+  /*NetworkTableEntry pVel, iVel, dVel;
+  ShuffleboardTab tab;*/
 
   @Override
   public void robotInit() {
@@ -25,7 +22,7 @@ public class Robot extends TimedRobot {
     dVel = tab.add("D Velocity", 0).getEntry(); */
     velPID = new PIDController(0.0000005, 0, 0);
   }
-
+  
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
@@ -50,12 +47,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    
+    //CommandScheduler.getInstance().run();
   }
 
   @Override
   public void teleopInit() {
+    /*if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }*/
     CommandScheduler.getInstance().cancelAll();
+    //CommandScheduler.getInstance().disable();
+
     // RobotMap.VEL_P = pVel.getDouble(0);
     // RobotMap.VEL_I = iVel.getDouble(0);
     // RobotMap.VEL_D = dVel.getDouble(0);
@@ -65,6 +67,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //double distanceX = robotContainer.limelight.GetTargetInfo().getDistanceX();
     //System.out.println(distanceX);
+    //CommandScheduler.getInstance().run();
   }
 
   @Override
@@ -77,6 +80,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
+    CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().disable();
+
   }
 }

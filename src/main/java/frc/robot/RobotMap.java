@@ -54,12 +54,14 @@ public class RobotMap {
   public static final double ENCODER_TICK_PER_REV = 6;
   public static final double MAX_AUTO_SPEED = 6;
 
-  public static final int NEO_LIMIT = 45;
+  public static final int NEO_LIMIT = 55;
   public static final double DRIVE_RATIO = 6.87;
 
   public static final double MAX_VOLTAGE = 12;
 
   public static final double FEET_TO_V = 12.0/132.0;
+
+  public static final double SPEED_ADJUST = 0.6;
 
   // Low gear
   public static final double LOW_DRIVING_GEAR = 24;
