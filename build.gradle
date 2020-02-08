@@ -57,8 +57,8 @@ dependencies {
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
-    compile 'com.github.TripleHelixProgramming:HelixUtilities:master-SNAPSHOT'
-    compile 'com.github.Team319:BobTrajectory:master-SNAPSHOT'
+    compile 'com.github.TripleHelixProgramming:HelixUtilities:2020-SNAPSHOT'
+    compile 'com.github.Team319:BobTrajectory:v2.1.0'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
