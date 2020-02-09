@@ -54,10 +54,14 @@ public class MagazineSubsystem extends Subsystem {
 
     public void LoadChamber() {
         //Advanced loader motor
+        this.loading.restetReference();
+        this.loading.setReference(20);        
     }
 
     public void LoadMagazine() {
         //Advanced magazine motor
+        this.indexing.restetReference();
+        this.indexing.setReference(20);
     }
 
     public boolean isFilled() {

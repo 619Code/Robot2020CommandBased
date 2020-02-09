@@ -89,6 +89,11 @@ public class SparkMaxSetPointHelper {
         pidController.setFF(kFF);
         pidController.setOutputRange(kMinOutput, kMaxOutput);
     }
+
+    public void restetReference()
+    {
+        this.encoder.setPosition(0);
+    }
    
     public void setReference(double value)
     {
