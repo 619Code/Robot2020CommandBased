@@ -73,4 +73,8 @@ public class RobotMap {
 
   // Max Trajectory Velocity/Acceleration
   public static final double kMaxAccelerationFeetPerSecondSquared = 1.5;
+
+  public static final double TARGET_HEIGHT = 0;
+  public static final double LIMELIGHT_HEIGHT = 0;
+  public static final double LIMELIGHT_ANGLE = 0;
 }
