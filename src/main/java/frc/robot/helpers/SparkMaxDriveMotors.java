@@ -47,7 +47,7 @@ public class SparkMaxDriveMotors
     }
 
     public double getEncoderDistanceInFeet(boolean inverse) {
-        return this.getEncoderDistanceInInches(inverse);
+        return this.getEncoderDistanceInInches(inverse)/12;
     }
 
     public void ResetEncoder() {
