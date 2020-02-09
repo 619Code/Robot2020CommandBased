@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.paths.DistanceCalib;
 import frc.paths.TestPath;
 import frc.robot.helpers.Limelight;
 import frc.robot.helpers.TargetInfo;
@@ -13,7 +14,7 @@ public class TestReverse extends CommandGroup {
     this.drive = drive;
     this.limelight = limelight;
     requires(drive);
-    addSequential(new PathFollower(new TestPath(), drive, false, false));
-    addSequential(new TurnToVisionTarget(drive, limelight));
+    addSequential(new PathFollower(new DistanceCalib(), drive, false, false));
+    addSequential(new PathFollower(new DistanceCalib(), drive, true, false));
   }
 }

@@ -4,6 +4,7 @@ import com.team2363.commands.HelixFollower;
 import com.team2363.controller.PIDController;
 import com.team319.trajectory.Path;
 
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.ShiftingWCDSubsystem;;
 
@@ -52,5 +53,11 @@ public class PathFollower extends HelixFollower {
     @Override
     public void useOutputs(double left, double right) {
         drive.setRawPercentOutput(left / RobotMap.MAX_AUTO_SPEED, right / RobotMap.MAX_AUTO_SPEED);
+    }
+    
+    @Override
+    public boolean isFinished() {
+        var baseResult = super.isFinished();
+        return baseResult || !Robot.AutoMode;
     }
 }

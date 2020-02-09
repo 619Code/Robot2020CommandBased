@@ -38,12 +38,12 @@ public class RobotMap {
   public static final double DISTANCE = -1;
 
   // DRIVE
-  public static final double WHEEL_DIAMETER = 4;
+  public static final double WHEEL_DIAMETER = 6;
   public static final double ENCODER_TICK_PER_REV = 6;
   public static final double MAX_AUTO_SPEED = 6;
 
   public static final int NEO_LIMIT = 45;
-  public static final double DRIVE_RATIO = 6.87;
+  public static final double DRIVE_RATIO = 8;
 
   // PATHS
   
@@ -69,7 +69,7 @@ public class RobotMap {
   public static final double TARGET_D = 1.2;
 
   // DifferentialDrive Kinematics
-  public static final double kTrackwidthInches = 21;
+  public static final double kTrackwidthInches = 25;
 
   // Max Trajectory Velocity/Acceleration
   public static final double kMaxAccelerationFeetPerSecondSquared = 1.5;
