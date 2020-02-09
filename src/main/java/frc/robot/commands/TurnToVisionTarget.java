@@ -34,7 +34,7 @@ public class TurnToVisionTarget extends Command {
   @Override
   protected void execute() {
     targetInfo = limelight.GetTargetInfo();
-    drive.curve(0,targetPID.calculate(targetInfo.getTargetX(), 0));
+    drive.curve(0,targetPID.calculate(targetInfo.getTargetX(), 0), true);
   }
 
   @Override

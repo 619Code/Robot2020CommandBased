@@ -4,6 +4,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -34,7 +35,7 @@ public class ShiftingWCD extends Subsystem {
     initMotors();
     initDrive();
     initSensors();
-    // shifter = new DoubleSolenoid(0, 1);
+    shifter = new DoubleSolenoid(0, 1);
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,6 +60,15 @@ public class ShiftingWCD extends Subsystem {
     resetEncoders();
     m_kinematics= new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.kTrackwidthInches));
     m_odometry = new DifferentialDriveOdometry(getAngle());
+  }
+
+  public void setShift(boolean isLowGear){
+    if(isLowGear){
+      shifter.set(Value.kForward);
+    }
+    else{
+      shifter.set(Value.kReverse); 
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,8 +115,9 @@ public class ShiftingWCD extends Subsystem {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  public void curve(double speed, double rotation) {
-    drive.curvatureDrive(speed, rotation, true);
+  public void curve(double speed, double rotation, boolean isLowGear) {
+    drive.curvatureDrive(speed, -rotation, true);
+    setShift(isLowGear);
   }
 
   public void arcade(double speed, double rotation) {
