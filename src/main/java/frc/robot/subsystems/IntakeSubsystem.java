@@ -23,7 +23,7 @@ public class IntakeSubsystem extends Subsystem{
     }
 
     private void raise() {
-        wrist.set(Value.kReverse);
+        wrist.set(Value.kReverse);        
     }
 
     private void lower() {

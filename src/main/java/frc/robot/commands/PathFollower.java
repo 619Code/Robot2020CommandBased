@@ -6,6 +6,8 @@ import com.team319.trajectory.Path;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.States;
+import frc.robot.helpers.ERobotState;
 import frc.robot.subsystems.ShiftingWCDSubsystem;;
 
 public class PathFollower extends HelixFollower {
@@ -58,6 +60,7 @@ public class PathFollower extends HelixFollower {
     @Override
     public boolean isFinished() {
         var baseResult = super.isFinished();
-        return baseResult || !Robot.AutoMode;
+
+        return baseResult || !(States.RobotState == ERobotState.Auto);
     }
 }

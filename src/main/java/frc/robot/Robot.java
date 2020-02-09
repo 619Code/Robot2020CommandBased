@@ -1,27 +1,15 @@
-/*⠁⠁⠁⠁⠁⠁⠐⢶⣶⣶⣶⣤⣤⡀⠁⠁⣠⣀⣀⠁⠁⠁⠁⠁⠁⠁⠁⠁⠁⠁
-⠁⠁⠁⠁⠁⠁⠁⠁⠙⢿⣯⣠⣶⣦⣤⣤⣌⣛⠻⢇⣠⣤⣤⠁⠁⠁⠁⠁⠁⠁
-⠁⠁⠁⠁⠁⠁⠁⠁⠁⠁⠻⣿⣿⣿⡟⢉⡤⢤⣤⣤⡍⠛⢡⢖⣥⣶⣦⣀⠁⠁
-⠁⠁⠁⠁⠁⠁⠁⠁⠁⠁⣠⣿⣿⣿⡏⣭⣶⣿⣿⠟⢿⣦⡡⣿⣿⡇⠁⡙⣷⡀
-⠁⠁⠁⠁⠁⠁⠁⣀⣴⣿⣿⣿⣿⣿⣿⡞⣿⣿⡟⢀⡀⣿⣿⢻⣿⣿⣀⣁⣿⠏
-⠁⠁⠁⢀⣠⣶⣿⣿⣿⣿⣿⣿⣿⣿⣟⢰⢻⣿⣇⣈⣴⣿⠟⢨⣛⠛⠛⠉⠁⠁
-⠁⣠⣶⣿⣿⡟⢋⠤⣤⠘⢿⣿⣧⡙⠻⠌⠒⠙⠛⢛⣫⣥⣿⣦⡈⠉⣡⣴⣾⠇
-⢰⣿⣿⣿⣿⠁⡇⠁⠙⠷⣤⡙⠻⢿⣿⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⠿⠟⠋⠁⠁
-⠘⣿⣿⣿⣿⣆⠻⣄⠁⣀⡀⠉⠙⠒⠂⠉⠍⠉⠉⠉⠉⣩⣍⣁⣂⡈⠠⠂⠁⠁
-⠁⠘⢿⣿⣿⣿⣦⡉⠳⢬⣛⠷⢦⡄⠁⠁⠁⠁⠁⣀⣼⣿⣿⠿⠛⠋⠁⠁⠁⠁
-⠁⠁⠁⠉⠻⢿⣿⣿⣷⣦⣬⣍⣓⡒⠒⣒⣂⣠⡬⠽⠓⠂⠁⠁⠁⠁⠁⠁*/
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.helpers.ERobotState;
 
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer;
   private Scheduler scheduler;
   private Command m_autonomousCommand;
-  public static boolean AutoMode;
-
+  
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();
@@ -40,7 +28,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    Robot.AutoMode = false;
+    States.RobotState = ERobotState.Disabled;
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -53,7 +41,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    Robot.AutoMode = true;
+    States.RobotState = ERobotState.Auto;
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.cancel();
     // }
@@ -72,6 +60,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    States.RobotState = ERobotState.Teleop;
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -81,6 +70,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     scheduler.run();
+  }
+
+  @Override
+  public void testInit() {
+    States.RobotState = ERobotState.Test;
+    super.testInit();
   }
 
   @Override

@@ -77,4 +77,11 @@ public class RobotMap {
   public static final double TARGET_HEIGHT = 0;
   public static final double LIMELIGHT_HEIGHT = 0;
   public static final double LIMELIGHT_ANGLE = 0;
+
+  // Magazine
+  public static int MAG_POS_SENSOR_lOADED = 0;
+  public static int MAG_POS_SENSOR_1 = 1;
+  public static int MAG_POS_SENSOR_2 = 2;
+  public static int MAG_POS_SENSOR_3 = 3;
+  public static int MAG_POS_SENSOR_4 = 4;
 }

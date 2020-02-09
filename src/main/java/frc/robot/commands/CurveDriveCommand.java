@@ -44,9 +44,7 @@ public class CurveDriveCommand extends Command {
       rotation = rotation * 0.5;
       isLowGear = false;
     }
-  }
-
-  
+  }  
 
   @Override
   protected boolean isFinished() {

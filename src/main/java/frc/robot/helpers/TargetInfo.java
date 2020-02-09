@@ -1,6 +1,7 @@
 package frc.robot.helpers;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotMap;
 
 public class TargetInfo {
 
