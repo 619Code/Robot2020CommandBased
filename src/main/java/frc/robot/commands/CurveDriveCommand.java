@@ -4,14 +4,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.ShiftingWCD;
+import frc.robot.subsystems.ShiftingWCDSubsystem;
 
-public class CurveDrive extends Command {
-  private ShiftingWCD drive;
+public class CurveDriveCommand extends Command {
+  private ShiftingWCDSubsystem drive;
   private XboxController joystick;
   private double speed, rotation;
   private boolean isLowGear;
-  public CurveDrive(ShiftingWCD drive, XboxController joystick) {
+  public CurveDriveCommand(ShiftingWCDSubsystem drive, XboxController joystick) {
     this.drive = drive;
     this.joystick = joystick;
     requires(drive);

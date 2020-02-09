@@ -5,17 +5,17 @@ import com.team2363.controller.PIDController;
 import com.team319.trajectory.Path;
 
 import frc.robot.RobotMap;
-import frc.robot.subsystems.ShiftingWCD;;
+import frc.robot.subsystems.ShiftingWCDSubsystem;;
 
 public class PathFollower extends HelixFollower {
-    private ShiftingWCD drive;
+    private ShiftingWCDSubsystem drive;
     
     private PIDController headingController = new PIDController(RobotMap.HEADING_P, RobotMap.HEADING_I,
             RobotMap.HEADING_D, 0.001);
     private PIDController distanceController = new PIDController(RobotMap.DISTANCE_P, RobotMap.DISTANCE_I,
             RobotMap.DISTANCE_D, 0.001);
 
-    public PathFollower(Path path, ShiftingWCD drive, boolean isReverse, boolean isMirror) {
+    public PathFollower(Path path, ShiftingWCDSubsystem drive, boolean isReverse, boolean isMirror) {
         super(path);
         if (isReverse) reverse();
         if (isMirror) mirror();

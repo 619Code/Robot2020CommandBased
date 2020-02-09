@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.paths.TestPath;
 import frc.robot.helpers.Limelight;
 import frc.robot.helpers.TargetInfo;
-import frc.robot.subsystems.ShiftingWCD;
+import frc.robot.subsystems.ShiftingWCDSubsystem;
 
 public class TestReverse extends CommandGroup {
-  private ShiftingWCD drive;
+  private ShiftingWCDSubsystem drive;
   private Limelight limelight;
-  public TestReverse(ShiftingWCD drive, Limelight limelight) {
+  public TestReverse(ShiftingWCDSubsystem drive, Limelight limelight) {
     this.drive = drive;
     this.limelight = limelight;
     requires(drive);

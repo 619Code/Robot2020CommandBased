@@ -5,10 +5,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotMap;
 
-public class Climber {
+public class ClimberSubsystem {
     CANSparkMax liftOne, liftTwo;
 
-    public Climber() {
+    public ClimberSubsystem() {
         liftOne = new CANSparkMax(RobotMap.CLIMB1, MotorType.kBrushless);
         liftTwo = new CANSparkMax(RobotMap.CLIMB2, MotorType.kBrushless);
     }

@@ -9,17 +9,17 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import frc.robot.subsystems.ShiftingWCD;
+import frc.robot.subsystems.ShiftingWCDSubsystem;
 import frc.robot.RobotMap;
 import frc.robot.helpers.Limelight;
 import frc.robot.helpers.TargetInfo;
 
 public class TurnToVisionTarget extends Command {
-  private ShiftingWCD drive;
+  private ShiftingWCDSubsystem drive;
   private TargetInfo targetInfo;
   private PIDController targetPID;
   private Limelight limelight;
-  public TurnToVisionTarget(ShiftingWCD drive, Limelight limelight) {
+  public TurnToVisionTarget(ShiftingWCDSubsystem drive, Limelight limelight) {
     this.drive = drive;
     this.limelight = limelight;
     targetInfo = limelight.GetTargetInfo();

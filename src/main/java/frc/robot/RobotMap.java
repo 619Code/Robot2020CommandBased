@@ -9,7 +9,7 @@ package frc.robot;
 
 public class RobotMap {
   // Talon ID
-  public static final int INTAKE_MOTOR = -1;
+  public static final int INTAKE_MOTOR = 21;
   
   // Drive CANs
   public static final int LEFTMASTER = 10;

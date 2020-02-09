@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.RobotMap;
 import frc.robot.helpers.SparkMaxDriveMotors;
 
-public class ShiftingWCD extends Subsystem {
+public class ShiftingWCDSubsystem extends Subsystem {
 
   //CANSparkMax leftMaster, leftSlave0, leftSlave1, rightMaster, rightSlave0, rightSlave1;
   DifferentialDrive drive;
@@ -31,7 +31,7 @@ public class ShiftingWCD extends Subsystem {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  public ShiftingWCD() {
+  public ShiftingWCDSubsystem() {
     initMotors();
     initDrive();
     initSensors();
