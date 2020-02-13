@@ -23,11 +23,7 @@ public class Limelight {
     }
 
     public TargetInfo GetTargetInfo() {
-        var targetInfo = new TargetInfo();        
-        targetInfo.X = this.tx.getDouble(0);
-        targetInfo.Y = this.ty.getDouble(0);
-        targetInfo.Area = this.ta.getDouble(0);
-        targetInfo.HasTarget = this.tv.getDouble(0) == 0 ? false : true;
+        var targetInfo = new TargetInfo(this.tx.getDouble(0), this.ty.getDouble(0), this.ta.getDouble(0), this.tv.getDouble(0));
         return targetInfo;
     }
 

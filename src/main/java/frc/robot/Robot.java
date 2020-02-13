@@ -5,11 +5,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.helpers.ERobotState;
 
+//This is the main robot class. All mode behaviors are set and run in this class.
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer;
   private Scheduler scheduler;
-  private Command m_autonomousCommand;
+  private Command autoCommand;
   
+  //Sets up the robot and prints a list of information about the current state of the robot
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();
@@ -18,39 +20,35 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {    
-    if (m_autonomousCommand != null) {
-      System.out.println("Interupted:" + m_autonomousCommand.isInterruptible());
-      System.out.println("Canceled:" + m_autonomousCommand.isCanceled());
-      System.out.println("Complete:" + m_autonomousCommand.isCompleted());
-      System.out.println("Running:" + m_autonomousCommand.isRunning());
+    if (autoCommand != null) { 
+      System.out.println("Interrupted:" + autoCommand.isInterruptible());
+      System.out.println("Canceled:" + autoCommand.isCanceled());
+      System.out.println("Complete:" + autoCommand.isCompleted());
+      System.out.println("Running:" + autoCommand.isRunning());
     }
   }
 
+  //The disabled state shouldn't do anything other than cancelling any commands that are currently running
   @Override
   public void disabledInit() {
     States.RobotState = ERobotState.Disabled;
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (autoCommand != null) {
+      autoCommand.cancel();
     }
-    //Scheduler.getInstance().removeAll();
   }
-
+  
   @Override
   public void disabledPeriodic() {
   }
-
+  
+  //get auto command, start the command, and run the command
   @Override
   public void autonomousInit() {
     States.RobotState = ERobotState.Auto;
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.cancel();
-    // }
-    // Scheduler.getInstance().removeAll();
-    m_autonomousCommand = robotContainer.getAutoCommand();
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
+    autoCommand = robotContainer.getAutoCommand();
+    if (autoCommand != null) {
+      autoCommand.start();
     }
-
   }
 
   @Override
@@ -58,11 +56,12 @@ public class Robot extends TimedRobot {
     scheduler.run();
   }
 
+  //Cancel all auto commands and run the default drive command (located in RobotContainer)
   @Override
   public void teleopInit() {
     States.RobotState = ERobotState.Teleop;
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (autoCommand != null) {
+      autoCommand.cancel();
     }
     Scheduler.getInstance().removeAll();
   }
@@ -72,6 +71,7 @@ public class Robot extends TimedRobot {
     scheduler.run();
   }
 
+  //This section should be configured to whatever is needed at the moment
   @Override
   public void testInit() {
     States.RobotState = ERobotState.Test;

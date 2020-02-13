@@ -29,8 +29,6 @@ public class ShiftingWCDSubsystem extends Subsystem {
   DifferentialDriveOdometry m_odometry;
   Pose2d pose;
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-
   public ShiftingWCDSubsystem() {
     initMotors();
     initDrive();
@@ -38,8 +36,7 @@ public class ShiftingWCDSubsystem extends Subsystem {
     shifter = new DoubleSolenoid(0, 1);
   }
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-
+  //Initialize the motors, drive, and sensors
   private void initMotors() {
 
     leftMotors = new SparkMaxDriveMotors(10, 11, 12);
@@ -62,6 +59,7 @@ public class ShiftingWCDSubsystem extends Subsystem {
     m_odometry = new DifferentialDriveOdometry(getAngle());
   }
 
+  //Change the current gear
   public void setShift(boolean isLowGear){
     if(isLowGear){
       shifter.set(Value.kForward);
@@ -70,8 +68,6 @@ public class ShiftingWCDSubsystem extends Subsystem {
       shifter.set(Value.kReverse); 
     }
   }
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   public void resetGyro() {
     navx.reset();
@@ -116,7 +112,7 @@ public class ShiftingWCDSubsystem extends Subsystem {
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   public void curve(double speed, double rotation, boolean isLowGear) {
-    drive.curvatureDrive(speed, -rotation, true);
+    drive.curvatureDrive(RobotMap.SPEED_ADJUST*speed, -RobotMap.SPEED_ADJUST*rotation, true);
     setShift(isLowGear);
   }
 

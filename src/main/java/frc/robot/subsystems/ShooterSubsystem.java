@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.RobotMap;
 
+//This is the shooter subsystem. All methods or information related to the shooter should be accessed through this class.
 public class ShooterSubsystem extends Subsystem {
   private CANSparkMax shooterMotor, angleMotor;
   private PIDController shooterPID, anglePID;
@@ -19,18 +20,20 @@ public class ShooterSubsystem extends Subsystem {
     anglePID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
   }
 
-  public void setVelocity(double targetRPM){
-    double currentRPM = shooterMotor.getEncoder().getVelocity();
-    shooterMotor.set(shooterPID.calculate(currentRPM, targetRPM));
-  }
+  //Uses a PID to adjust the current angle/velocity to the target angle/velocity
   public void setAngle(double targetAngle){
-    double currentAngle = calculateAngle(shooterMotor.getEncoder().getPosition());
+    double currentAngle = getAngle(shooterMotor.getEncoder().getPosition());
     angleMotor.set(anglePID.calculate(currentAngle, targetAngle));
   }
 
-  public double calculateAngle(double position){
-    //calculate position, can't yet because build
-    return position;
+  public void setVelocity(double targetRPM) {
+    double currentRPM = shooterMotor.getEncoder().getVelocity();
+    shooterMotor.set(shooterPID.calculate(currentRPM, targetRPM));
+  }
+
+  //Calculate the current angle of the shooter
+  public double getAngle(double position){
+    return -1;
   }
 
   @Override

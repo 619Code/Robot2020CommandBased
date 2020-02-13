@@ -45,6 +45,8 @@ public class RobotMap {
   public static final int NEO_LIMIT = 45;
   public static final double DRIVE_RATIO = 8;
 
+  public static final double SPEED_ADJUST = 0.6;
+
   // PATHS
   
   // pid values
@@ -84,4 +86,6 @@ public class RobotMap {
   public static int MAG_POS_SENSOR_2 = 2;
   public static int MAG_POS_SENSOR_3 = 3;
   public static int MAG_POS_SENSOR_4 = 4;
+
+  // Field Elements
 }

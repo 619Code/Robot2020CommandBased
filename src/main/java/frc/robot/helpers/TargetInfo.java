@@ -4,13 +4,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 public class TargetInfo {
-
-    public TargetInfo(){}
-
     public double X;
     public double Y;
     public double Area;
     public boolean HasTarget;
+
+    public TargetInfo(double tx, double ty, double ta, double tv){
+        this.X = tx;
+        this.Y = ty;
+        this.Area = ta;
+        this.HasTarget = tv == 0 ? false : true;
+    }
 
     public void Show() {
         SmartDashboard.putNumber("LimeLight-X", X);
