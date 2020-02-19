@@ -22,8 +22,9 @@ public class RobotMap {
   // CAN ID
   public static final int CLIMB1 = -1;
   public static final int CLIMB2 = -1;
-  public static final int INDEXING = -1;
-  public static final int LOADING = -1;
+  public static final int INDEXING_MOTOR = 30;
+  public static final int BELT_MOTOR = 22;
+  public static final int LOADING_MOTOR = 31;
   public static final int FEEDER1 = -1;
   public static final int FEEDER2 = -1;
   public static final int SHOOTER_MOTOR = -1;
@@ -66,9 +67,9 @@ public class RobotMap {
   public static final double ANGLE_I = -1;
   public static final double ANGLE_D = -1;
 
-  public static final double TARGET_P = 0.12; //0.64
+  public static final double TARGET_P = 0.05; //0.64 0.12
   public static final double TARGET_I = 0;
-  public static final double TARGET_D = 1.2;
+  public static final double TARGET_D = 0;
 
   // DifferentialDrive Kinematics
   public static final double kTrackwidthInches = 25;
@@ -81,11 +82,11 @@ public class RobotMap {
   public static final double LIMELIGHT_ANGLE = 0;
 
   // Magazine
-  public static int MAG_POS_SENSOR_lOADED = 0;
-  public static int MAG_POS_SENSOR_1 = 1;
-  public static int MAG_POS_SENSOR_2 = 2;
-  public static int MAG_POS_SENSOR_3 = 3;
-  public static int MAG_POS_SENSOR_4 = 4;
+  public static final int MAG_POS_FIRST = 2;
+  public static final int MAG_POS_SECOND = 1;
+  public static final int MAG_POS_LAST = 0;
+  public static final int SHOOTER_POS = 4;
+  public static final int FEEDER_POS = 3;
 
   // Field Elements
 }

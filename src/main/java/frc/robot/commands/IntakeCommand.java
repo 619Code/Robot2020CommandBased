@@ -22,6 +22,7 @@ public class IntakeCommand extends Command {
   public IntakeCommand(IntakeSubsystem intake, XboxController joystick) {
     this.intake = intake;
     this.joystick = joystick;
+
     requires(intake);
   }
 
@@ -31,13 +32,14 @@ public class IntakeCommand extends Command {
   }
   @Override
   protected void execute() {
-    speed = 0.5*(joystick.getTriggerAxis(Hand.kLeft)-joystick.getTriggerAxis(Hand.kRight));
-    if(Math.abs(speed) < 0.075){
-      speed=0;
+    if(joystick.getTriggerAxis(Hand.kLeft) > 0.5) {
+      intake.spin(0.5);
+    } else if(joystick.getBumper(Hand.kLeft)) {
+      intake.spin(-0.5);
+    } else {
+      intake.spin(0);
     }
-    intake.spin(speed);
   }
-  
   
   
   @Override

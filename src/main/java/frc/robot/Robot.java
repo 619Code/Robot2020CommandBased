@@ -1,5 +1,8 @@
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -10,7 +13,6 @@ public class Robot extends TimedRobot {
   private RobotContainer robotContainer;
   private Scheduler scheduler;
   private Command autoCommand;
-  
   //Sets up the robot and prints a list of information about the current state of the robot
   @Override
   public void robotInit() {
@@ -21,10 +23,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {    
     if (autoCommand != null) { 
-      System.out.println("Interrupted:" + autoCommand.isInterruptible());
-      System.out.println("Canceled:" + autoCommand.isCanceled());
-      System.out.println("Complete:" + autoCommand.isCompleted());
-      System.out.println("Running:" + autoCommand.isRunning());
+      //System.out.println("Interrupted:" + autoCommand.isInterruptible());
+      //System.out.println("Canceled:" + autoCommand.isCanceled());
+      //System.out.println("Complete:" + autoCommand.isCompleted());
+      //System.out.println("Running:" + autoCommand.isRunning());
     }
   }
 
@@ -48,6 +50,7 @@ public class Robot extends TimedRobot {
     autoCommand = robotContainer.getAutoCommand();
     if (autoCommand != null) {
       autoCommand.start();
+      System.out.println("Running Auto");
     }
   }
 

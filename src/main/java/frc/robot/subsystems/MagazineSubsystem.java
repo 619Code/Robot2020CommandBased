@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -11,30 +12,33 @@ import frc.robot.hardware.LimitSwitch;
 import frc.robot.helpers.SparkMaxSetPointHelper;
 
 public class MagazineSubsystem extends Subsystem {
-    SparkMaxSetPointHelper indexing;
-    SparkMaxSetPointHelper loading;
+    CANSparkMax indexing;
+    CANSparkMax loading;
     
     LimitSwitch feederSwitch;
 
-    DigitalInput positionLoaded;
-    DigitalInput position0;
-    DigitalInput position1;
-    DigitalInput position2;
-    DigitalInput position3;
+    public DigitalInput pos0;
+    public DigitalInput pos1;
+    public DigitalInput pos2;
+    public DigitalInput pos3;
+    public DigitalInput pos4;
 
     DigitalInput[] positions;
     
     boolean isLoaded;
 
     public MagazineSubsystem() {
-        indexing = new SparkMaxSetPointHelper(RobotMap.INDEXING, ControlType.kPosition);
-        loading = new SparkMaxSetPointHelper(RobotMap.LOADING, ControlType.kPosition);
-        positionLoaded = new DigitalInput(RobotMap.MAG_POS_SENSOR_lOADED);
-        position0 = new DigitalInput(RobotMap.MAG_POS_SENSOR_1);
-        position1 = new DigitalInput(RobotMap.MAG_POS_SENSOR_2);
-        position2 = new DigitalInput(RobotMap.MAG_POS_SENSOR_3);
-        position3 = new DigitalInput(RobotMap.MAG_POS_SENSOR_4);
-        this.positions = new DigitalInput[] {position0, position1, position2,position3};        
+        indexing = new CANSparkMax(RobotMap.INDEXING_MOTOR, MotorType.kBrushless);
+        indexing.setSmartCurrentLimit(35);
+        loading = new CANSparkMax(RobotMap.LOADING_MOTOR, MotorType.kBrushless);
+        loading.setSmartCurrentLimit(35);
+        loading.setIdleMode(IdleMode.kCoast);
+        pos0 = new DigitalInput(RobotMap.MAG_POS_FIRST);
+        pos1 = new DigitalInput(RobotMap.MAG_POS_SECOND);
+        pos2 = new DigitalInput(RobotMap.MAG_POS_LAST);
+        pos3 = new DigitalInput(RobotMap.SHOOTER_POS);
+        pos4 = new DigitalInput(RobotMap.FEEDER_POS);
+        this.positions = new DigitalInput[] {pos0, pos1, pos2, pos3, pos4};        
     }
 
     public int nextEmptyIndex() {
@@ -49,32 +53,25 @@ public class MagazineSubsystem extends Subsystem {
 
     public boolean HasBallAtIndex(int index)
     {
-        return this.positions[index].get();
+        return !this.positions[index].get();
     }
 
-    public void LoadChamber() {
-        //Advanced loader motor
-        this.loading.restetReference();
-        this.loading.setReference(20);        
+    public void LoadChamber(double speed) {
+        loading.set(speed);     
     }
 
-    public void LoadMagazine() {
-        //Advanced magazine motor
-        this.indexing.restetReference();
-        this.indexing.setReference(20);
+    public void LoadMagazine(double speed) {
+        indexing.set(speed);
     }
 
     public boolean isFilled() {
-        return this.position0.get() && 
-            this.position1.get() &&
-            this.position2.get() &&
-            this.position3.get() &&
-            this.isLoaded();        
+        return this.pos0.get() && 
+            this.pos1.get() &&
+            this.pos2.get() &&
+            this.pos3.get() &&
+            this.pos4.get();        
     }
 
-    public boolean isLoaded() {
-        return this.positionLoaded.get();
-    }
     @Override
     protected void initDefaultCommand() {
     }

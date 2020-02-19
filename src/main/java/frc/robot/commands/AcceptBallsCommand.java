@@ -18,17 +18,17 @@ public class AcceptBallsCommand extends Command {
 
   @Override
   protected void execute() {
-      if (!this.magazineSubsystem.isLoaded() && this.magazineSubsystem.nextEmptyIndex() == 1)
+      if (!this.magazineSubsystem.HasBallAtIndex(2) && this.magazineSubsystem.nextEmptyIndex() == 1)
       {
-          this.magazineSubsystem.LoadChamber();
+          //this.magazineSubsystem.LoadChamber(0);
       }
-      else if (this.magazineSubsystem.isLoaded())
+      else if (this.magazineSubsystem.HasBallAtIndex(2))
       {
           if (!this.magazineSubsystem.isFilled())
           {
               if (this.magazineSubsystem.HasBallAtIndex(0))
               {
-                  this.magazineSubsystem.LoadMagazine();
+                  //this.magazineSubsystem.LoadMagazine(0);
               }
           }
       }
@@ -37,7 +37,7 @@ public class AcceptBallsCommand extends Command {
   @Override
   protected boolean isFinished()
   {
-    if (this.magazineSubsystem.isLoaded())
+    if (this.magazineSubsystem.HasBallAtIndex(2))
         return false;
     else
         return true;
