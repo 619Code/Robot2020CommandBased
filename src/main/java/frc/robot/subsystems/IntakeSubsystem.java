@@ -28,7 +28,7 @@ public class IntakeSubsystem extends Subsystem{
 
     public void spin(double speed){
         roller.set(ControlMode.PercentOutput, speed);
-        intakeBelt.set(speed*2);
+        intakeBelt.set(Math.min(speed*2, 1));
         //intakeBelt.set(speed);
     }
 
