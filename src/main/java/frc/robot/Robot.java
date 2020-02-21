@@ -1,8 +1,5 @@
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -28,6 +25,7 @@ public class Robot extends TimedRobot {
       //System.out.println("Complete:" + autoCommand.isCompleted());
       //System.out.println("Running:" + autoCommand.isRunning());
     }
+    robotContainer.displayTelemetry();
   }
 
   //The disabled state shouldn't do anything other than cancelling any commands that are currently running

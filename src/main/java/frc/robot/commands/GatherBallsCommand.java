@@ -1,11 +1,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.*;
 
 public class GatherBallsCommand extends Command {
 
     private IntakeMagazineSubsystem imSubsystem;
+    private boolean waiting = false;
 
     public GatherBallsCommand(IntakeMagazineSubsystem intakeMagazineSubsystem) {
         this.imSubsystem = intakeMagazineSubsystem;
@@ -21,72 +23,60 @@ public class GatherBallsCommand extends Command {
 
     @Override
     protected void execute() {
-        
-        if (this.imSubsystem.isFilled())
-        {            
-            // Shut everything down
-            this.imSubsystem.RaiseIntake();
-            this.imSubsystem.SpinIntake(0);
-            this.imSubsystem.IntakeBelt(0);
-            this.imSubsystem.MagazineBelt(0);
-            this.imSubsystem.ChamberCrazyness(0);
+
+        double intakeSpeed = 0;
+        double intakeBeltSpeed = 0;
+        double loaderSpeed = 0;
+        double magSpeed = 0;
+
+        if (this.imSubsystem.isFilled()) {
+            // Base case: nothing moving
+            // everything set to 0
             this.finished = true;
+        } else if (!this.imSubsystem.isMagazineFilled()) {
+            // intaking but empty
+            // v
+            // > | >>>
+            intakeSpeed = RobotMap.INTAKE_IN;
+            intakeBeltSpeed = RobotMap.INTAKE_BELT_IN;
+            loaderSpeed = RobotMap.LOADER_DOWN;
+            magSpeed = RobotMap.MAG_IN;
+        } else if (this.imSubsystem.isMagazineFilled() && !this.imSubsystem.oneInTheChamber() && !this.waiting) {
+            // 3 balls in mag but stil moving in
+            // v
+            // > | OOO
+            // loader has to go down till ball vectored, then up
+            intakeSpeed = RobotMap.INTAKE_IN;
+            intakeBeltSpeed = RobotMap.INTAKE_BELT_IN;
+            loaderSpeed = RobotMap.LOADER_DOWN;
+        } else if (this.waiting) {
+            // 3 balls in mag and loading chamber
+            intakeSpeed = RobotMap.INTAKE_IN;
+            intakeBeltSpeed = RobotMap.INTAKE_BELT_IN;
+            loaderSpeed = RobotMap.LOADER_DOWN;
+            this.waiting = !this.imSubsystem.oneInTheChamber();
+        } else {
+            // last ball
+            // X
+            // > | OOO
+            intakeSpeed = RobotMap.INTAKE_IN;
+            intakeBeltSpeed = RobotMap.INTAKE_BELT_IN;
         }
-        else if (this.imSubsystem.IsMagazineFilled() 
-            && !this.imSubsystem.IsChamberFilled())
-        {
-            // Keep taking in balls
-            this.imSubsystem.SpinIntake(.5);
 
-            // Move the chamber wheels up
-            this.imSubsystem.ChamberCrazyness(-.6);
-
-            // Move the intake belt back
-            this.imSubsystem.IntakeBelt(-1);
-
-            // Shut the magazine belt down
-            this.imSubsystem.MagazineBelt(0);
-        }
-        else if (!this.imSubsystem.IsMagazineFilled())
-        {
-            // Move the chamber down to help balls go into magazine
-            this.imSubsystem.ChamberCrazyness(.6);
-
-            // Move the magazine belt back to make room for more balls
-            this.imSubsystem.MagazineBelt(.4);
-
-            // Keep the intake belt moving back to get balls to the magazine
-            this.imSubsystem.IntakeBelt(-1);
-
-            // Keep taking in balls
-            this.imSubsystem.SpinIntake(.5);
-        }
-        else // We now need to try to fill the last postion
-        {
-            // Shut down the chamber wheels, hopefully the balls 
-            //  stays up with compression
-            this.imSubsystem.ChamberCrazyness(0);
-
-            // Make sure the magazine belt is not running
-            this.imSubsystem.MagazineBelt(0);
-
-            // Keep the intake belt moving to get 
-            //  the ball in the intake position
-            this.imSubsystem.IntakeBelt(-1);
-
-            // Keep more balls coming
-            this.imSubsystem.SpinIntake(.5);
-        }
+        this.imSubsystem.Load(loaderSpeed);
+        this.imSubsystem.MagazineBelt(magSpeed);
+        this.imSubsystem.IntakeBelt(intakeBeltSpeed);
+        this.imSubsystem.SpinIntake(intakeSpeed);
     }
 
     @Override
     protected boolean isFinished() {
-       return finished;
+        return finished;
     }
 
     @Override
     public void end() {
-        finished = true;
+        this.finished = true;
         super.end();
     }
 }

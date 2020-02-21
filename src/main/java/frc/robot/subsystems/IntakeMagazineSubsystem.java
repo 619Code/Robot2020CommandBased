@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -60,7 +59,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     // Load chamber.  Provice negative values to to 
-    public void ChamberCrazyness(double speed) {
+    public void Load(double speed) {
         loading.set(speed);
     }
 
@@ -77,7 +76,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
         return true;
     }
 
-    public boolean IsMagazineFilled() {        
+    public boolean isMagazineFilled() {        
         for(int i = 0; i < 3; i++)
         {
             if(!positions[i].get()) {
@@ -87,7 +86,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
         return true;
     }
 
-    public boolean IsChamberFilled() {
+    public boolean oneInTheChamber() {
         return positions[3].get();
     }
 

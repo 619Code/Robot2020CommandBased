@@ -1,5 +1,6 @@
 package frc.robot.hardware;
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class LimitSwitch {
@@ -12,6 +13,6 @@ public class LimitSwitch {
 	
 	public boolean get() {
         return !limitSwitch.get();
-    }
+	}
 	
 }

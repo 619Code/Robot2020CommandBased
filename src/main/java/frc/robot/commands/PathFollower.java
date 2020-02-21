@@ -4,7 +4,6 @@ import com.team2363.commands.HelixFollower;
 import com.team2363.controller.PIDController;
 import com.team319.trajectory.Path;
 
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.States;
 import frc.robot.helpers.ERobotState;
