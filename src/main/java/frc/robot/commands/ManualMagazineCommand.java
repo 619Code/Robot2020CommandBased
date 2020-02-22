@@ -29,7 +29,7 @@ public class ManualMagazineCommand extends Command {
     System.out.println(magazine.HasBallAtIndex(3));
     System.out.println("---------------");
     if(joystick.getTriggerAxis(Hand.kLeft) > 0.5) {
-      magazine.LoadChamber(0.6);
+      magazine.LoadChamber(.6);
     } else if(joystick.getBumper(Hand.kLeft)) {
       magazine.LoadChamber(-1);
     } else {

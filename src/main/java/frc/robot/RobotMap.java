@@ -87,6 +87,9 @@ public class RobotMap {
   public static final int MAG_POS_LAST = 0;
   public static final int SHOOTER_POS = 4;
   public static final int FEEDER_POS = 3;
+  public static final int PRE_MAG = 6;
+
+  public static int ballCount = 0;
 
   // Field Elements
 }
