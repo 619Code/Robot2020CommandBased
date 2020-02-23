@@ -17,28 +17,26 @@ public class IntakeMagazineDefaultCommand extends Command {
         requires(imSubsystem); 
     }
 
+    
+
     protected void execute() {
-        RobotMap.ballCount = 0;
-        if(joystick.getTriggerAxis(Hand.kLeft) > 0.5) {
-            imSubsystem.Loader(.6);
-            imSubsystem.IntakeBelt(1);
-            imSubsystem.SpinIntake(0.5);
-          } else if(joystick.getBumper(Hand.kLeft)) {
-            imSubsystem.Loader(-1);
-            imSubsystem.IntakeBelt(-1);
-            imSubsystem.SpinIntake(-0.5);
-          } else {
-            imSubsystem.Loader(0);
-            imSubsystem.IntakeBelt(0);
-            imSubsystem.SpinIntake(0);
-          }
-          if(joystick.getTriggerAxis(Hand.kRight) > 0.5) {
-            imSubsystem.MagazineBelt(0.5);
-          } else if(joystick.getBumper(Hand.kRight)) {
-            imSubsystem.MagazineBelt(-0.5);
-          } else {
-            imSubsystem.MagazineBelt(0);
-          }
+      imSubsystem.MagazineBelt(0);
+      imSubsystem.Loader(0);
+      imSubsystem.IntakeBelt(0);
+      imSubsystem.SpinIntake(0);
+      if(joystick.getBumper(Hand.kRight)) {
+        imSubsystem.Loader(-0.8);
+      }  
+      if(joystick.getBumper(Hand.kLeft)){
+        imSubsystem.MagazineBelt(-0.5);
+        imSubsystem.IntakeBelt(-0.5);
+      }
+      if(joystick.getPOV(0) == 0){
+        imSubsystem.RaiseIntake();
+      }
+      if(joystick.getPOV(0) == 180){
+        imSubsystem.LowerIntake();
+      }
     }
 
     @Override

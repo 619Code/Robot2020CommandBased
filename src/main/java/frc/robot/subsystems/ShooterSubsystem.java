@@ -1,6 +1,13 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.AlternateEncoderType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -9,31 +16,37 @@ import frc.robot.RobotMap;
 
 //This is the shooter subsystem. All methods or information related to the shooter should be accessed through this class.
 public class ShooterSubsystem extends Subsystem {
-  private CANSparkMax shooterMotor, angleMotor;
-  private PIDController shooterPID, anglePID;
+  private CANSparkMax shooterMotorLeft, shooterMotorRight, angleMotor;
+  private PIDController anglePID;
 
-  public ShooterSubsystem(){
-    shooterMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
-    shooterPID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
+  public ShooterSubsystem() {
+    shooterMotorLeft = new CANSparkMax(RobotMap.SHOOTER_MOTOR_LEFT, MotorType.kBrushed);
+    shooterMotorLeft.restoreFactoryDefaults();
+    shooterMotorRight = new CANSparkMax(RobotMap.SHOOTER_MOTOR_RIGHT, MotorType.kBrushed);
+    shooterMotorRight.restoreFactoryDefaults();
 
-    angleMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
+    shooterMotorRight.follow(shooterMotorLeft);
+
+    angleMotor = new CANSparkMax(RobotMap.ANGLE_MOTOR, MotorType.kBrushless);
     anglePID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
+
+    angleMotor.getEncoder().setPosition(0);
   }
 
-  //Uses a PID to adjust the current angle/velocity to the target angle/velocity
-  public void setAngle(double targetAngle){
-    double currentAngle = getAngle(shooterMotor.getEncoder().getPosition());
-    angleMotor.set(anglePID.calculate(currentAngle, targetAngle));
+  public void shoot(double rpm) {
+    double targetVelocity_UnitsPer100ms = rpm * 4096 / 600;
+    // shooterMotorLeft.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
+    //System.out.println(shooterMotorLeft.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192).getVelocity());
+    shooterMotorLeft.set(rpm);
+    //shooterMotorRight.set(rpm);
   }
 
-  public void setVelocity(double targetRPM) {
-    double currentRPM = shooterMotor.getEncoder().getVelocity();
-    shooterMotor.set(shooterPID.calculate(currentRPM, targetRPM));
-  }
-
-  //Calculate the current angle of the shooter
-  public double getAngle(double position){
-    return -1;
+  public void setAngle(double angle) {
+    angle = 45;
+    double targetAngle = (angle-12) * 9.0/90.0;
+    System.out.println("REEEEEE" + angleMotor.getEncoder().getPosition()
+    );
+    angleMotor.set(anglePID.calculate(angleMotor.getEncoder().getPosition(), targetAngle));
   }
 
   @Override

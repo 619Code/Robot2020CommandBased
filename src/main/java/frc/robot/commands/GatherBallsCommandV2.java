@@ -33,28 +33,28 @@ public class GatherBallsCommandV2 extends Command {
     protected void execute() {
         System.out.println(latch);
         currentState = this.imSubsystem.HasBallAtIndex(4);
-        if(getRisingEdge()) {
+        if (getRisingEdge()) {
             RobotMap.ballCount++;
         }
-        //System.out.println(States.GatheringState);
-        if(!imSubsystem.IsMagazineFilled()) {
-            latch=false;
+        // System.out.println(States.GatheringState);
+        if (!imSubsystem.IsMagazineFilled()) {
+            latch = false;
             if (!imSubsystem.HasBallAtIndex(0)) {
                 States.GatheringState = EGatheringState.FullIntake;
             } else {
-                if(imSubsystem.HasBallAtIndex(4)) {
+                if (imSubsystem.HasBallAtIndex(4)) {
                     States.GatheringState = EGatheringState.FullIntake;
                 } else {
                     States.GatheringState = EGatheringState.PartialIntake;
                 }
             }
         } else {
-            if(!imSubsystem.isFilled()) {
-                if(imSubsystem.HasBallAtIndex(3)) {
+            if (!imSubsystem.isFilled()) {
+                if (imSubsystem.HasBallAtIndex(3)) {
                     latch = false;
                     States.GatheringState = EGatheringState.LoadLast;
                 } else {
-                    if((imSubsystem.HasBallAtIndex(4) || latch) && !imSubsystem.HasBallAtIndex(5)) {
+                    if ((imSubsystem.HasBallAtIndex(4) || latch) && !imSubsystem.HasBallAtIndex(5)) {
                         States.GatheringState = EGatheringState.LoadChamber;
                         latch = true;
                     } else {
@@ -69,7 +69,7 @@ public class GatherBallsCommandV2 extends Command {
         switch (States.GatheringState) {
         case FullIntake:
             // POSITIVE IS DOWN
-            this.imSubsystem.Loader(.4);
+            this.imSubsystem.Loader(.3);
             // POSITIVE IS IN
             this.imSubsystem.MagazineBelt(.5);
             // POSITIVE IS IN
@@ -78,7 +78,7 @@ public class GatherBallsCommandV2 extends Command {
             this.imSubsystem.SpinIntake(.5);
             break;
         case PartialIntake:
-            this.imSubsystem.Loader(.4);
+            this.imSubsystem.Loader(.3);
             this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.IntakeBelt(1);
             this.imSubsystem.SpinIntake(.5);
@@ -102,7 +102,7 @@ public class GatherBallsCommandV2 extends Command {
             this.imSubsystem.SpinIntake(0);
             break;
         }
-        lastState=currentState;
+        lastState = currentState;
     }
 
     private boolean getRisingEdge() {
@@ -116,7 +116,7 @@ public class GatherBallsCommandV2 extends Command {
 
     @Override
     public void end() {
-        //RobotMap.ballCount = 0;   
+        // RobotMap.ballCount = 0;
         finished = true;
         super.end();
     }

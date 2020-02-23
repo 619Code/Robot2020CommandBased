@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -19,7 +20,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     CANSparkMax loading;
     private VictorSPX roller;
     private CANSparkMax intakeBelt;
-    //private DoubleSolenoid wrist;
+    private Solenoid wrist;
 
     DigitalInput[] positions;
     
@@ -37,6 +38,9 @@ public class IntakeMagazineSubsystem extends Subsystem {
         roller = new VictorSPX(RobotMap.INTAKE_MOTOR);
         roller.configFactoryDefault();
         roller.setNeutralMode(NeutralMode.Brake);
+
+        wrist = new Solenoid(2);
+
         intakeBelt = new CANSparkMax(RobotMap.BELT_MOTOR, MotorType.kBrushless);
         intakeBelt.setSecondaryCurrentLimit(25);
         
@@ -50,7 +54,8 @@ public class IntakeMagazineSubsystem extends Subsystem {
             new DigitalInput(RobotMap.MAG_POS_LAST),
             new DigitalInput(RobotMap.SHOOTER_POS),
             new DigitalInput(RobotMap.FEEDER_POS),
-            new DigitalInput(RobotMap.PRE_MAG)};
+            new DigitalInput(RobotMap.PRE_MAG)
+        };
     }
 
     public int nextEmptyIndex() {
@@ -77,8 +82,9 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public boolean isFilled() {
-        for(DigitalInput pos : positions) {
-            if(pos.get()) {
+        for(int i = 0; i < 5; i++)
+        {
+            if(positions[i].get()) {
                 return false;
             }
         }
@@ -111,12 +117,12 @@ public class IntakeMagazineSubsystem extends Subsystem {
 
     public void RaiseIntake() 
     {
-        //wrist.set(Value.kReverse);        
+        wrist.set(false);        
     }
 
     public void LowerIntake() 
     {
-        //wrist.set(Value.kForward);
+        wrist.set(true);
     }
 
 

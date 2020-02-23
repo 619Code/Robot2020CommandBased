@@ -1,3 +1,4 @@
+
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
@@ -13,7 +14,7 @@ public class ShooterSubsystemV2 extends Subsystem {
   private PIDController shooterPID;
 
   public ShooterSubsystemV2(){
-    shooterMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
+    //shooterMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
     shooterPID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
   }
 

@@ -27,7 +27,28 @@ public class RobotMap {
   public static final int LOADING_MOTOR = 31;
   public static final int FEEDER1 = -1;
   public static final int FEEDER2 = -1;
-  public static final int SHOOTER_MOTOR = -1;
+
+  //Shooter
+  public static final int SHOOTER_MOTOR_RIGHT = 41;
+  public static final int SHOOTER_MOTOR_LEFT = 40;
+  public static final int ANGLE_MOTOR = 42;
+
+  public static final int kPIDLoopIdx = 0;
+  public static final int kTimeoutMs = 30;
+
+  public static final double kGains_VelocitkF = 0.0;
+  public static final double kGains_VelocitkP = 0.0;
+  public static final double kGains_VelocitkI = 0.0;
+  public static final double kGains_VelocitkD = 0.0;
+
+  
+	/**
+	 * PID Gains may have to be adjusted based on the responsiveness of control loop.
+     * kF: 1023 represents output value to Talon at 100%, 7200 represents Velocity units at 100% output
+     * 
+	 * 	                                    			  kP   kI   kD   kF          Iz    PeakOut 
+  public final static Gains kGains_Velocit = new Gains( 0.25, 0.001, 20, 1023.0/7200.0,  300,  1.00);
+  */
 
   //Solenoids
   public static final int PCM_CAN_ID = -1;
@@ -59,9 +80,9 @@ public class RobotMap {
   public static final double DISTANCE_I = 0; //8
   public static final double DISTANCE_D = 0;
 
-  public static final double SHOOTER_P = -1;
-  public static final double SHOOTER_I = -1;
-  public static final double SHOOTER_D = -1;
+  public static final double SHOOTER_P = 0.55;
+  public static final double SHOOTER_I = 0.0;
+  public static final double SHOOTER_D = 0.0;
 
   public static final double ANGLE_P = -1;
   public static final double ANGLE_I = -1;
