@@ -43,21 +43,6 @@ public class TurnToVisionTarget extends Command {
     targetInfo = limelight.GetTargetInfo();
     drive.curve(0,-targetPID.calculate(targetInfo.getTargetX(), 0), true); 
     shooterSubsystem.setAngle(targetInfo.getTargetY());
-    /*if (Math.abs(targetInfo.getTargetX())<0.05){
-      if(RobotMap.ballCount > 3) {
-        shooterSubsystem.shoot(1);
-        imSubsystem.Loader(-0.8);
-      } else if(RobotMap.ballCount > 0) {
-        shooterSubsystem.shoot(1);
-        imSubsystem.Loader(-0.8);
-        imSubsystem.IntakeBelt(-0.5);
-        imSubsystem.MagazineBelt(-0.5);
-      } else {
-        shooterSubsystem.shoot(0);
-      }
-      
-    }
-    */
   }
 
   @Override
@@ -67,6 +52,7 @@ public class TurnToVisionTarget extends Command {
 
   @Override
   protected void end() {
+    
   }
 
   @Override

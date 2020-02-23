@@ -80,8 +80,8 @@ public class RobotMap {
   public static final double DISTANCE_I = 0; //8
   public static final double DISTANCE_D = 0;
 
-  public static final double SHOOTER_P = 0.55;
-  public static final double SHOOTER_I = 0.0;
+  public static final double SHOOTER_P = 0.075;
+  public static final double SHOOTER_I = 0.025;
   public static final double SHOOTER_D = 0.0;
 
   public static final double ANGLE_P = -1;
