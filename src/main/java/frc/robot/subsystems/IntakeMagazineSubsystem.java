@@ -101,6 +101,16 @@ public class IntakeMagazineSubsystem extends Subsystem {
         return true;
     }
 
+    public boolean IsMagazineOccupied() {        
+        for(int i = 0; i < 3; i++)
+        {
+            if(positions[i].get()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean IsIntakePositionFilled() {
         return !positions[4].get();
     }
@@ -129,4 +139,14 @@ public class IntakeMagazineSubsystem extends Subsystem {
     @Override
     protected void initDefaultCommand() {
     }
+
+	public boolean isEmpty() {
+		for(int i = 0; i < 5; i++)
+        {
+            if(!positions[i].get()) {
+                return false;
+            }
+        }
+        return true;
+	}
 }
