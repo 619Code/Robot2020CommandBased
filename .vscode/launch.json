@@ -9,6 +9,13 @@
       "name": "CodeLens (Launch) - CreatePath",
       "request": "launch",
       "mainClass": "frc.robot.helpers.CreatePath",
+      "projectName": "Robot2020CommandBased"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - CreatePath",
+      "request": "launch",
+      "mainClass": "frc.robot.helpers.CreatePath",
       "projectName": "revert"
     },
     {
