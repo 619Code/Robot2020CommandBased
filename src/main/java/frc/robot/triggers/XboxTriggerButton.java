@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 /**
  * A {@link Button} that gets its state from a {@link GenericHID}.
  */
-public class XBoxTriggerButton extends Button {
+public class XboxTriggerButton extends Button {
   private final XboxController m_joystick;
   private final Hand m_hand;
 
@@ -38,6 +38,6 @@ public class XBoxTriggerButton extends Button {
    */
   @Override
   public boolean get() {
-    return m_joystick.getTriggerAxis(this.m_hand) > .5;;
+    return m_joystick.getTriggerAxis(this.m_hand) > .5;
   }
 }
