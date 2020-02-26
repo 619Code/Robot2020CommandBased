@@ -41,12 +41,17 @@ public class TurnToVisionTarget extends Command {
   @Override
   protected void execute() {
     targetInfo = limelight.GetTargetInfo();
-    drive.curve(0,-targetPID.calculate(targetInfo.getTargetX(), 0), true); 
-    shooterSubsystem.setAngle(targetInfo.getTargetY());
+    drive.curve(0,-targetPID.calculate(targetInfo.getTargetX(), 0), true);
+    if(targetInfo.HasTarget) {
+      shooterSubsystem.setAngle(targetInfo.getTargetY());
+    } else {
+      shooterSubsystem.setAbsAngle(15);
+    }
   }
 
   @Override
   protected boolean isFinished() {
+    //shooterSubsystem.setAbsAngle(0);
     return false;
   }
 
