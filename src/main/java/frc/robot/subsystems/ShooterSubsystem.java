@@ -41,6 +41,10 @@ public class ShooterSubsystem extends Subsystem {
     //shooterMotorRight.set(rpm);
   }
 
+  public double getVelocity() {
+    return this.shooterMotorLeft.getEncoder().getVelocity();
+  }
+
   public void setAngle(double angle) {
     double targetAngle = ((angle) * 10.5/90.0)+angleMotor.getEncoder().getPosition();
     System.out.println("REEEEEE" + angleMotor.getEncoder().getPosition() + " " + targetAngle);
