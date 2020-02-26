@@ -10,7 +10,7 @@ package frc.robot;
 public class RobotMap {
   // Talon ID
   public static final int INTAKE_MOTOR = 21;
-  
+
   // Drive CANs
   public static final int LEFTMASTER = 10;
   public static final int RIGHTMASTER = 13;
@@ -28,7 +28,7 @@ public class RobotMap {
   public static final int FEEDER1 = -1;
   public static final int FEEDER2 = -1;
 
-  //Shooter
+  // Shooter
   public static final int SHOOTER_MOTOR_RIGHT = 41;
   public static final int SHOOTER_MOTOR_LEFT = 40;
   public static final int ANGLE_MOTOR = 42;
@@ -41,18 +41,18 @@ public class RobotMap {
   public static final double kGains_VelocitkI = 0.0;
   public static final double kGains_VelocitkD = 0.0;
 
-  
-	/**
-	 * PID Gains may have to be adjusted based on the responsiveness of control loop.
-     * kF: 1023 represents output value to Talon at 100%, 7200 represents Velocity units at 100% output
-     * 
-	 * 	                                    			  kP   kI   kD   kF          Iz    PeakOut 
-  public final static Gains kGains_Velocit = new Gains( 0.25, 0.001, 20, 1023.0/7200.0,  300,  1.00);
-  */
+  /**
+   * PID Gains may have to be adjusted based on the responsiveness of control
+   * loop. kF: 1023 represents output value to Talon at 100%, 7200 represents
+   * Velocity units at 100% output
+   * 
+   * kP kI kD kF Iz PeakOut public final static Gains kGains_Velocit = new Gains(
+   * 0.25, 0.001, 20, 1023.0/7200.0, 300, 1.00);
+   */
 
-  //Solenoids
+  // Solenoids
   public static final int PCM_CAN_ID = -1;
-  public static final int[] INTAKE_WRIST_CHANNEL = {-1, -1};
+  public static final int[] INTAKE_WRIST_CHANNEL = { -1, -1 };
 
   // Climb Constants
   public static final double PULLEY_RATIO = -1;
@@ -70,14 +70,14 @@ public class RobotMap {
   public static final double SPEED_ADJUST = 0.6;
 
   // PATHS
-  
+
   // pid values
-  public static final double HEADING_P = 0.01; //0.64
+  public static final double HEADING_P = 0.01; // 0.64
   public static final double HEADING_I = 0;
   public static final double HEADING_D = 0;
 
-  public static final double DISTANCE_P = 0.5; //5
-  public static final double DISTANCE_I = 0; //8
+  public static final double DISTANCE_P = 0.5; // 5
+  public static final double DISTANCE_I = 0; // 8
   public static final double DISTANCE_D = 0;
 
   public static final double SHOOTER_P = 0.075;
@@ -88,7 +88,7 @@ public class RobotMap {
   public static final double ANGLE_I = -1;
   public static final double ANGLE_D = -1;
 
-  public static final double TARGET_P = 0.05; //0.64 0.12
+  public static final double TARGET_P = 0.05; // 0.64 0.12
   public static final double TARGET_I = 0;
   public static final double TARGET_D = 0;
 
