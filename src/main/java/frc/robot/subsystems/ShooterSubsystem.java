@@ -31,7 +31,12 @@ public class ShooterSubsystem extends Subsystem {
     shooterMotorRight.setInverted(false);
     shooterMotorRight.follow(shooterMotorLeft);
 
+    shooterMotorRight.setSmartCurrentLimit(35);
+    shooterMotorLeft.setSmartCurrentLimit(35);
+    
     angleMotor = new CANSparkMax(RobotMap.ANGLE_MOTOR, MotorType.kBrushless);
+    angleMotor.restoreFactoryDefaults();
+    angleMotor.setSmartCurrentLimit(35);
     anglePID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
 
     angleMotor.getEncoder().setPosition(0);
@@ -61,6 +66,11 @@ public class ShooterSubsystem extends Subsystem {
     double targetAngle = ((angle) * 10.5 / 90.0);
     System.out.println("EEEEER" + angleMotor.getEncoder().getPosition() + " " + targetAngle);
     angleMotor.set(anglePID.calculate(angleMotor.getEncoder().getPosition(), targetAngle));
+  }
+
+  public void setZero(){
+    angleMotor.set(0);
+    angleMotor.getEncoder().setPosition(0);
   }
 
   @Override

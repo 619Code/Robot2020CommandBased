@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.commands.CurveDriveCommand;
 import frc.robot.commands.GatherBallsCommandV2;
 import frc.robot.commands.IntakeMagazineDefaultCommand;
@@ -37,7 +38,7 @@ public class RobotContainer {
 
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
         imSubsystem.setDefaultCommand(new IntakeMagazineDefaultCommand(imSubsystem, secondaryJoystick));
-        shooter.setDefaultCommand(new ManualShootCommand(shooter, secondaryJoystick));
+        shooter.setDefaultCommand(new InstantCommand(shooter::setZero));
         ConfigureControllers();
     }
 
@@ -45,8 +46,12 @@ public class RobotContainer {
     public void ConfigureControllers() {
         var turnButton = new JoystickButton(primaryJoystick, XboxController.Button.kB.value);
         turnButton.whileHeld(new TurnToVisionTarget(drive, limelight, shooter));
+
         var gatherBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value , 0.5);
         gatherBalls.whileHeld(new GatherBallsCommandV2(imSubsystem, secondaryJoystick));
+
+        var shootBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value , 0.5);
+        shootBalls.whileHeld(new ManualShootCommand(shooter, secondaryJoystick));
     }
 
     //Auto command(s) should be accessed from this method

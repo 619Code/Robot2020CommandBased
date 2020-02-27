@@ -28,10 +28,12 @@ public class IntakeMagazineSubsystem extends Subsystem {
 
         // Back magazine belt holding 3 balls
         indexing = new CANSparkMax(RobotMap.INDEXING_MOTOR, MotorType.kBrushless);
+        indexing.restoreFactoryDefaults();
         indexing.setSecondaryCurrentLimit(35);
         
         // Vertical loader
         loading = new CANSparkMax(RobotMap.LOADING_MOTOR, MotorType.kBrushless);
+        loading.restoreFactoryDefaults();
         loading.setSecondaryCurrentLimit(35);
         loading.setIdleMode(IdleMode.kCoast);
 
@@ -42,6 +44,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
         wrist = new Solenoid(2);
 
         intakeBelt = new CANSparkMax(RobotMap.BELT_MOTOR, MotorType.kBrushless);
+        intakeBelt.restoreFactoryDefaults();
         intakeBelt.setSecondaryCurrentLimit(25);
         
         // Magazine index diagram
