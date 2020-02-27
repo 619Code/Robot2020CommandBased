@@ -22,6 +22,7 @@ public class MagazineSubsystem extends Subsystem {
     public DigitalInput pos2;
     public DigitalInput pos3;
     public DigitalInput pos4;
+    public DigitalInput pos5;
 
     DigitalInput[] positions;
     
@@ -38,7 +39,8 @@ public class MagazineSubsystem extends Subsystem {
         pos2 = new DigitalInput(RobotMap.MAG_POS_LAST);
         pos3 = new DigitalInput(RobotMap.SHOOTER_POS);
         pos4 = new DigitalInput(RobotMap.FEEDER_POS);
-        this.positions = new DigitalInput[] {pos0, pos1, pos2, pos3, pos4};        
+        pos5 =  new DigitalInput(RobotMap.PRE_MAG);
+        this.positions = new DigitalInput[] {pos0, pos1, pos2, pos3, pos4, pos5};        
     }
 
     public int nextEmptyIndex() {
@@ -69,7 +71,7 @@ public class MagazineSubsystem extends Subsystem {
             this.pos1.get() &&
             this.pos2.get() &&
             this.pos3.get() &&
-            this.pos4.get();        
+            (this.pos4.get()||this.pos5.get());        
     }
 
     @Override
