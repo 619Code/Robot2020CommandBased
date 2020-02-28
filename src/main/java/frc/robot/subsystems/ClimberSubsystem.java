@@ -1,26 +1,39 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.team2363.controller.PIDController;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
-public class ClimberSubsystem {
-    CANSparkMax liftOne, liftTwo;
+public class ClimberSubsystem extends Subsystem {
+    public CANSparkMax lift;
+    public TalonSRX hook;
+    PIDController hookPID;
 
     public ClimberSubsystem() {
-        liftOne = new CANSparkMax(RobotMap.CLIMB1, MotorType.kBrushless);
-        liftTwo = new CANSparkMax(RobotMap.CLIMB2, MotorType.kBrushless);
+        hook = new TalonSRX(RobotMap.HOOK);
+        lift = new CANSparkMax(RobotMap.LIFT, MotorType.kBrushless);
+        hookPID = new PIDController(RobotMap.HOOK_P, RobotMap.HOOK_I, RobotMap.HOOK_D);
     }
 
-    public void extend() {
-        while(true) {
-            //liftOne.set();
-            //liftTwo.set();
-        }
+    public void setHookPosition(double position) {
+        double targetPosition = position; //put calculations here
+        //System.out.println("Hook Position: " + hook.getEncoder().getPosition() + " " + targetPosition);
+        //hook.set(hookPID.calculate(hook.getEncoder().getPosition(), targetPosition));
+        hook.set(ControlMode.PercentOutput, position);
     }
 
-    public void ascend() {
+    public void extendLift(double speed) {
+        lift.set(speed);
+    }
+
+    @Override
+    protected void initDefaultCommand() {
+        // TODO Auto-generated method stub
 
     }
 }

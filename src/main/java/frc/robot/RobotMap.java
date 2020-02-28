@@ -20,8 +20,8 @@ public class RobotMap {
   public static final int RIGHTSLAVE1 = 15;
 
   // CAN ID
-  public static final int CLIMB1 = -1;
-  public static final int CLIMB2 = -1;
+  public static final int HOOK = 51;
+  public static final int LIFT = 50;
   public static final int INDEXING_MOTOR = 30;
   public static final int BELT_MOTOR = 22;
   public static final int LOADING_MOTOR = 31;
@@ -87,6 +87,10 @@ public class RobotMap {
   public static final double ANGLE_P = -1;
   public static final double ANGLE_I = -1;
   public static final double ANGLE_D = -1;
+
+  public static final double HOOK_P = -1;
+  public static final double HOOK_I = -1;
+  public static final double HOOK_D = -1;
 
   public static final double TARGET_P = 0.05; // 0.64 0.12
   public static final double TARGET_I = 0;

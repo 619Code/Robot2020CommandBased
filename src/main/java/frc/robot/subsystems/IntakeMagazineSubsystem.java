@@ -45,7 +45,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
 
         intakeBelt = new CANSparkMax(RobotMap.BELT_MOTOR, MotorType.kBrushless);
         intakeBelt.restoreFactoryDefaults();
-        intakeBelt.setSecondaryCurrentLimit(25);
+        intakeBelt.setSecondaryCurrentLimit(50);
         
         // Magazine index diagram
         // [3]
@@ -61,9 +61,14 @@ public class IntakeMagazineSubsystem extends Subsystem {
         };
     }
 
+    public void LogDigitalInputs()
+    {
+
+    }
+
     public int nextEmptyIndex() {
         for (int i = 0; i < 4; i++) {
-            if (this.positions[i].get() == false)
+            if (this.positions[i].get() == true)
                 return i;
         }
         //Indicates no free slots
@@ -107,7 +112,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     public boolean IsMagazineOccupied() {        
         for(int i = 0; i < 3; i++)
         {
-            if(positions[i].get()) {
+            if(!positions[i].get()) {
                 return true;
             }
         }
@@ -125,7 +130,8 @@ public class IntakeMagazineSubsystem extends Subsystem {
 
     public void IntakeBelt(double speed)
     {        
-        intakeBelt.set(speed);       
+        System.out.println("Intake Belt:" + speed);
+        intakeBelt.set(speed);
     }
 
     public void RaiseIntake() 

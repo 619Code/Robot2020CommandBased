@@ -7,7 +7,10 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.commands.CurveDriveCommand;
 import frc.robot.commands.GatherBallsCommandV2;
 import frc.robot.commands.IntakeMagazineDefaultCommand;
+import frc.robot.commands.ManualClimber;
 import frc.robot.commands.ManualShootCommand;
+import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.ShooterSetZeroCommand;
 import frc.robot.commands.TurnToVisionTarget;
 import frc.robot.helpers.JoystickAnalogButton;
 import frc.robot.helpers.Limelight;
@@ -36,9 +39,11 @@ public class RobotContainer {
         secondaryJoystick = new XboxController(1);
         limelight = new Limelight();
 
+        limelight.TurnLightOff();
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
         imSubsystem.setDefaultCommand(new IntakeMagazineDefaultCommand(imSubsystem, secondaryJoystick));
-        shooter.setDefaultCommand(new InstantCommand(shooter::setZero));
+        climber.setDefaultCommand(new ManualClimber(climber, secondaryJoystick));
+        //shooter.setDefaultCommand(new ShooterSetZeroCommand(shooter));
         ConfigureControllers();
     }
 
@@ -52,6 +57,13 @@ public class RobotContainer {
 
         var shootBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value , 0.5);
         shootBalls.whileHeld(new ManualShootCommand(shooter, secondaryJoystick));
+
+        var shooterButtonTest = new JoystickButton(secondaryJoystick, XboxController.Button.kY.value);
+        shooterButtonTest.whileHeld(new ShooterCommand(this.imSubsystem, this.limelight, this.shooter));
+    }
+
+    public void AllStop() {
+        this.shooter.shoot(0);
     }
 
     //Auto command(s) should be accessed from this method

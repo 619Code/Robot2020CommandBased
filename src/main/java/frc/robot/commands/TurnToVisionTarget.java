@@ -32,14 +32,17 @@ public class TurnToVisionTarget extends Command {
     targetInfo = limelight.GetTargetInfo();
     targetPID = new PIDController(RobotMap.TARGET_P, RobotMap.TARGET_I, RobotMap.TARGET_D);
     requires(drive);
+    //requires(shooterSubsystem);
   }
 
   @Override
   protected void initialize() {
+    limelight.TurnLightOn();
   }
 
   @Override
   protected void execute() {
+
     targetInfo = limelight.GetTargetInfo();
     drive.curve(0,-targetPID.calculate(targetInfo.getTargetX(), 0), true);
     if(targetInfo.HasTarget) {
@@ -57,7 +60,7 @@ public class TurnToVisionTarget extends Command {
 
   @Override
   protected void end() {
-    
+    limelight.TurnLightOff();
   }
 
   @Override

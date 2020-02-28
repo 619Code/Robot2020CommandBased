@@ -20,8 +20,9 @@ public class ShooterSubsystem extends Subsystem {
 
   public ShooterSubsystem() {
     shooterMotorLeft = new CANSparkMax(RobotMap.SHOOTER_MOTOR_LEFT, MotorType.kBrushed);
-    speedEncoder = shooterMotorLeft.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192);
+    
     shooterMotorLeft.restoreFactoryDefaults();
+    speedEncoder = shooterMotorLeft.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192);
     speedPID = shooterMotorLeft.getPIDController();
     speedPID.setFeedbackDevice(speedEncoder);
 
@@ -50,11 +51,11 @@ public class ShooterSubsystem extends Subsystem {
     // 8192).getVelocity());
     shooterMotorLeft.set(rpm);
     // shooterMotorRight.set(rpm);
-  }
+  } 
 
   public double getVelocity() {
-    return shooterMotorLeft.getAlternateEncoder().getVelocity();
-  }
+    return speedEncoder.getVelocity();
+  }  
 
   public void setAngle(double angle) {
     double targetAngle = ((angle) * 10.5 / 90.0) + angleMotor.getEncoder().getPosition();

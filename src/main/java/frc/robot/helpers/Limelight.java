@@ -2,7 +2,6 @@ package frc.robot.helpers;
 
 import edu.wpi.first.networktables.*;
 
-
 public class Limelight {
 
     private NetworkTableEntry tx;
@@ -23,18 +22,16 @@ public class Limelight {
     }
 
     public TargetInfo GetTargetInfo() {
-        var targetInfo = new TargetInfo(this.tx.getDouble(0), this.ty.getDouble(0), this.ta.getDouble(0), this.tv.getDouble(0));
+        var targetInfo = new TargetInfo(this.tx.getDouble(0), this.ty.getDouble(0), this.ta.getDouble(0),
+                this.tv.getDouble(0));
         return targetInfo;
     }
 
-    public void TurnLightOff()
-    {
+    public void TurnLightOff() {
         this.light.setNumber(1);
     }
 
-    public void TrunLightOn() 
-    {
+    public void TurnLightOn() {
         this.light.setNumber(3);
     }
 }
-
