@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.helpers.BallIndex;
 
 public class IntakeMagazineSubsystem extends Subsystem {
     CANSparkMax indexing;
@@ -22,7 +23,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     private CANSparkMax intakeBelt;
     private Solenoid wrist;
 
-    DigitalInput[] positions;
+    BallIndex[] positions;
     
     public IntakeMagazineSubsystem() {
 
@@ -51,14 +52,16 @@ public class IntakeMagazineSubsystem extends Subsystem {
         // [3]
         // [4][2][1][0]
         // Position sensors detecting balls
-        this.positions = new DigitalInput[] {
-            new DigitalInput(RobotMap.MAG_POS_FIRST),
-            new DigitalInput(RobotMap.MAG_POS_SECOND),
-            new DigitalInput(RobotMap.MAG_POS_LAST),
-            new DigitalInput(RobotMap.SHOOTER_POS),
-            new DigitalInput(RobotMap.FEEDER_POS),
-            new DigitalInput(RobotMap.PRE_MAG)
+        this.positions = new BallIndex[] {
+            new BallIndex(RobotMap.MAG_POS_FIRST),
+            new BallIndex(RobotMap.MAG_POS_SECOND),
+            new BallIndex(RobotMap.MAG_POS_LAST),
+            new BallIndex(RobotMap.SHOOTER_POS),
+            new BallIndex(RobotMap.FEEDER_POS),
+            new BallIndex(RobotMap.PRE_MAG)
         };
+
+        // It needs to be noted that a sensor that sees the ball reads 0 and a sensor that does not see a ball reads
     }
 
     public void LogDigitalInputs()
@@ -68,7 +71,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
 
     public int nextEmptyIndex() {
         for (int i = 0; i < 4; i++) {
-            if (this.positions[i].get() == true)
+            if (this.positions[i].hasBall() == false)
                 return i;
         }
         //Indicates no free slots
@@ -77,7 +80,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
 
     public boolean HasBallAtIndex(int index)
     {
-        return !this.positions[index].get();
+        return this.positions[index].hasBall();
     }
 
     // Load chamber.  Provice negative values to to 
@@ -92,7 +95,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     public boolean isFilled() {
         for(int i = 0; i < 5; i++)
         {
-            if(positions[i].get()) {
+            if(!positions[i].hasBall()) {
                 return false;
             }
         }
@@ -102,7 +105,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     public boolean IsMagazineFilled() {        
         for(int i = 0; i < 3; i++)
         {
-            if(positions[i].get()) {
+            if(!positions[i].hasBall()) {
                 return false;
             }
         }
@@ -112,7 +115,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     public boolean IsMagazineOccupied() {        
         for(int i = 0; i < 3; i++)
         {
-            if(!positions[i].get()) {
+            if(positions[i].hasBall()) {
                 return true;
             }
         }
@@ -120,7 +123,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public boolean IsIntakePositionFilled() {
-        return !positions[4].get();
+        return positions[4].hasBall();
     }
 
     public void SpinIntake(double speed)
@@ -152,7 +155,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
 	public boolean isEmpty() {
 		for(int i = 0; i < 5; i++)
         {
-            if(!positions[i].get()) {
+            if(positions[i].hasBall()) {
                 return false;
             }
         }

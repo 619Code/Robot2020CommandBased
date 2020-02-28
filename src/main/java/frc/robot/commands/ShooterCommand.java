@@ -5,26 +5,33 @@ import javax.swing.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.States;
 import frc.robot.helpers.EShootState;
+import frc.robot.helpers.IterativeDelay;
 import frc.robot.helpers.Limelight;
 import frc.robot.subsystems.IntakeMagazineSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterCommand extends Command {
 
-    private IntakeMagazineSubsystem imSubsystem;
-    private Limelight limelight;
-    private ShooterSubsystem shooterSubsystem;
-    private double goodVelocity = 0;
-    private int delayStopIterations = 150;
+    private final IntakeMagazineSubsystem imSubsystem;
+    private final Limelight limelight;
+    private final ShooterSubsystem shooterSubsystem;
+    private final double goodVelocity = 0;
+    private IterativeDelay speedupDelay;
+    private IterativeDelay stopDelay;
+    private final int delayStopIterations = 150;
     private int stopIterations = 0;
-    private int shooterSpeedUpTime = 100;
-    private int shooterSpeedUpIterations = 0;
+    private final int shooterSpeedUpTime = 100;
+    private final int shooterSpeedUpIterations = 0;
 
-    public ShooterCommand(IntakeMagazineSubsystem im, Limelight ll, ShooterSubsystem ss) {
+    public ShooterCommand(final IntakeMagazineSubsystem im, final Limelight ll, final ShooterSubsystem ss) {
         imSubsystem = im;
         limelight = ll;
         shooterSubsystem = ss;
         requires(imSubsystem);
+        requires(ss);
+
+        this.speedupDelay = new IterativeDelay(100);
+        this.stopDelay = new IterativeDelay(150);
     }
 
     @Override
@@ -41,15 +48,16 @@ public class ShooterCommand extends Command {
             States.ShooterState = EShootState.MovingBallsInVertical;
         }
 
-        shooterSubsystem.shoot(.8);
-        if (this.shooterSpeedUpIterations <= this.shooterSpeedUpTime)
-        {
-            this.shooterSpeedUpIterations++;
-        }
-        else 
-        {
-        //if (this.shooterSubsystem.getVelocity() > goodVelocity)
         
+        this.speedupDelay.Cycle();
+        shooterSubsystem.shoot(.8);
+        if (this.speedupDelay.IsDone())
+        {
+            // Peter: Idealliy this code would look something like this, but
+            // until we can figure out how to get a non zero velocity from 
+            // our encoder we have to leave this logic out.
+            //if (this.shooterSubsystem.getVelocity() > goodVelocity)
+            
             imSubsystem.Loader(-0.8);
 
             if (States.ShooterState == EShootState.MovingBallsInMagazine)
@@ -59,6 +67,9 @@ public class ShooterCommand extends Command {
                 imSubsystem.MagazineBelt(-0.5);
             }
         }
+
+        // Peter: This is the pause code that we would use
+        // if we can get the encoder working on the shooter.
         // else
         // {
         //     imSubsystem.Loader(0);
@@ -66,9 +77,11 @@ public class ShooterCommand extends Command {
         //     imSubsystem.MagazineBelt(0);
         // }
         
+        // Once everything has been shot we want the shooter to 
+        //  keep going for a few seconds.
         if (imSubsystem.isEmpty())
         {
-            this.stopIterations++;
+            this.stopDelay.Cycle();
         }
 
         switch(States.ShooterState) {
@@ -86,7 +99,7 @@ public class ShooterCommand extends Command {
 
     @Override
     protected boolean isFinished() {
-        if (this.stopIterations >= this.delayStopIterations)
+        if (this.stopDelay.IsDone())
         {
             States.ShooterState = EShootState.Finished;
             return true;

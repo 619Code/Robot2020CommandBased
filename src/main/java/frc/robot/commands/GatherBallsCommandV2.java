@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,19 +12,17 @@ import frc.robot.subsystems.IntakeMagazineSubsystem;
 public class GatherBallsCommandV2 extends Command {
 
     private IntakeMagazineSubsystem imSubsystem;
-    private XboxController joystick;
     public boolean loaderUp = false;
     public boolean magLoaded = false;
     private boolean currentState = false;
     private boolean lastState = false;
     private boolean finished = false;
     private boolean latch = false;
-    private Timer tweakMagazine;
-    private int magazineTweakInSeconds = 1;
+    // private Timer tweakMagazine;
+    // private int magazineTweakInSeconds = 1;
 
-    public GatherBallsCommandV2(IntakeMagazineSubsystem intakeMagazineSubsystem, XboxController joystick) {
+    public GatherBallsCommandV2(IntakeMagazineSubsystem intakeMagazineSubsystem) {
         this.imSubsystem = intakeMagazineSubsystem;
-        this.joystick = joystick;
         this.requires(this.imSubsystem);
     }
 
@@ -88,13 +87,15 @@ public class GatherBallsCommandV2 extends Command {
             break;
         case LoadChamber:
             this.imSubsystem.Loader(-1);
-            tightenMagazine();
+            //tightenMagazine();
+            this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.IntakeBelt(1);
             this.imSubsystem.SpinIntake(.4);
             break;
         case LoadLast:
             this.imSubsystem.Loader(0);
-            tightenMagazine();
+            //tightenMagazine();
+            this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.IntakeBelt(1);
             this.imSubsystem.SpinIntake(.5);
             break;
@@ -109,20 +110,25 @@ public class GatherBallsCommandV2 extends Command {
         lastState = currentState;
     }
 
-    private void tightenMagazine() {
-        // Tweek the magazine to tighten up the magazine a little
-        if (this.tweakMagazine != null)
-        {
-            if (this.tweakMagazine.hasPeriodPassed(this.magazineTweakInSeconds))
-                this.imSubsystem.MagazineBelt(0);
-            else
-                this.imSubsystem.MagazineBelt(0.3);
-        }
-        else {
-            this.tweakMagazine = new Timer();
-            this.tweakMagazine.start();
-        }
-    }
+     // Peter: I am temporarily removing this code, I think overall
+        //  it was having a negative effect on loading the magazine.  
+        //  needs to be refined.
+    // private void tightenMagazine() {
+       
+
+    //     // Tweek the magazine to tighten up the magazine a little
+    //     if (this.tweakMagazine != null)
+    //     {
+    //         if (this.tweakMagazine.hasPeriodPassed(this.magazineTweakInSeconds))
+    //             this.imSubsystem.MagazineBelt(0);
+    //         else
+    //             this.imSubsystem.MagazineBelt(0.3);
+    //     }
+    //     else {
+    //         this.tweakMagazine = new Timer();
+    //         this.tweakMagazine.start();
+    //     }
+    // }
 
     private boolean getRisingEdge() {
         return currentState && !lastState;
