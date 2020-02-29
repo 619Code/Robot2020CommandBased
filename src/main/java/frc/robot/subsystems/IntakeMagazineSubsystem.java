@@ -42,7 +42,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
         roller.configFactoryDefault();
         roller.setNeutralMode(NeutralMode.Brake);
 
-        wrist = new Solenoid(2);
+        wrist = new Solenoid(RobotMap.INTAKE_SOLENOID);
 
         intakeBelt = new CANSparkMax(RobotMap.BELT_MOTOR, MotorType.kBrushless);
         intakeBelt.restoreFactoryDefaults();
@@ -133,7 +133,6 @@ public class IntakeMagazineSubsystem extends Subsystem {
 
     public void IntakeBelt(double speed)
     {        
-        System.out.println("Intake Belt:" + speed);
         intakeBelt.set(speed);
     }
 

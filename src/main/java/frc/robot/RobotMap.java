@@ -52,7 +52,8 @@ public class RobotMap {
 
   // Solenoids
   public static final int PCM_CAN_ID = -1;
-  public static final int[] INTAKE_WRIST_CHANNEL = { -1, -1 };
+  public static final int INTAKE_SOLENOID = 0;
+  public static final int[] DRIVE_SOLENOID = {1, 4};
 
   // Climb Constants
   public static final double PULLEY_RATIO = -1;

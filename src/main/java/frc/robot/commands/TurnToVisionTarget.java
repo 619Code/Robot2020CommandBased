@@ -38,6 +38,7 @@ public class TurnToVisionTarget extends Command {
   @Override
   protected void initialize() {
     limelight.TurnLightOn();
+    
   }
 
   @Override
@@ -47,7 +48,8 @@ public class TurnToVisionTarget extends Command {
     drive.curve(0,-targetPID.calculate(targetInfo.getTargetX(), 0), true);
     if(targetInfo.HasTarget) {
       aimingSubsystem.setAngle(targetInfo.getTargetY());
-    } else {
+    }
+    else{
       aimingSubsystem.setAbsAngle(15);
     }
   }

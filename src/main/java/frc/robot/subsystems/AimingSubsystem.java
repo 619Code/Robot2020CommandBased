@@ -27,13 +27,13 @@ public class AimingSubsystem extends Subsystem {
 
   public void setAngle(double angle) {
     double targetAngle = ((angle) * 10.5 / 90.0) + angleMotor.getEncoder().getPosition();
-    System.out.println("REEEEEE" + angleMotor.getEncoder().getPosition() + " " + targetAngle);
+    System.out.println("ANGLE:" + angleMotor.getEncoder().getPosition() + " " + targetAngle);
     angleMotor.set(anglePID.calculate(angleMotor.getEncoder().getPosition(), targetAngle));
   }
 
   public void setAbsAngle(double angle) {
     double targetAngle = ((angle) * 10.5 / 90.0);
-    System.out.println("EEEEER" + angleMotor.getEncoder().getPosition() + " " + targetAngle);
+    System.out.println("ABSANGLE" + angleMotor.getEncoder().getPosition() + " " + targetAngle);
     angleMotor.set(anglePID.calculate(angleMotor.getEncoder().getPosition(), targetAngle));
   }
 
