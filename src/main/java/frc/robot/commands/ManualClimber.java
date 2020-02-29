@@ -35,28 +35,17 @@ public class ManualClimber extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed1 = joystick.getY(Hand.kRight);
-    // double speed2 = 0.4 * joystick.getY(Hand.kLeft);
-    if (speed1 < -0.2) {
-      speed1 *= 0.5;
-      climberSubsystem.extendLift(speed1);
-    } else {
-      climberSubsystem.extendLift(0);
+    double speed = joystick.getY(Hand.kRight);
+    if(Math.abs(speed) > 0.075) {
+        speed *= 0.5;
+        climberSubsystem.setHookPosition(speed);
+        System.out.println("Raw Speed: " + speed);
     }
-    // if (Math.abs(speed2) > 0.1) {
-    // speed2 *= 0.5;
-    // climberSubsystem.setHookPosition(speed2);
-    // } else {
-    // climberSubsystem.setHookPosition(0.05);
-    // }
-    double x = 0.3 * joystick.getRawAxis(1);
-    // if (Math.abs(x) > 0.07) {
-    // System.out.println(x);
-    climberSubsystem.setHookPosition(x);
-    // } else {
-    // climberSubsystem.setHookPosition(0);
-    // }
-
+    if(joystick.getBButton()) {
+        climberSubsystem.extendLift(-0.3);
+    } else {
+        climberSubsystem.extendLift(0);
+    }
   }
 
   // Returns true when the command should end.

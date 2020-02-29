@@ -8,7 +8,7 @@ import frc.robot.States;
 import frc.robot.helpers.EGatheringState;
 import frc.robot.subsystems.IntakeMagazineSubsystem;
 
-public class GatherBallsCommand extends Command {
+public class GatherBallsCommandV2 extends Command {
 
     private IntakeMagazineSubsystem imSubsystem;
     private XboxController joystick;
@@ -21,7 +21,7 @@ public class GatherBallsCommand extends Command {
     private Timer tweakMagazine;
     private int magazineTweakInSeconds = 1;
 
-    public GatherBallsCommand(IntakeMagazineSubsystem intakeMagazineSubsystem, XboxController joystick) {
+    public GatherBallsCommandV2(IntakeMagazineSubsystem intakeMagazineSubsystem, XboxController joystick) {
         this.imSubsystem = intakeMagazineSubsystem;
         this.joystick = joystick;
         this.requires(this.imSubsystem);
@@ -94,6 +94,7 @@ public class GatherBallsCommand extends Command {
             break;
         case LoadLast:
             this.imSubsystem.Loader(0);
+            tightenMagazine();
             this.imSubsystem.IntakeBelt(1);
             this.imSubsystem.SpinIntake(.5);
             break;

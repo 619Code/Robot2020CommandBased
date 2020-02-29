@@ -23,7 +23,6 @@ public class ShooterSetZeroCommand extends Command {
   @Override
   protected void execute() {
     this.shooterSubsystem.setZero();
-    shooterSubsystem.shoot(0);
   }
   
   @Override
