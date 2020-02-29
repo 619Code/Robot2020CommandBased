@@ -93,13 +93,21 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public boolean isFilled() {
-        for(int i = 0; i < 5; i++)
+
+        // Return false if ball is not in position 0,1,2,3
+        for(int i = 0; i < 4; i++)
         {
             if(!positions[i].hasBall()) {
                 return false;
             }
         }
-        return true;
+
+        // If either the intake position sensors are reading positive consider the system
+        //  full
+        if (positions[4].hasBall() || positions[5].hasBall())
+            return true;
+        else
+            return false;
     }
 
     public boolean IsMagazineFilled() {        
@@ -123,7 +131,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public boolean IsIntakePositionFilled() {
-        return positions[4].hasBall();
+        return positions[4].hasBall() || positions[5].hasBall();
     }
 
     public void SpinIntake(double speed)
@@ -152,7 +160,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
 	public boolean isEmpty() {
-		for(int i = 0; i < 5; i++)
+		for(int i = 0; i < 6; i++)
         {
             if(positions[i].hasBall()) {
                 return false;
