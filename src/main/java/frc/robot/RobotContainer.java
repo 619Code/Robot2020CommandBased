@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.commands.CurveDriveCommand;
-import frc.robot.commands.GatherBallsCommandV2;
+import frc.robot.commands.GatherBallsCommand;
 import frc.robot.commands.IntakeMagazineDefaultCommand;
 import frc.robot.commands.ManualClimber;
 import frc.robot.commands.ManualShootCommand;
@@ -43,23 +43,23 @@ public class RobotContainer {
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
         imSubsystem.setDefaultCommand(new IntakeMagazineDefaultCommand(imSubsystem, secondaryJoystick));
         climber.setDefaultCommand(new ManualClimber(climber, secondaryJoystick));
-        //shooter.setDefaultCommand(new ShooterSetZeroCommand(shooter));
+        shooter.setDefaultCommand(new ShooterSetZeroCommand(shooter));
         ConfigureControllers();
     }
 
     //If a button triggers a command, it should be declared here
     public void ConfigureControllers() {
-        var turnButton = new JoystickButton(primaryJoystick, XboxController.Button.kB.value);
-        turnButton.whileHeld(new TurnToVisionTarget(drive, limelight, shooter));
+        var shooterButton = new JoystickButton(primaryJoystick, XboxController.Button.kB.value);
+        shooterButton.whileHeld(new TurnToVisionTarget(drive, limelight, shooter, primaryJoystick, secondaryJoystick));
+        
+        var gatherBallsButton = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value , 0.5);
+        gatherBallsButton.whileHeld(new GatherBallsCommand(imSubsystem, secondaryJoystick));
 
-        var gatherBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value , 0.5);
-        gatherBalls.whileHeld(new GatherBallsCommandV2(imSubsystem, secondaryJoystick));
+        //var shootBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value , 0.5);
+        //shootBalls.whileHeld(new ManualShootCommand(shooter, secondaryJoystick));
 
-        var shootBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value , 0.5);
-        shootBalls.whileHeld(new ManualShootCommand(shooter, secondaryJoystick));
-
-        var shooterButtonTest = new JoystickButton(secondaryJoystick, XboxController.Button.kY.value);
-        shooterButtonTest.whileHeld(new ShooterCommand(this.imSubsystem, this.limelight, this.shooter));
+        //var shooterButtonTest = new JoystickButton(secondaryJoystick, XboxController.Button.kY.value);
+        //shooterButtonTest.whileHeld(new ShooterCommand(this.imSubsystem, this.limelight, this.shooter));
     }
 
     public void AllStop() {
@@ -68,6 +68,6 @@ public class RobotContainer {
 
     //Auto command(s) should be accessed from this method
     public Command getAutoCommand(){
-        return new TurnToVisionTarget(drive, limelight, shooter);
+        return new TurnToVisionTarget(drive, limelight, shooter, primaryJoystick, secondaryJoystick);
     }
 }

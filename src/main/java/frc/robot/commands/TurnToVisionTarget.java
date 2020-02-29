@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.subsystems.IntakeMagazineSubsystem;
@@ -23,16 +25,19 @@ public class TurnToVisionTarget extends Command {
   private PIDController targetPID;
   private Limelight limelight;
   private IntakeMagazineSubsystem imSubsystem;
+  private XboxController primaryController, secondaryController;
 
-  public TurnToVisionTarget(ShiftingWCDSubsystem drive, Limelight limelight, ShooterSubsystem shooterSubsystem /*,IntakeMagazineSubsystem imSubsystem*/) {
+  public TurnToVisionTarget(ShiftingWCDSubsystem drive, Limelight limelight, ShooterSubsystem shooterSubsystem, XboxController primaryController, XboxController secondaryController) {
     this.drive = drive;
     this.limelight = limelight;
     this.shooterSubsystem = shooterSubsystem;
+    this.primaryController = primaryController;
+    this.secondaryController = secondaryController;
     //this.imSubsystem = imSubsystem;
     targetInfo = limelight.GetTargetInfo();
     targetPID = new PIDController(RobotMap.TARGET_P, RobotMap.TARGET_I, RobotMap.TARGET_D);
     requires(drive);
-    //requires(shooterSubsystem);
+    requires(shooterSubsystem);
   }
 
   @Override
@@ -42,13 +47,17 @@ public class TurnToVisionTarget extends Command {
 
   @Override
   protected void execute() {
-
     targetInfo = limelight.GetTargetInfo();
     drive.curve(0,-targetPID.calculate(targetInfo.getTargetX(), 0), true);
     if(targetInfo.HasTarget) {
       shooterSubsystem.setAngle(targetInfo.getTargetY());
     } else {
       shooterSubsystem.setAbsAngle(15);
+    }
+    
+    double speed = secondaryController.getTriggerAxis(Hand.kRight);
+    if(speed>0.075){
+      shooterSubsystem.shoot(speed);
     }
   }
 

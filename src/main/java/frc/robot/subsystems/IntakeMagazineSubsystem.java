@@ -90,11 +90,14 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public boolean isFilled() {
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 4; i++)
         {
             if(positions[i].get()) {
                 return false;
             }
+        }
+        if(positions[4].get() && positions[5].get()) {
+            return false;
         }
         return true;
     }
@@ -130,7 +133,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
 
     public void IntakeBelt(double speed)
     {        
-        System.out.println("Intake Belt:" + speed);
+        //System.out.println("Intake Belt:" + speed);
         intakeBelt.set(speed);
     }
 

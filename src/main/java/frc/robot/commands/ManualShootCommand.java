@@ -42,7 +42,7 @@ public class ManualShootCommand extends Command {
     // shooterSubsystem.shoot(0);
     // }
     //shooterSubsystem.shoot(joystick.getTriggerAxis(Hand.kRight));
-    shooterSubsystem.shoot(.8);
+    shooterSubsystem.shoot(1);
     System.out.println(shooterSubsystem.getVelocity());
   }
 
