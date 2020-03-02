@@ -10,7 +10,7 @@ public class States {
     public static ERobotState RobotState;
     public static EGatheringState GatheringState;
     public static EShootState ShooterState;
-
+    public static boolean isShooting = false;
     /* paste this in robotPeriodic()
     States.IS_AUTO = isAutonomous();
     States.IS_TELE = isOperatorControl();

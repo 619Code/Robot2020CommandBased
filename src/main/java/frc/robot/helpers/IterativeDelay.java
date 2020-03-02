@@ -8,6 +8,7 @@ public class IterativeDelay
     public IterativeDelay(int cycles)
     {
         this.targetCycles = cycles;
+        this.cyclesPassed = 0;
     }
 
     public void Reset() {
@@ -17,6 +18,10 @@ public class IterativeDelay
     public void Cycle() {
         if (!IsDone())
             cyclesPassed++;
+    }
+
+    public int getCycle() {
+        return cyclesPassed;
     }
 
     public boolean IsDone() {

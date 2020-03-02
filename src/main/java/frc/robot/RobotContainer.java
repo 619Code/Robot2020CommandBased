@@ -19,10 +19,10 @@ public class RobotContainer {
     private final ShiftingWCDSubsystem drive;
     private final ClimberSubsystem climber;
     private final ShooterSubsystem shooter;
-    private final AimingSubsystem aimingSubsystem;
     private final IntakeMagazineSubsystem imSubsystem;
     private final XboxController primaryJoystick, secondaryJoystick;
     private final Limelight limelight;
+    private final AimingSubsystem aimingSubsystem;
 
     //Initialize all subsystems and set default commands
     public RobotContainer() {
@@ -30,36 +30,36 @@ public class RobotContainer {
         imSubsystem = new IntakeMagazineSubsystem();
         shooter = new ShooterSubsystem();
         climber = new ClimberSubsystem();
-        aimingSubsystem = new AimingSubsystem();
         primaryJoystick = new XboxController(0);
         secondaryJoystick = new XboxController(1);
         limelight = new Limelight();
+        aimingSubsystem = new AimingSubsystem();
 
         limelight.TurnLightOff();
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
         imSubsystem.setDefaultCommand(new IntakeMagazineDefaultCommand(imSubsystem, secondaryJoystick));
         climber.setDefaultCommand(new ManualClimber(climber, secondaryJoystick));
-
-        //Peter: Seperated out elevation motor from shooter subsystem to support aim zero default command
-        // behavior.
-        aimingSubsystem.setDefaultCommand(new AimingSetZeroCommand(this.aimingSubsystem));
+        aimingSubsystem.setDefaultCommand(new AimingSetZeroCommand(aimingSubsystem));
         ConfigureControllers();
     }
 
     //If a button triggers a command, it should be declared here
     public void ConfigureControllers() {
-        var turnButton = new JoystickButton(primaryJoystick, XboxController.Button.kB.value);
-        turnButton.whileHeld(new TurnToVisionTarget(drive, limelight, aimingSubsystem));
-
-        var gatherBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value , 0.5);
-        gatherBalls.whileHeld(new GatherBallsCommandV2(imSubsystem));
+        var shooterButton = new JoystickButton(primaryJoystick, XboxController.Button.kB.value);
+        shooterButton.whileHeld(new TurnToVisionTarget(drive, limelight, this.aimingSubsystem));
+        
+        var gatherBallsButton = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value , 0.5);
+        gatherBallsButton.whileHeld(new GatherBallsCommand(imSubsystem, secondaryJoystick));
 
         var shootBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value , 0.5);
         shootBalls.whileHeld(new ManualShootCommand(shooter, secondaryJoystick));
 
-        // Peter: Added Y button on controller joystick to test out new ShooterCommand feed and shoot code.
         var shooterButtonTest = new JoystickButton(secondaryJoystick, XboxController.Button.kY.value);
         shooterButtonTest.whileHeld(new ShooterCommand(this.imSubsystem, this.limelight, this.shooter));
+
+        var unjamButton = new JoystickButton(secondaryJoystick, XboxController.Button.kX.value);
+        unjamButton.whileHeld(new UnjamCommand(this.imSubsystem));
+        
     }
 
     public void AllStop() {

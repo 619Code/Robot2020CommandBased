@@ -31,6 +31,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
         indexing = new CANSparkMax(RobotMap.INDEXING_MOTOR, MotorType.kBrushless);
         indexing.restoreFactoryDefaults();
         indexing.setSecondaryCurrentLimit(35);
+        indexing.setIdleMode(IdleMode.kCoast);
         
         // Vertical loader
         loading = new CANSparkMax(RobotMap.LOADING_MOTOR, MotorType.kBrushless);
@@ -40,13 +41,14 @@ public class IntakeMagazineSubsystem extends Subsystem {
 
         roller = new VictorSPX(RobotMap.INTAKE_MOTOR);
         roller.configFactoryDefault();
-        roller.setNeutralMode(NeutralMode.Brake);
+        roller.setNeutralMode(NeutralMode.Coast);
 
         wrist = new Solenoid(RobotMap.INTAKE_SOLENOID);
 
         intakeBelt = new CANSparkMax(RobotMap.BELT_MOTOR, MotorType.kBrushless);
         intakeBelt.restoreFactoryDefaults();
         intakeBelt.setSecondaryCurrentLimit(50);
+        intakeBelt.setIdleMode(IdleMode.kCoast);
         
         // Magazine index diagram
         // [3]
@@ -130,8 +132,12 @@ public class IntakeMagazineSubsystem extends Subsystem {
         return false;
     }
 
+    public boolean IsIntakePositionFilledForShooting() {
+        return positions[5].hasBall();
+    }
+
     public boolean IsIntakePositionFilled() {
-        return positions[4].hasBall() || positions[5].hasBall();
+        return positions[4].hasBall()||positions[5].hasBall();
     }
 
     public void SpinIntake(double speed)

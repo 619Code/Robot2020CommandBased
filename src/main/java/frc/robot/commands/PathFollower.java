@@ -8,7 +8,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.States;
 import frc.robot.helpers.ERobotState;
-import frc.robot.subsystems.ShiftingWCDSubsystem;;
+import frc.robot.subsystems.ShiftingWCDSubsystem;
 
 public class PathFollower extends HelixFollower {
     private ShiftingWCDSubsystem drive;
