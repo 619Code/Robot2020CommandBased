@@ -31,8 +31,8 @@ public class GatherBallsCommand extends Command {
 
     @Override
     protected void initialize() {
-        //this.imSubsystem.LowerIntake();
-        tightenMagazine = new IterativeDelay(30);
+        this.imSubsystem.LowerIntake();
+        tightenMagazine = new IterativeDelay(25);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class GatherBallsCommand extends Command {
                     latch = false;
                     States.GatheringState = EGatheringState.LoadLast;
                 } else {
-                    if ((imSubsystem.HasBallAtIndex(4) || latch) && !imSubsystem.HasBallAtIndex(5)) {
+                    if ((imSubsystem.HasBallAtIndex(4)) || latch) {
                         States.GatheringState = EGatheringState.LoadChamber;
                         latch = true;
                     } else {
@@ -70,45 +70,48 @@ public class GatherBallsCommand extends Command {
                     }
                 }
             } else {
-                //this.imSubsystem.RaiseIntake();
+                this.imSubsystem.RaiseIntake();
                 States.GatheringState = EGatheringState.Stop;
             }
         }
 
+        System.out.println("Gath State:" + States.GatheringState.toString());
         switch (States.GatheringState) {
         case FullIntake:
             // POSITIVE IS DOWN
-            this.imSubsystem.Loader(.2);
+            this.imSubsystem.Loader(.8);
             // POSITIVE IS IN
-            this.imSubsystem.MagazineBelt(.6);
+            this.imSubsystem.MagazineBelt(.4);
             // POSITIVE IS IN
-            this.imSubsystem.IntakeBelt(1);
+            this.imSubsystem.IntakeBelt(0.8);
             // POSITIVE IS IN
-            this.imSubsystem.SpinIntake(.6);
+            this.imSubsystem.SpinIntake(.5);
             break;
         case PartialIntake:
-            this.imSubsystem.Loader(.2);
+            this.imSubsystem.Loader(.8);
             this.imSubsystem.MagazineBelt(0);
-            this.imSubsystem.IntakeBelt(1); 
-            this.imSubsystem.SpinIntake(.6);
+            this.imSubsystem.IntakeBelt(0.8); 
+            this.imSubsystem.SpinIntake(.5);
             break;
         case LoadChamber:
+            tightenMagazine();            
             this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.Loader(-.8);            
-            this.imSubsystem.IntakeBelt(1);
-            this.imSubsystem.SpinIntake(.6);
+            this.imSubsystem.IntakeBelt(0.8);
+            this.imSubsystem.SpinIntake(.5);
             break;
         case LoadLast:
             //tightenMagazine();
             this.imSubsystem.MagazineBelt(0);
-            this.imSubsystem.IntakeBelt(1);
-            this.imSubsystem.SpinIntake(.6);
+            this.imSubsystem.Loader(0); 
+            this.imSubsystem.IntakeBelt(0.8);
+            this.imSubsystem.SpinIntake(.5);
             break;
         case Stop:
             this.tightenMagazine();            
             this.imSubsystem.Loader(0);
-            //this.imSubsystem.MagazineBelt(0);
-            //this.imSubsystem.IntakeBelt(0);
+            this.imSubsystem.MagazineBelt(0);
+            this.imSubsystem.IntakeBelt(0);
             this.imSubsystem.SpinIntake(0);            
             break;
         }

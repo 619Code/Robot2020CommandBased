@@ -17,7 +17,7 @@ import frc.robot.RobotMap;
 import frc.robot.helpers.BallIndex;
 
 public class IntakeMagazineSubsystem extends Subsystem {
-    CANSparkMax indexing;
+    CANSparkMax magazine;
     CANSparkMax loading;
     private VictorSPX roller;
     private CANSparkMax intakeBelt;
@@ -28,10 +28,10 @@ public class IntakeMagazineSubsystem extends Subsystem {
     public IntakeMagazineSubsystem() {
 
         // Back magazine belt holding 3 balls
-        indexing = new CANSparkMax(RobotMap.INDEXING_MOTOR, MotorType.kBrushless);
-        indexing.restoreFactoryDefaults();
-        indexing.setSecondaryCurrentLimit(35);
-        indexing.setIdleMode(IdleMode.kCoast);
+        magazine = new CANSparkMax(RobotMap.MAGAZINE_MOTOR, MotorType.kBrushless);
+        magazine.restoreFactoryDefaults();
+        magazine.setSecondaryCurrentLimit(35);
+        magazine.setIdleMode(IdleMode.kCoast);
         
         // Vertical loader
         loading = new CANSparkMax(RobotMap.LOADING_MOTOR, MotorType.kBrushless);
@@ -91,7 +91,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public void MagazineBelt(double speed) {
-        indexing.set(speed);
+        magazine.set(speed);
     }
 
     public boolean isFilled() {

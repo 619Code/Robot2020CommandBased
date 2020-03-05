@@ -64,7 +64,7 @@ public class ShooterCommand extends Command {
                 imSubsystem.IntakeBelt(-1);
             }
             else{
-                imSubsystem.IntakeBelt(0);
+                imSubsystem.IntakeBelt(0.2);
             }
         }
 
