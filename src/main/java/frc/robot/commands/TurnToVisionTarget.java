@@ -79,6 +79,10 @@ public class TurnToVisionTarget extends Command {
 
   @Override
   protected boolean isFinished() {
+
+    if (RobotState.isDisabled())
+      return true;
+
     return false;
   }
 
