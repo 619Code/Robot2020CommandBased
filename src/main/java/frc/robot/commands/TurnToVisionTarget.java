@@ -49,29 +49,40 @@ public class TurnToVisionTarget extends Command {
   protected void execute() {
 
     targetInfo = limelight.GetTargetInfo();
-    double lastAngle = 0;
+    
     //Temp always do this
-    if(States.isShooting == false){      
-      drive.curve(0,-targetPID.calculate(targetInfo.getTargetX(), 0), true);
+    if(States.isShooting == false){     
+      double targetAngle = -targetPID.calculate(targetInfo.getTargetX());
+      drive.curve(0, targetAngle, true);
       if(targetInfo.HasTarget) {      
-        //double currentAngle = targetInfo.getTargetY();
+        double currentAngle = targetInfo.getTargetY();
+        
+        if (Math.abs(currentAngle) < 1)
+        {
+          currentAngle = 0;
+        }
+
         // Filtering data coming from the limelight
-        double currentAngle = filter.calculate(targetInfo.getTargetY());
-        System.out.println("Target Y:" + targetInfo.getTargetY());
+        //double currentAngle = filter.calculate(targetInfo.getTargetY());
+        //System.out.println("Target Y:" + targetInfo.getTargetY());
         aimingSubsystem.setAngle(currentAngle);
-        lastAngle = currentAngle;
       }
       else{
         aimingSubsystem.setAbsAngle(30);
       }
     }
     else{
-      aimingSubsystem.setAngle(lastAngle);
+      drive.curve(0, 0, true);
+      aimingSubsystem.setAngle(0);
     }
   }
 
   @Override
   protected boolean isFinished() {
+
+    if (RobotState.isDisabled())
+      return true;
+
     return false;
   }
 

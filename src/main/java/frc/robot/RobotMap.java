@@ -22,7 +22,7 @@ public class RobotMap {
   // CAN ID
   public static final int HOOK = 51;
   public static final int LIFT = 50;
-  public static final int INDEXING_MOTOR = 30;
+  public static final int MAGAZINE_MOTOR = 30;
   public static final int BELT_MOTOR = 22;
   public static final int LOADING_MOTOR = 31;
   public static final int FEEDER1 = -1;
@@ -85,8 +85,8 @@ public class RobotMap {
   // public static final double SHOOTER_I = 0.025;
   // public static final double SHOOTER_D = 0.001;
 
-  public static final double SHOOTER_P = 0.075;
-  public static final double SHOOTER_I = 0.025;
+  public static final double SHOOTER_P = 0.04;
+  public static final double SHOOTER_I = 0.0025;
   public static final double SHOOTER_D = 0.001;
 
   public static final double ANGLE_P = -1;
@@ -107,9 +107,11 @@ public class RobotMap {
   // Max Trajectory Velocity/Acceleration
   public static final double kMaxAccelerationFeetPerSecondSquared = 1.5;
 
+  public static final double ANGLE_TO_TICK_RATIO = 1.0 / 2.0;
   public static final double TARGET_HEIGHT = 0;
   public static final double LIMELIGHT_HEIGHT = 0;
   public static final double LIMELIGHT_ANGLE = 0;
+
 
   // Magazine
   public static final int MAG_POS_FIRST = 2;
@@ -117,7 +119,7 @@ public class RobotMap {
   public static final int MAG_POS_LAST = 0;
   public static final int SHOOTER_POS = 4;
   public static final int FEEDER_POS = 3;
-  public static final int PRE_MAG = 6;
+  public static final int PRE_MAG = 5;
 
   public static int ballCount = 0;
 

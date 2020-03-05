@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
+import frc.robot.auto.AutoShootThree;
 import frc.robot.commands.*;
 import frc.robot.helpers.JoystickAnalogButton;
 import frc.robot.helpers.Limelight;
@@ -68,6 +69,8 @@ public class RobotContainer {
 
     //Auto command(s) should be accessed from this method
     public Command getAutoCommand(){
-        return new TurnToVisionTarget(drive, limelight, aimingSubsystem);
+        return new AutoShootThree(this.aimingSubsystem, this.drive, this.imSubsystem,this.limelight,this.shooter);
+        //return new TurnToVisionTarget(drive, limelight, aimingSubsystem);
+
     }
 }
