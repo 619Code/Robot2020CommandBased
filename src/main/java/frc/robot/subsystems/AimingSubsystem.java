@@ -11,11 +11,13 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.RobotMap;
+import frc.robot.hardware.LimitSwitch;
 
 //This is the shooter subsystem. All methods or information related to the shooter should be accessed through this class.
 public class AimingSubsystem extends Subsystem {
   private CANSparkMax angleMotor;
   private PIDController anglePID;
+  private LimitSwitch zeroSwitch;
 
   public AimingSubsystem() {
            
@@ -26,6 +28,8 @@ public class AimingSubsystem extends Subsystem {
     angleMotor.setIdleMode(IdleMode.kCoast);
     anglePID = new PIDController(RobotMap.SHOOTER_P, RobotMap.SHOOTER_I, RobotMap.SHOOTER_D);
     angleMotor.getEncoder().setPosition(0);
+
+    zeroSwitch = new LimitSwitch(RobotMap.ZEROSWITCH);
   }  
 
   public void setAngle(double angle) {
@@ -41,9 +45,10 @@ public class AimingSubsystem extends Subsystem {
   }
 
   public void setZero(){
-    this.setAbsAngle(15);
-    //angleMotor.set(0);
-    //angleMotor.getEncoder().setPosition(0);
+    this.setAbsAngle(RobotMap.DEFAULT_ANGLE);
+    if(zeroSwitch.get()){
+      angleMotor.getEncoder().setPosition(0);
+    }
   }
 
   @Override

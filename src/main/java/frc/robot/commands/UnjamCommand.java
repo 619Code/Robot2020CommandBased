@@ -1,11 +1,6 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.RobotMap;
-import frc.robot.States;
-import frc.robot.helpers.EGatheringState;
 import frc.robot.helpers.IterativeDelay;
 import frc.robot.subsystems.IntakeMagazineSubsystem;
 

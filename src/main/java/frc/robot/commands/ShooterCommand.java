@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.States;
-import frc.robot.helpers.EShootState;
 import frc.robot.helpers.IterativeDelay;
 import frc.robot.helpers.Limelight;
 import frc.robot.subsystems.IntakeMagazineSubsystem;

@@ -11,14 +11,12 @@ import edu.wpi.first.wpilibj.LinearFilter;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import frc.robot.subsystems.AimingSubsystem;
-import frc.robot.subsystems.IntakeMagazineSubsystem;
-import frc.robot.subsystems.ShiftingWCDSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.RobotMap;
 import frc.robot.States;
 import frc.robot.helpers.Limelight;
 import frc.robot.helpers.TargetInfo;
+import frc.robot.subsystems.AimingSubsystem;
+import frc.robot.subsystems.ShiftingWCDSubsystem;
 
 public class TurnToVisionTarget extends Command {
   private ShiftingWCDSubsystem drive;

@@ -33,6 +33,10 @@ public class RobotMap {
   public static final int SHOOTER_MOTOR_LEFT = 40;
   public static final int ANGLE_MOTOR = 42;
 
+  public static final int ZEROSWITCH = 6;
+
+  public static final double DEFAULT_ANGLE = 5.0;
+
   public static final int kPIDLoopIdx = 0;
   public static final int kTimeoutMs = 30;
 
