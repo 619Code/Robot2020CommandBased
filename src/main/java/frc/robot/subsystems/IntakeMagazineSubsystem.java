@@ -43,7 +43,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
         roller.configFactoryDefault();
         roller.setNeutralMode(NeutralMode.Coast);
 
-        wrist = new Solenoid(RobotMap.INTAKE_SOLENOID);
+        wrist = new Solenoid(RobotMap.PCM_CAN_ID, RobotMap.INTAKE_SOLENOID);
 
         intakeBelt = new CANSparkMax(RobotMap.BELT_MOTOR, MotorType.kBrushless);
         intakeBelt.restoreFactoryDefaults();

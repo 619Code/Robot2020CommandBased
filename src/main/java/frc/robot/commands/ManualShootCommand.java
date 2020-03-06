@@ -7,7 +7,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -17,6 +19,9 @@ public class ManualShootCommand extends Command {
    */
   private ShooterSubsystem shooterSubsystem;
   private XboxController joystick;
+
+  double speedAdjust;
+  double speed;
 
   public ManualShootCommand(ShooterSubsystem shooterSubsystem, XboxController joystick) {
     this.shooterSubsystem = shooterSubsystem;
@@ -34,14 +39,13 @@ public class ManualShootCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if(joystick.getTriggerAxis(Hand.kRight)>0.5){
-    // shooterSubsystem.shoot(.5);
-    // }
-    // else{
-    // shooterSubsystem.shoot(0);
-    // }
-    //shooterSubsystem.shoot(joystick.getTriggerAxis(Hand.kRight));
-    shooterSubsystem.shoot(.8);
+    if(Math.abs(joystick.getY(Hand.kRight)) > 0.1) {
+      speedAdjust = joystick.getY(Hand.kRight);
+    } else {
+      speedAdjust = 0;
+    }
+    speed = 0.9 + (speedAdjust/10);
+    shooterSubsystem.shoot(speed);
     System.out.println(shooterSubsystem.getVelocity());
   }
 

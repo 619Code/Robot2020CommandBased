@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
@@ -31,18 +32,22 @@ public class RobotContainer {
     private final XboxController primaryJoystick, secondaryJoystick;
     private final Limelight limelight;
     private final AimingSubsystem aimingSubsystem;
-
+    //private final Compressor compressor;
     //Initialize all subsystems and set default commands
     public RobotContainer() {
         drive = new ShiftingWCDSubsystem();
         imSubsystem = new IntakeMagazineSubsystem();
         shooter = new ShooterSubsystem();
         climber = new ClimberSubsystem();
+
         primaryJoystick = new XboxController(0);
         secondaryJoystick = new XboxController(1);
+        
         limelight = new Limelight();
         aimingSubsystem = new AimingSubsystem();
+        //compressor = new Compressor(RobotMap.PCM_CAN_ID);
 
+        //compressor.setClosedLoopControl(true);
         limelight.TurnLightOff();
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
         imSubsystem.setDefaultCommand(new IntakeMagazineDefaultCommand(imSubsystem, secondaryJoystick));
@@ -59,11 +64,11 @@ public class RobotContainer {
         var gatherBallsButton = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value , 0.5);
         gatherBallsButton.whileHeld(new GatherBallsCommand(imSubsystem, secondaryJoystick));
 
-        var shootBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value , 0.5);
-        shootBalls.whileHeld(new ManualShootCommand(shooter, secondaryJoystick));
+        var shootBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value , 0.1);
+        shootBalls.whileHeld(new ShooterCommand(this.imSubsystem, this.limelight, this.shooter));
 
         var shooterButtonTest = new JoystickButton(secondaryJoystick, XboxController.Button.kY.value);
-        shooterButtonTest.whileHeld(new ShooterCommand(this.imSubsystem, this.limelight, this.shooter));
+        shooterButtonTest.whileHeld(new ManualShootCommand(shooter, secondaryJoystick));
 
         var unjamButton = new JoystickButton(secondaryJoystick, XboxController.Button.kX.value);
         unjamButton.whileHeld(new UnjamCommand(this.imSubsystem));

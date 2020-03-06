@@ -22,18 +22,21 @@ public class IntakeMagazineDefaultCommand extends Command {
       imSubsystem.Loader(0);
       imSubsystem.IntakeBelt(0);
       imSubsystem.SpinIntake(0);
-      if(joystick.getBumper(Hand.kRight)) {
+      /*if(joystick.getBumper(Hand.kRight)) {
         imSubsystem.Loader(-0.8);
       }  
       if(joystick.getBumper(Hand.kLeft)){
         imSubsystem.MagazineBelt(-0.5);
         imSubsystem.IntakeBelt(-0.5);
-      }
+      }*/
       if(joystick.getPOV(0) == 0){
         imSubsystem.RaiseIntake();
       }
       if(joystick.getPOV(0) == 180){
         imSubsystem.LowerIntake();
+      }
+      if(joystick.getAButton()) {
+        imSubsystem.SpinIntake(-0.5); //we could maybe change this, IDK
       }
     }
 

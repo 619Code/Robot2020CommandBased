@@ -128,7 +128,7 @@ public class GatherBallsCommand extends Command {
         }
         else
         {
-            this.imSubsystem.IntakeBelt(.1);
+            this.imSubsystem.IntakeBelt(.2);
             this.imSubsystem.MagazineBelt(.2);
         }
     }

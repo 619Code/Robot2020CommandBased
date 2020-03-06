@@ -55,9 +55,11 @@ public class RobotMap {
    */
 
   // Solenoids
-  public static final int PCM_CAN_ID = -1;
+  public static final int PCM_CAN_ID = 0;
   public static final int INTAKE_SOLENOID = 0;
-  public static final int[] DRIVE_SOLENOID = {1, 4};
+  public static final int DRIVE_SOLENOID_FORWARD = 1;
+  public static final int DRIVE_SOLENOID_BACK = 4;
+
 
   // Climb Constants
   public static final double PULLEY_RATIO = -1;

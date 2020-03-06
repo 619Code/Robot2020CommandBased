@@ -33,7 +33,7 @@ public class ShiftingWCDSubsystem extends Subsystem {
     initMotors();
     initDrive();
     initSensors();
-    shifter = new DoubleSolenoid(RobotMap.DRIVE_SOLENOID[0],RobotMap.DRIVE_SOLENOID[1]);
+    shifter = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.DRIVE_SOLENOID_FORWARD,RobotMap.DRIVE_SOLENOID_BACK);
   }
 
   //Initialize the motors, drive, and sensors

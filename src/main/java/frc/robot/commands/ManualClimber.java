@@ -36,12 +36,12 @@ public class ManualClimber extends Command {
   @Override
   public void execute() {
     double speed = joystick.getY(Hand.kRight);
-    if (Math.abs(speed) > 0.05) {
+    if (Math.abs(speed) > 0.1) {
       speed *= 0.3;
       climberSubsystem.setHookPosition(speed);
       // System.out.println("Raw Speed: " + speed);
     } else {
-      climberSubsystem.setHookPosition(0);
+      climberSubsystem.setHookPosition(0.05);
     }
     if (joystick.getBButton()) {
       climberSubsystem.extendLift(-1);
