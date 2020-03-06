@@ -52,6 +52,7 @@ public class RobotContainer {
         imSubsystem.setDefaultCommand(new IntakeMagazineDefaultCommand(imSubsystem, secondaryJoystick));
         climber.setDefaultCommand(new ManualClimber(climber, secondaryJoystick));
         aimingSubsystem.setDefaultCommand(new AimingSetZeroCommand(aimingSubsystem));
+        shooter.setDefaultCommand(new ManualShootCommand(shooter, secondaryJoystick));
         ConfigureControllers();
     }
 
@@ -65,9 +66,6 @@ public class RobotContainer {
 
         var unloadMag = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value , 0.5);
         unloadMag.whileHeld(new ShooterCommand(this.imSubsystem, this.shooter));
-
-        var manualShoot = new JoystickButton(secondaryJoystick, XboxController.Button.kBumperRight.value);
-        manualShoot.whileHeld(new ManualShootCommand(shooter, secondaryJoystick));
 
         var unjamButton = new JoystickButton(secondaryJoystick, XboxController.Button.kX.value);
         unjamButton.whileHeld(new UnjamCommand(this.imSubsystem));

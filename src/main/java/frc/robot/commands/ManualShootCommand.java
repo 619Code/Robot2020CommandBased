@@ -25,7 +25,7 @@ public class ManualShootCommand extends Command {
   public ManualShootCommand(ShooterSubsystem shooterSubsystem, XboxController joystick) {
     this.shooterSubsystem = shooterSubsystem;
     this.joystick = joystick;
-    //requires(shooterSubsystem);
+    requires(shooterSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -44,7 +44,14 @@ public class ManualShootCommand extends Command {
       speedAdjust = 0;
     }
     speed = 0.9 + (speedAdjust/10);
-    shooterSubsystem.shoot(speed);
+
+    if (joystick.getBumper(Hand.kRight)){
+      shooterSubsystem.shoot(speed);
+    }
+    else{
+      shooterSubsystem.shoot(0);
+    }
+    
     //System.out.println(shooterSubsystem.getVelocity());
   }
 

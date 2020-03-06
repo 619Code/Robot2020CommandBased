@@ -24,8 +24,9 @@ public class ShooterCommand extends Command {
         this.imSubsystem = imSubsystem;
         this.shooterSubsystem = shooterSubsystem;
         requires(imSubsystem);
-        requires(shooterSubsystem);
-
+        if(RobotState.isAutonomous()){
+            requires(shooterSubsystem);
+        }
         //this.speedupDelayTimer = new Timer();
                 
         this.speedupDelay = new IterativeDelay(150);
