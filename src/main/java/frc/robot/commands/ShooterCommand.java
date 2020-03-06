@@ -2,6 +2,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.States;
 import frc.robot.helpers.IterativeDelay;
@@ -12,6 +14,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterCommand extends Command {
 
     private final IntakeMagazineSubsystem imSubsystem;
+    private XboxController joystick;
     private final Limelight limelight;
     private final ShooterSubsystem shooterSubsystem;
     private final double goodVelocity = 0;
@@ -19,10 +22,11 @@ public class ShooterCommand extends Command {
     private IterativeDelay stopDelay;
     private Timer speedupDelayTimer;
 
-    public ShooterCommand(final IntakeMagazineSubsystem im, final Limelight ll, final ShooterSubsystem ss) {
+    public ShooterCommand(final IntakeMagazineSubsystem im, final Limelight ll, final ShooterSubsystem ss, XboxController joystick) {
         imSubsystem = im;
         limelight = ll;
         shooterSubsystem = ss;
+        this.joystick = joystick;
         requires(imSubsystem);
         requires(ss);
 
@@ -48,8 +52,22 @@ public class ShooterCommand extends Command {
 
         super.execute();
         this.speedupDelay.Cycle();
-        shooterSubsystem.shoot(1);
+        double speedAdjust = 0;
+        double speed = 0.9;
 
+        if (this.joystick != null)
+        {
+            if(Math.abs(joystick.getY(Hand.kLeft)) > 0.1) {
+                speedAdjust = joystick.getY(Hand.kLeft);
+            } 
+            else {
+                speedAdjust = 0;
+            }
+        }
+
+        speed = speed + (speedAdjust/10);
+        shooterSubsystem.shoot(speed);
+        
         if (this.speedupDelay.IsDone())
         {
             imSubsystem.Loader(-0.6);

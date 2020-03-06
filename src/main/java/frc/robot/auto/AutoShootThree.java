@@ -8,9 +8,9 @@ import frc.robot.subsystems.*;
 
 public class AutoShootThree extends CommandGroup {
     public AutoShootThree(AimingSubsystem aimingSubsystem, ShiftingWCDSubsystem drive, IntakeMagazineSubsystem im, Limelight limelight, ShooterSubsystem shooter) {
-       addSequential(new PathFollower(new SixFeet(), drive, false, true ));
-       addParallel(new TurnToVisionTarget(drive, limelight, aimingSubsystem));
-       addSequential(new WaitTillOnTargetCommand(limelight));
-       addSequential(new ShooterCommand(im, limelight, shooter));
+       addSequential(new PathFollower(new SixFeet(), drive, true, true));
+       addSequential(new TurnToVisionTarget(drive, limelight, aimingSubsystem), 3.0);
+       //addSequential(new WaitTillOnTargetCommand(limelight));
+       addSequential(new ShooterCommand(im, limelight, shooter, null));
     }
 }

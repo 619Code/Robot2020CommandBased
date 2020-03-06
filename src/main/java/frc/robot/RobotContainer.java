@@ -65,7 +65,7 @@ public class RobotContainer {
         gatherBallsButton.whileHeld(new GatherBallsCommand(imSubsystem, secondaryJoystick));
 
         var shootBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value , 0.1);
-        shootBalls.whileHeld(new ShooterCommand(this.imSubsystem, this.limelight, this.shooter));
+        shootBalls.whileHeld(new ShooterCommand(this.imSubsystem, this.limelight, this.shooter, secondaryJoystick));
 
         var shooterButtonTest = new JoystickButton(secondaryJoystick, XboxController.Button.kY.value);
         shooterButtonTest.whileHeld(new ManualShootCommand(shooter, secondaryJoystick));

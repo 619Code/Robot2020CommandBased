@@ -45,9 +45,11 @@ public class AimingSubsystem extends Subsystem {
   }
 
   public void setZero(){
-    this.setAbsAngle(RobotMap.DEFAULT_ANGLE);
     if(zeroSwitch.get()){
       angleMotor.set(0);      
+    }
+    else{
+      angleMotor.set(-0.1);
     }
   }
 
