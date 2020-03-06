@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.auto;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.paths.DistanceCalib;

@@ -43,7 +43,7 @@ public class ManualClimber extends Command {
     } else {
       climberSubsystem.setHookPosition(0.05);
     }
-    if (joystick.getBButton()) {
+    if (joystick.getBumper(Hand.kLeft)) {
       climberSubsystem.extendLift(-1);
     } else {
       climberSubsystem.extendLift(0);

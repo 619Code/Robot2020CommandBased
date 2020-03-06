@@ -7,9 +7,8 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -33,7 +32,7 @@ public class ManualShootCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("intialized the shooter");
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,7 +45,7 @@ public class ManualShootCommand extends Command {
     }
     speed = 0.9 + (speedAdjust/10);
     shooterSubsystem.shoot(speed);
-    System.out.println(shooterSubsystem.getVelocity());
+    //System.out.println(shooterSubsystem.getVelocity());
   }
 
   // Returns true when the command should end.

@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.RobotMap;
 import frc.robot.States;
-import frc.robot.helpers.EGatheringState;
 import frc.robot.helpers.IterativeDelay;
+import frc.robot.helpers.states.EGatheringState;
 import frc.robot.subsystems.IntakeMagazineSubsystem;
 
 public class GatherBallsCommand extends Command {

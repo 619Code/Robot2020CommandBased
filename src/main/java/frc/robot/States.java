@@ -1,8 +1,8 @@
 package frc.robot;
 
-import frc.robot.helpers.EGatheringState;
-import frc.robot.helpers.ERobotState;
-import frc.robot.helpers.EShootState;
+import frc.robot.helpers.states.EGatheringState;
+import frc.robot.helpers.states.ERobotState;
+import frc.robot.helpers.states.EShootState;
 
 //This tracks the current state of each robot part
 public class States {

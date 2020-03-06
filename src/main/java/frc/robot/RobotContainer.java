@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
@@ -58,17 +57,17 @@ public class RobotContainer {
 
     //If a button triggers a command, it should be declared here
     public void ConfigureControllers() {
-        var shooterButton = new JoystickButton(primaryJoystick, XboxController.Button.kB.value);
-        shooterButton.whileHeld(new TurnToVisionTarget(drive, limelight, this.aimingSubsystem));
+        var aimButton = new JoystickButton(primaryJoystick, XboxController.Button.kB.value);
+        aimButton.whileHeld(new TurnToVisionTarget(drive, limelight, this.aimingSubsystem));
         
         var gatherBallsButton = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kLeftTrigger.value , 0.5);
         gatherBallsButton.whileHeld(new GatherBallsCommand(imSubsystem, secondaryJoystick));
 
-        var shootBalls = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value , 0.1);
-        shootBalls.whileHeld(new ShooterCommand(this.imSubsystem, this.limelight, this.shooter, secondaryJoystick));
+        var unloadMag = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value , 0.5);
+        unloadMag.whileHeld(new ShooterCommand(this.imSubsystem, this.shooter));
 
-        var shooterButtonTest = new JoystickButton(secondaryJoystick, XboxController.Button.kY.value);
-        shooterButtonTest.whileHeld(new ManualShootCommand(shooter, secondaryJoystick));
+        var manualShoot = new JoystickButton(secondaryJoystick, XboxController.Button.kBumperRight.value);
+        manualShoot.whileHeld(new ManualShootCommand(shooter, secondaryJoystick));
 
         var unjamButton = new JoystickButton(secondaryJoystick, XboxController.Button.kX.value);
         unjamButton.whileHeld(new UnjamCommand(this.imSubsystem));

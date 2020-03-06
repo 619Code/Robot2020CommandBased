@@ -1,14 +1,11 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.AlternateEncoderType;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.RobotMap;
 
 //This is the shooter subsystem. All methods or information related to the shooter should be accessed through this class.

@@ -3,7 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.helpers.ERobotState;
+import frc.robot.helpers.states.ERobotState;
 
 //This is the main robot class. All mode behaviors are set and run in this class.
 public class Robot extends TimedRobot {
