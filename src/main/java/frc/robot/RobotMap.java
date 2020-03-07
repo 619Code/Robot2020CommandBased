@@ -60,11 +60,11 @@ public class RobotMap {
   public static final int DRIVE_SOLENOID_FORWARD = 1;
   public static final int DRIVE_SOLENOID_BACK = 4;
 
-
   // Climb Constants
   public static final double PULLEY_RATIO = -1;
   public static final double GEAR_RATIO = -1;
   public static final double DISTANCE = -1;
+  public static final double CLIMB_TARGET = 0;
 
   // DRIVE
   public static final double WHEEL_DIAMETER = 6;
@@ -87,21 +87,25 @@ public class RobotMap {
   public static final double DISTANCE_I = 0; // 8
   public static final double DISTANCE_D = 0;
 
-  // public static final double SHOOTER_P = 0.08;
-  // public static final double SHOOTER_I = 0.025;
-  // public static final double SHOOTER_D = 0.001;
+  // public static final double ANGLE_P = 0.08;
+  // public static final double ANGLE_I = 0.025;
+  // public static final double ANGLE_D = 0.001;
 
-  public static final double SHOOTER_P = 0.04;
-  public static final double SHOOTER_I = 0.0025;
-  public static final double SHOOTER_D = 0.001;
+  public static final double ANGLE_P = 0.04;
+  public static final double ANGLE_I = 0.0025;
+  public static final double ANGLE_D = 0.001;
 
-  public static final double ANGLE_P = -1;
-  public static final double ANGLE_I = -1;
-  public static final double ANGLE_D = -1;
+  public static final double SHOOTER_P = 0.0;
+  public static final double SHOOTER_I = 0.0;
+  public static final double SHOOTER_D = 0.0;
 
-  public static final double HOOK_P = -1;
-  public static final double HOOK_I = -1;
-  public static final double HOOK_D = -1;
+  // public static final double ANGLE_P = -1;
+  // public static final double ANGLE_I = -1;
+  // public static final double ANGLE_D = -1;
+
+  public static final double HOOK_P = 0.01;
+  public static final double HOOK_I = 0.0;
+  public static final double HOOK_D = 0.0;
 
   public static final double TARGET_P = 0.03; // 0.64 0.12
   public static final double TARGET_I = 0.0;
@@ -117,7 +121,6 @@ public class RobotMap {
   public static final double TARGET_HEIGHT = 0;
   public static final double LIMELIGHT_HEIGHT = 0;
   public static final double LIMELIGHT_ANGLE = 0;
-
 
   // Magazine
   public static final int MAG_POS_FIRST = 2;

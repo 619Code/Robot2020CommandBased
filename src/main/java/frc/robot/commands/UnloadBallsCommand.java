@@ -9,30 +9,26 @@ import frc.robot.helpers.IterativeDelay;
 import frc.robot.subsystems.IntakeMagazineSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterCommand extends Command {
+public class UnloadBallsCommand extends Command {
 
     private IntakeMagazineSubsystem imSubsystem;
     private XboxController joystick;
-    
+
     private ShooterSubsystem shooterSubsystem;
     private double goodVelocity = 0;
     private IterativeDelay speedupDelay;
     private IterativeDelay stopDelay;
     private Timer speedupDelayTimer;
 
-    public ShooterCommand(IntakeMagazineSubsystem imSubsystem, ShooterSubsystem shooterSubsystem) {
+    public UnloadBallsCommand(IntakeMagazineSubsystem imSubsystem) {
         this.imSubsystem = imSubsystem;
-        this.shooterSubsystem = shooterSubsystem;
         requires(imSubsystem);
-        if(RobotState.isAutonomous()){
-            requires(shooterSubsystem);
-        }
-        //this.speedupDelayTimer = new Timer();
-                
+        // this.speedupDelayTimer = new Timer();
+
         this.speedupDelay = new IterativeDelay(150);
         this.stopDelay = new IterativeDelay(150);
 
-        //this.speedupDelayTimer.start();
+        // this.speedupDelayTimer.start();
     }
 
     @Override
@@ -48,56 +44,44 @@ public class ShooterCommand extends Command {
     protected void execute() {
         super.execute();
         this.speedupDelay.Cycle();
-        double speed = 0.9;
 
-        if (RobotState.isAutonomous())
-        {
-            shooterSubsystem.shoot(speed);
-
-            if (this.speedupDelay.IsDone())
-            {
+        if (RobotState.isAutonomous()) {
+            if (this.speedupDelay.IsDone()) {
                 unloadBalls();
             }
-        }
-        else{
+        } else {
             unloadBalls();
         }
 
-        if (imSubsystem.isEmpty())
-        {
+        if (imSubsystem.isEmpty()) {
             this.stopDelay.Cycle();
         }
 
     }
 
-    public void unloadBalls(){
+    public void unloadBalls() {
         imSubsystem.Loader(-0.6);
-            if (!(imSubsystem.HasBallAtIndex(3)||imSubsystem.HasBallAtIndex(4)||imSubsystem.HasBallAtIndex(5))){
-                imSubsystem.MagazineBelt(-0.4);
-            }
-            else {
-                imSubsystem.MagazineBelt(0);
-            }
-            if (!(imSubsystem.HasBallAtIndex(5))){
-                imSubsystem.IntakeBelt(-1);
-            }
-            else{
-                imSubsystem.IntakeBelt(0.3);
-            }
+        if (!(imSubsystem.HasBallAtIndex(3) || imSubsystem.HasBallAtIndex(4) || imSubsystem.HasBallAtIndex(5))) {
+            imSubsystem.MagazineBelt(-0.4);
+        } else {
+            imSubsystem.MagazineBelt(0);
+        }
+        if (!(imSubsystem.HasBallAtIndex(5))) {
+            imSubsystem.IntakeBelt(-1);
+        } else {
+            imSubsystem.IntakeBelt(0.3);
+        }
     }
 
     @Override
     protected boolean isFinished() {
-        if(RobotState.isDisabled())
+        if (RobotState.isDisabled())
             return true;
 
-        if (this.stopDelay.IsDone())
-        {
-            //States.ShooterState = EShootState.Finished;
+        if (this.stopDelay.IsDone()) {
+            // States.ShooterState = EShootState.Finished;
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -108,7 +92,5 @@ public class ShooterCommand extends Command {
         imSubsystem.Loader(0);
         imSubsystem.IntakeBelt(0);
         imSubsystem.MagazineBelt(0);
-        shooterSubsystem.shoot(0);
     }
 }
-

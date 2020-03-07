@@ -20,7 +20,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     private Solenoid wrist;
 
     BallIndex[] positions;
-    
+
     public IntakeMagazineSubsystem() {
 
         // Back magazine belt holding 3 balls
@@ -28,7 +28,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
         magazine.restoreFactoryDefaults();
         magazine.setSecondaryCurrentLimit(35);
         magazine.setIdleMode(IdleMode.kCoast);
-        
+
         // Vertical loader
         loading = new CANSparkMax(RobotMap.LOADING_MOTOR, MotorType.kBrushless);
         loading.restoreFactoryDefaults();
@@ -45,25 +45,21 @@ public class IntakeMagazineSubsystem extends Subsystem {
         intakeBelt.restoreFactoryDefaults();
         intakeBelt.setSecondaryCurrentLimit(50);
         intakeBelt.setIdleMode(IdleMode.kCoast);
-        
+
         // Magazine index diagram
         // [3]
         // [4][2][1][0]
         // Position sensors detecting balls
-        this.positions = new BallIndex[] {
-            new BallIndex(RobotMap.MAG_POS_FIRST),
-            new BallIndex(RobotMap.MAG_POS_SECOND),
-            new BallIndex(RobotMap.MAG_POS_LAST),
-            new BallIndex(RobotMap.SHOOTER_POS),
-            new BallIndex(RobotMap.FEEDER_POS),
-            new BallIndex(RobotMap.PRE_MAG)
-        };
+        this.positions = new BallIndex[] { new BallIndex(RobotMap.MAG_POS_FIRST),
+                new BallIndex(RobotMap.MAG_POS_SECOND), new BallIndex(RobotMap.MAG_POS_LAST),
+                new BallIndex(RobotMap.SHOOTER_POS), new BallIndex(RobotMap.FEEDER_POS),
+                new BallIndex(RobotMap.PRE_MAG) };
 
-        // It needs to be noted that a sensor that sees the ball reads 0 and a sensor that does not see a ball reads
+        // It needs to be noted that a sensor that sees the ball reads 0 and a sensor
+        // that does not see a ball reads
     }
 
-    public void LogDigitalInputs()
-    {
+    public void LogDigitalInputs() {
 
     }
 
@@ -72,16 +68,15 @@ public class IntakeMagazineSubsystem extends Subsystem {
             if (this.positions[i].hasBall() == false)
                 return i;
         }
-        //Indicates no free slots
+        // Indicates no free slots
         return -1;
     }
 
-    public boolean HasBallAtIndex(int index)
-    {
+    public boolean HasBallAtIndex(int index) {
         return this.positions[index].hasBall();
     }
 
-    // Load chamber.  Provice negative values to to 
+    // Load chamber. Provice negative values to to
     public void Loader(double speed) {
         loading.set(speed);
     }
@@ -93,35 +88,33 @@ public class IntakeMagazineSubsystem extends Subsystem {
     public boolean isFilled() {
 
         // Return false if ball is not in position 0,1,2,3
-        for(int i = 0; i < 4; i++)
-        {
-            if(!positions[i].hasBall()) {
+        for (int i = 0; i < 4; i++) {
+            if (!positions[i].hasBall()) {
                 return false;
             }
         }
 
-        // If either the intake position sensors are reading positive consider the system
-        //  full
+        // If either the intake position sensors are reading positive consider the
+        // system
+        // full
         if (positions[4].hasBall() || positions[5].hasBall())
             return true;
         else
             return false;
     }
 
-    public boolean IsMagazineFilled() {        
-        for(int i = 0; i < 3; i++)
-        {
-            if(!positions[i].hasBall()) {
+    public boolean IsMagazineFilled() {
+        for (int i = 0; i < 3; i++) {
+            if (!positions[i].hasBall()) {
                 return false;
             }
         }
         return true;
     }
 
-    public boolean IsMagazineOccupied() {        
-        for(int i = 0; i < 3; i++)
-        {
-            if(positions[i].hasBall()) {
+    public boolean IsMagazineOccupied() {
+        for (int i = 0; i < 3; i++) {
+            if (positions[i].hasBall()) {
                 return true;
             }
         }
@@ -133,41 +126,35 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public boolean IsIntakePositionFilled() {
-        return positions[4].hasBall()||positions[5].hasBall();
+        return positions[4].hasBall() || positions[5].hasBall();
     }
 
-    public void SpinIntake(double speed)
-    {
+    public void SpinIntake(double speed) {
         roller.set(ControlMode.PercentOutput, speed);
     }
 
-    public void IntakeBelt(double speed)
-    {        
+    public void IntakeBelt(double speed) {
         intakeBelt.set(speed);
     }
 
-    public void RaiseIntake() 
-    {
-        wrist.set(false);        
+    public void RaiseIntake() {
+        wrist.set(false);
     }
 
-    public void LowerIntake() 
-    {
+    public void LowerIntake() {
         wrist.set(true);
     }
-
 
     @Override
     protected void initDefaultCommand() {
     }
 
-	public boolean isEmpty() {
-		for(int i = 0; i < 6; i++)
-        {
-            if(positions[i].hasBall()) {
+    public boolean isEmpty() {
+        for (int i = 0; i < 6; i++) {
+            if (positions[i].hasBall()) {
                 return false;
             }
         }
         return true;
-	}
+    }
 }

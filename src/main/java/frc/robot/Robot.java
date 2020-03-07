@@ -10,7 +10,9 @@ public class Robot extends TimedRobot {
   private RobotContainer robotContainer;
   private Scheduler scheduler;
   private Command autoCommand;
-  //Sets up the robot and prints a list of information about the current state of the robot
+
+  // Sets up the robot and prints a list of information about the current state of
+  // the robot
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();
@@ -18,16 +20,17 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void robotPeriodic() {    
-    if (autoCommand != null) { 
-      //System.out.println("Interrupted:" + autoCommand.isInterruptible());
-      //System.out.println("Canceled:" + autoCommand.isCanceled());
-      //System.out.println("Complete:" + autoCommand.isCompleted());
-      //System.out.println("Running:" + autoCommand.isRunning());
+  public void robotPeriodic() {
+    if (autoCommand != null) {
+      // System.out.println("Interrupted:" + autoCommand.isInterruptible());
+      // System.out.println("Canceled:" + autoCommand.isCanceled());
+      // System.out.println("Complete:" + autoCommand.isCompleted());
+      // System.out.println("Running:" + autoCommand.isRunning());
     }
   }
 
-  //The disabled state shouldn't do anything other than cancelling any commands that are currently running
+  // The disabled state shouldn't do anything other than cancelling any commands
+  // that are currently running
   @Override
   public void disabledInit() {
     States.RobotState = ERobotState.Disabled;
@@ -36,12 +39,12 @@ public class Robot extends TimedRobot {
     }
     this.robotContainer.AllStop();
   }
-  
+
   @Override
   public void disabledPeriodic() {
   }
-  
-  //get auto command, start the command, and run the command
+
+  // get auto command, start the command, and run the command
   @Override
   public void autonomousInit() {
     States.RobotState = ERobotState.Auto;
@@ -57,7 +60,8 @@ public class Robot extends TimedRobot {
     scheduler.run();
   }
 
-  //Cancel all auto commands and run the default drive command (located in RobotContainer)
+  // Cancel all auto commands and run the default drive command (located in
+  // RobotContainer)
   @Override
   public void teleopInit() {
     States.RobotState = ERobotState.Teleop;
@@ -72,7 +76,7 @@ public class Robot extends TimedRobot {
     scheduler.run();
   }
 
-  //This section should be configured to whatever is needed at the moment
+  // This section should be configured to whatever is needed at the moment
   @Override
   public void testInit() {
     States.RobotState = ERobotState.Test;

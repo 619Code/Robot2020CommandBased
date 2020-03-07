@@ -10,6 +10,7 @@ public class CurveDriveCommand extends Command {
   private XboxController joystick;
   private double speed, rotation;
   private boolean isLowGear;
+
   public CurveDriveCommand(ShiftingWCDSubsystem drive, XboxController joystick) {
     this.drive = drive;
     this.joystick = joystick;
@@ -35,15 +36,14 @@ public class CurveDriveCommand extends Command {
     if (Math.abs(rotation) < 0.075) {
       rotation = 0;
     }
-    if (joystick.getTriggerAxis(Hand.kLeft) > 0.5){
+    if (joystick.getTriggerAxis(Hand.kLeft) > 0.5) {
       isLowGear = true;
-    }
-    else if (joystick.getTriggerAxis(Hand.kRight) < 0.5){
+    } else if (joystick.getTriggerAxis(Hand.kRight) < 0.5) {
       speed = speed * 0.5;
       rotation = rotation * 0.5;
       isLowGear = false;
     }
-  }  
+  }
 
   @Override
   protected boolean isFinished() {
@@ -54,13 +54,12 @@ public class CurveDriveCommand extends Command {
   protected void end() {
   }
 
-
   @Override
   protected void interrupted() {
   }
 
   public void adjustVals() {
-    
+
   }
 
 }

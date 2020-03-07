@@ -8,8 +8,7 @@ public class UnjamCommand extends Command {
 
     private IntakeMagazineSubsystem imSubsystem;
     private IterativeDelay magazineStageOne;
-    //private IterativeDelay magazineStageTwo;
-
+    // private IterativeDelay magazineStageTwo;
 
     public UnjamCommand(IntakeMagazineSubsystem intakeMagazineSubsystem) {
         this.imSubsystem = intakeMagazineSubsystem;
@@ -19,18 +18,17 @@ public class UnjamCommand extends Command {
     @Override
     protected void initialize() {
         magazineStageOne = new IterativeDelay(10);
-        //magazineStageTwo = new IterativeDelay(10);
+        // magazineStageTwo = new IterativeDelay(10);
     }
 
     @Override
     protected void execute() {
-        magazineStageOne.Cycle();    
+        magazineStageOne.Cycle();
         this.imSubsystem.MagazineBelt(.3);
         this.imSubsystem.IntakeBelt(.3);
         this.imSubsystem.Loader(-.3);
         this.imSubsystem.SpinIntake(-.3);
     }
-
 
     @Override
     protected boolean isFinished() {

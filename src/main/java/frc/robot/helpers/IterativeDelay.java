@@ -1,12 +1,10 @@
 package frc.robot.helpers;
 
-public class IterativeDelay
-{
+public class IterativeDelay {
     int targetCycles;
     int cyclesPassed;
 
-    public IterativeDelay(int cycles)
-    {
+    public IterativeDelay(int cycles) {
         this.targetCycles = cycles;
         this.cyclesPassed = 0;
     }

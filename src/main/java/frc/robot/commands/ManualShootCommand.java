@@ -38,21 +38,24 @@ public class ManualShootCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Math.abs(joystick.getY(Hand.kRight)) > 0.1) {
-      speedAdjust = joystick.getY(Hand.kRight);
-    } else {
-      speedAdjust = 0;
-    }
-    speed = 0.9 + (speedAdjust/10);
+    if (!(this.joystick == null)) {
+      if (Math.abs(joystick.getY(Hand.kRight)) > 0.1) {
+        speedAdjust = joystick.getY(Hand.kRight);
+      } else {
+        speedAdjust = 0;
+      }
+      speed = 1.0 + (speedAdjust / 10.0);
 
-    if (joystick.getBumper(Hand.kRight)){
-      shooterSubsystem.shoot(speed);
+      if (joystick.getBumper(Hand.kRight)) {
+        shooterSubsystem.shoot(speed);
+      } else {
+        shooterSubsystem.shoot(0);
+      }
+    } else {
+      shooterSubsystem.shoot(1);
     }
-    else{
-      shooterSubsystem.shoot(0);
-    }
-    
-    //System.out.println(shooterSubsystem.getVelocity());
+
+    // System.out.println(shooterSubsystem.getVelocity());
   }
 
   // Returns true when the command should end.
@@ -63,6 +66,6 @@ public class ManualShootCommand extends Command {
 
   @Override
   protected void end() {
-    shooterSubsystem.shoot(0);    
+    shooterSubsystem.shoot(0);
   }
 }

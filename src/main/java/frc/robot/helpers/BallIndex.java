@@ -8,16 +8,15 @@ public class BallIndex {
 
     DigitalInput input;
 
-    public BallIndex(int channel)
-    {
+    public BallIndex(int channel) {
         input = new DigitalInput(channel);
     }
 
     public boolean hasBall() {
 
         // This is the oppisite logic of what you would think, but when
-        //  the sensor sees a ball it reads false and when the sensor
-        //  does not see the ball it reads 1.
+        // the sensor sees a ball it reads false and when the sensor
+        // does not see the ball it reads 1.
         if (input.get())
             return false;
         else

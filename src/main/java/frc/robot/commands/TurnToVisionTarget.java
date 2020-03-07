@@ -25,14 +25,16 @@ public class TurnToVisionTarget extends Command {
   private PIDController targetPID;
   private Limelight limelight;
   private LinearFilter filter;
+  private double lastAngle;
 
   public TurnToVisionTarget(ShiftingWCDSubsystem drive, Limelight limelight, AimingSubsystem aimingSubsystem) {
     this.drive = drive;
     this.limelight = limelight;
     this.aimingSubsystem = aimingSubsystem;
-    //this.imSubsystem = imSubsystem;
+    // this.imSubsystem = imSubsystem;
     targetInfo = limelight.GetTargetInfo();
     targetPID = new PIDController(RobotMap.TARGET_P, RobotMap.TARGET_I, RobotMap.TARGET_D);
+    lastAngle = 0;
     requires(drive);
     requires(aimingSubsystem);
   }
@@ -47,30 +49,28 @@ public class TurnToVisionTarget extends Command {
   protected void execute() {
 
     targetInfo = limelight.GetTargetInfo();
-    
-    double lastAngle = 0;
-    //Temp always do this
-    if(States.isShooting == false){     
+
+    // Temp always do this
+    if (States.isShooting == false) {
       double driveTargetAngle = -targetPID.calculate(targetInfo.getTargetX());
-      
+
       drive.curve(0, driveTargetAngle, true);
-      if(targetInfo.HasTarget) {      
+      if (targetInfo.HasTarget) {
         double currentTargetAngle = this.aimingSubsystem.getAngle() + targetInfo.getTargetY();
 
         lastAngle = currentTargetAngle;
+        // System.out.println(this.aimingSubsystem.getAngle() +":"+ currentTargetAngle
+        // +":"+targetInfo.getTargetY());
         // Filtering data coming from the limelight
-        //double currentAngle = filter.calculate(targetInfo.getTargetY());
-        //System.out.println("Target Y:" + targetInfo.getTargetY());
+        // double currentAngle = filter.calculate(targetInfo.getTargetY());
+        // System.out.println("Target Y:" + targetInfo.getTargetY());
         aimingSubsystem.setAngle(currentTargetAngle);
-      }
-      else{
+      } else {
         aimingSubsystem.setAngle(30);
       }
-    }
-    else{
+    } else {
       drive.curve(0, 0, true);
       aimingSubsystem.setAngle(lastAngle);
-      limelight.TurnLightOff();
     }
   }
 
@@ -85,7 +85,7 @@ public class TurnToVisionTarget extends Command {
 
   @Override
   protected void end() {
-    limelight.TurnLightOff();
+
   }
 
   @Override

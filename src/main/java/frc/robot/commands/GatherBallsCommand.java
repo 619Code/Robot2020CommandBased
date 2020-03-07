@@ -18,7 +18,7 @@ public class GatherBallsCommand extends Command {
     private boolean lastState = false;
     private boolean finished = false;
     private boolean latch = false;
-    //private Timer tweakMagazine;
+    // private Timer tweakMagazine;
     private int magazineTweakInSeconds = 1;
     private IterativeDelay tightenMagazine;
 
@@ -36,7 +36,7 @@ public class GatherBallsCommand extends Command {
 
     @Override
     protected void execute() {
-        //System.out.println(latch);
+        // System.out.println(latch);
         currentState = this.imSubsystem.HasBallAtIndex(4);
         if (getRisingEdge()) {
             RobotMap.ballCount++;
@@ -46,16 +46,14 @@ public class GatherBallsCommand extends Command {
             latch = false;
             if (!imSubsystem.HasBallAtIndex(0)) {
                 States.GatheringState = EGatheringState.FullIntake;
-            }
-            else {
+            } else {
                 if (imSubsystem.HasBallAtIndex(4)) {
                     States.GatheringState = EGatheringState.FullIntake;
                 } else {
                     States.GatheringState = EGatheringState.PartialIntake;
                 }
             }
-        } 
-        else {
+        } else {
             if (!imSubsystem.isFilled()) {
                 if (imSubsystem.HasBallAtIndex(3)) {
                     latch = false;
@@ -89,29 +87,29 @@ public class GatherBallsCommand extends Command {
         case PartialIntake:
             this.imSubsystem.Loader(.8);
             this.imSubsystem.MagazineBelt(0);
-            this.imSubsystem.IntakeBelt(0.8); 
+            this.imSubsystem.IntakeBelt(0.8);
             this.imSubsystem.SpinIntake(.5);
             break;
         case LoadChamber:
-            tightenMagazine();            
+            tightenMagazine();
             this.imSubsystem.MagazineBelt(0);
-            this.imSubsystem.Loader(-.8);            
+            this.imSubsystem.Loader(-.8);
             this.imSubsystem.IntakeBelt(0.8);
             this.imSubsystem.SpinIntake(.5);
             break;
         case LoadLast:
-            //tightenMagazine();
+            // tightenMagazine();
             this.imSubsystem.MagazineBelt(0);
-            this.imSubsystem.Loader(0); 
+            this.imSubsystem.Loader(0);
             this.imSubsystem.IntakeBelt(0.8);
             this.imSubsystem.SpinIntake(.5);
             break;
         case Stop:
-            this.tightenMagazine();            
+            this.tightenMagazine();
             this.imSubsystem.Loader(0);
             this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.IntakeBelt(0);
-            this.imSubsystem.SpinIntake(0);            
+            this.imSubsystem.SpinIntake(0);
             break;
         }
         lastState = currentState;
@@ -120,14 +118,11 @@ public class GatherBallsCommand extends Command {
     private void tightenMagazine() {
         this.tightenMagazine.Cycle();
         // Tweek the magazine to tighten up the magazine a little
-        if (this.tightenMagazine.IsDone())
-        {
+        if (this.tightenMagazine.IsDone()) {
             this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.IntakeBelt(0);
             finished = true;
-        }
-        else
-        {
+        } else {
             this.imSubsystem.IntakeBelt(.2);
             this.imSubsystem.MagazineBelt(.2);
         }

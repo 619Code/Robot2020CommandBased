@@ -1,14 +1,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.helpers.Limelight;
 import frc.robot.subsystems.AimingSubsystem;
 
 public class AimingSetZeroCommand extends Command {
-  
+
   private AimingSubsystem aimingSubsystem;
-  
-  public AimingSetZeroCommand(AimingSubsystem aimingSubsystem) {
+  private Limelight limelight;
+
+  public AimingSetZeroCommand(AimingSubsystem aimingSubsystem, Limelight limelight) {
     this.aimingSubsystem = aimingSubsystem;
+    this.limelight = limelight;
     requires(aimingSubsystem);
   }
 
@@ -19,8 +22,9 @@ public class AimingSetZeroCommand extends Command {
   @Override
   protected void execute() {
     this.aimingSubsystem.setZero();
+    limelight.TurnLightOff();
   }
-  
+
   @Override
   protected boolean isFinished() {
     return false;
@@ -29,7 +33,6 @@ public class AimingSetZeroCommand extends Command {
   @Override
   protected void end() {
   }
-
 
   @Override
   protected void interrupted() {

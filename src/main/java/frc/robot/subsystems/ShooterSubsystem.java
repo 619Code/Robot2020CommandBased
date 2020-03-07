@@ -16,16 +16,17 @@ public class ShooterSubsystem extends Subsystem {
 
   public ShooterSubsystem() {
     shooterMotorLeft = new CANSparkMax(RobotMap.SHOOTER_MOTOR_LEFT, MotorType.kBrushed);
-    
+
     shooterMotorLeft.restoreFactoryDefaults();
-    //speedEncoder = shooterMotorLeft.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192);
-    //speedEncoder = shooterMotorLeft.getEncoder(EncoderType.kQuadrature, 8192);    
+    // speedEncoder =
+    // shooterMotorLeft.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192);
+    // speedEncoder = shooterMotorLeft.getEncoder(EncoderType.kQuadrature, 8192);
     speedPID = shooterMotorLeft.getPIDController();
-    //speedPID.setFeedbackDevice(speedEncoder);
+    // speedPID.setFeedbackDevice(speedEncoder);
 
     shooterMotorRight = new CANSparkMax(RobotMap.SHOOTER_MOTOR_RIGHT, MotorType.kBrushed);
     shooterMotorRight.restoreFactoryDefaults();
-    //shooterMotorRight.getEncoder(EncoderType.kNoSensor, 0);
+    // shooterMotorRight.getEncoder(EncoderType.kNoSensor, 0);
     shooterMotorRight.setInverted(false);
     shooterMotorRight.follow(shooterMotorLeft);
 
@@ -40,11 +41,11 @@ public class ShooterSubsystem extends Subsystem {
     // 8192).getVelocity());
     shooterMotorLeft.set(rpm);
     // shooterMotorRight.set(rpm);
-  } 
+  }
 
   public double getVelocity() {
     return 0.0;
-  }  
+  }
 
   @Override
   public void initDefaultCommand() {

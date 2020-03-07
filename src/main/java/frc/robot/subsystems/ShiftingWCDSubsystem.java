@@ -17,14 +17,15 @@ import frc.robot.helpers.SparkMaxDriveMotors;
 
 public class ShiftingWCDSubsystem extends Subsystem {
 
-  //CANSparkMax leftMaster, leftSlave0, leftSlave1, rightMaster, rightSlave0, rightSlave1;
+  // CANSparkMax leftMaster, leftSlave0, leftSlave1, rightMaster, rightSlave0,
+  // rightSlave1;
   DifferentialDrive drive;
   DoubleSolenoid shifter;
   SparkMaxDriveMotors leftMotors;
   SparkMaxDriveMotors rightMotors;
 
   AHRS navx;
-  //CANEncoder leftEncoder, rightEncoder;
+  // CANEncoder leftEncoder, rightEncoder;
   DifferentialDriveKinematics m_kinematics;
   DifferentialDriveOdometry m_odometry;
   Pose2d pose;
@@ -33,10 +34,10 @@ public class ShiftingWCDSubsystem extends Subsystem {
     initMotors();
     initDrive();
     initSensors();
-    shifter = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.DRIVE_SOLENOID_FORWARD,RobotMap.DRIVE_SOLENOID_BACK);
+    shifter = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.DRIVE_SOLENOID_FORWARD, RobotMap.DRIVE_SOLENOID_BACK);
   }
 
-  //Initialize the motors, drive, and sensors
+  // Initialize the motors, drive, and sensors
   private void initMotors() {
 
     leftMotors = new SparkMaxDriveMotors(10, 11, 12);
@@ -51,21 +52,20 @@ public class ShiftingWCDSubsystem extends Subsystem {
 
   private void initSensors() {
     navx = new AHRS(SPI.Port.kMXP);
-    //leftEncoder = leftMaster.getEncoder();
-    //rightEncoder = rightMaster.getEncoder();
+    // leftEncoder = leftMaster.getEncoder();
+    // rightEncoder = rightMaster.getEncoder();
     resetGyro();
     resetEncoders();
-    m_kinematics= new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.kTrackwidthInches));
+    m_kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.kTrackwidthInches));
     m_odometry = new DifferentialDriveOdometry(getAngle());
   }
 
-  //Change the current gear
-  public void setShift(boolean isLowGear){
-    if(isLowGear){
+  // Change the current gear
+  public void setShift(boolean isLowGear) {
+    if (isLowGear) {
       shifter.set(Value.kForward);
-    }
-    else{
-      shifter.set(Value.kReverse); 
+    } else {
+      shifter.set(Value.kReverse);
     }
   }
 
@@ -112,7 +112,7 @@ public class ShiftingWCDSubsystem extends Subsystem {
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   public void curve(double speed, double rotation, boolean isLowGear) {
-    drive.curvatureDrive(RobotMap.SPEED_ADJUST*speed, -RobotMap.SPEED_ADJUST*rotation, true);
+    drive.curvatureDrive(RobotMap.SPEED_ADJUST * speed, -RobotMap.SPEED_ADJUST * rotation, true);
     setShift(isLowGear);
   }
 
@@ -128,8 +128,9 @@ public class ShiftingWCDSubsystem extends Subsystem {
 
   @Override
   public void periodic() {
-    pose = m_odometry.update(getAngle(), Units.inchesToMeters(getLeftEncoderInches()), Units.inchesToMeters(getRightEncoderInches()));
-  } 
+    pose = m_odometry.update(getAngle(), Units.inchesToMeters(getLeftEncoderInches()),
+        Units.inchesToMeters(getRightEncoderInches()));
+  }
 
   @Override
   protected void initDefaultCommand() {
