@@ -23,7 +23,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
 
     BallIndex[] positions;
     boolean isIntakeDown;
-
+    boolean isDone = false;
     public IntakeMagazineSubsystem() {
 
         // Back magazine belt holding 3 balls
@@ -109,8 +109,18 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public void cycleback(){
-        
-        magazine.getEncoder().getPosition();
+        magazine.set(magazinePID.calculate(magazine.getEncoder().getPosition(), 7*RobotMap.ROTATIONS_PER_INCH));
+    }
+
+    public boolean isCycleBackDone(){
+        if(Math.abs(7*RobotMap.ROTATIONS_PER_INCH-magazine.getEncoder().getPosition())>0.1){
+            isDone = false;
+        }
+        else {
+            magazine.getEncoder().setPosition(0);
+            isDone = true;
+        }
+        return isDone;
     }
 
     public boolean IsMagazineFilled() {
