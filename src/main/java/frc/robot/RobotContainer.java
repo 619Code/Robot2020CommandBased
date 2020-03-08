@@ -49,11 +49,13 @@ public class RobotContainer {
 
         // compressor.setClosedLoopControl(true);
         limelight.TurnLightOff();
+
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
         imSubsystem.setDefaultCommand(new IntakeMagazineDefaultCommand(imSubsystem, secondaryJoystick));
+        imSubsystem.RaiseIntake();
         climber.setDefaultCommand(new ManualClimber(climber, secondaryJoystick));
         aimingSubsystem.setDefaultCommand(new AimingSetZeroCommand(aimingSubsystem, limelight));
-        shooter.setDefaultCommand(new ManualShootCommand(shooter, secondaryJoystick));
+        //shooter.setDefaultCommand(new ManualShootCommand(shooter, secondaryJoystick));
         ConfigureControllers();
     }
 
@@ -66,7 +68,7 @@ public class RobotContainer {
         gatherBallsButton.whileHeld(new GatherBallsCommand(imSubsystem, secondaryJoystick));
 
         var unloadMag = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value, 0.5);
-        unloadMag.whileHeld(new UnloadBallsCommand(this.imSubsystem));
+        unloadMag.whileHeld(new UnloadBallsCommand(this.imSubsystem, shooter));
 
         var unjamButton = new JoystickButton(secondaryJoystick, XboxController.Button.kX.value);
         unjamButton.whileHeld(new UnjamCommand(this.imSubsystem));

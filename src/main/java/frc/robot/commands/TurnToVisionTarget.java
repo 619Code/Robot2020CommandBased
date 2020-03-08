@@ -54,7 +54,7 @@ public class TurnToVisionTarget extends Command {
     if (States.isShooting == false) {
       double driveTargetAngle = -targetPID.calculate(targetInfo.getTargetX());
 
-      drive.curve(0, driveTargetAngle, true);
+      drive.curve(0, driveTargetAngle, false);
       if (targetInfo.HasTarget) {
         double currentTargetAngle = this.aimingSubsystem.getAngle() + targetInfo.getTargetY();
 
@@ -69,7 +69,7 @@ public class TurnToVisionTarget extends Command {
         aimingSubsystem.setAngle(30);
       }
     } else {
-      drive.curve(0, 0, true);
+      drive.curve(0, 0, false);
       aimingSubsystem.setAngle(lastAngle);
     }
   }

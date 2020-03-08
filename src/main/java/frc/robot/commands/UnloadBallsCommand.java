@@ -20,12 +20,15 @@ public class UnloadBallsCommand extends Command {
     private IterativeDelay stopDelay;
     private Timer speedupDelayTimer;
 
-    public UnloadBallsCommand(IntakeMagazineSubsystem imSubsystem) {
+    public UnloadBallsCommand(IntakeMagazineSubsystem imSubsystem, ShooterSubsystem shooterSubsystem) {
         this.imSubsystem = imSubsystem;
+        this.shooterSubsystem = shooterSubsystem;
         requires(imSubsystem);
+        requires(shooterSubsystem);
+        
         // this.speedupDelayTimer = new Timer();
 
-        this.speedupDelay = new IterativeDelay(150);
+        this.speedupDelay = new IterativeDelay(100);
         this.stopDelay = new IterativeDelay(150);
 
         // this.speedupDelayTimer.start();
@@ -33,6 +36,7 @@ public class UnloadBallsCommand extends Command {
 
     @Override
     protected void initialize() {
+        
         States.isShooting = true;
         this.speedupDelay = new IterativeDelay(100);
         this.stopDelay = new IterativeDelay(150);
@@ -43,16 +47,14 @@ public class UnloadBallsCommand extends Command {
     @Override
     protected void execute() {
         super.execute();
-        this.speedupDelay.Cycle();
 
-        if (RobotState.isAutonomous()) {
-            if (this.speedupDelay.IsDone()) {
-                unloadBalls();
-            }
-        } else {
+        this.speedupDelay.Cycle();
+        shooterSubsystem.shoot(0.95);
+
+        if (this.speedupDelay.IsDone()) {
             unloadBalls();
         }
-
+      
         if (imSubsystem.isEmpty()) {
             this.stopDelay.Cycle();
         }
@@ -76,11 +78,16 @@ public class UnloadBallsCommand extends Command {
     @Override
     protected boolean isFinished() {
         if (RobotState.isDisabled())
+        {
+            shooterSubsystem.shoot(0);
             return true;
+        }
 
         if (this.stopDelay.IsDone()) {
             // States.ShooterState = EShootState.Finished;
+            shooterSubsystem.shoot(0);
             return true;
+
         } else {
             return false;
         }
@@ -92,5 +99,6 @@ public class UnloadBallsCommand extends Command {
         imSubsystem.Loader(0);
         imSubsystem.IntakeBelt(0);
         imSubsystem.MagazineBelt(0);
+        shooterSubsystem.shoot(0);
     }
 }

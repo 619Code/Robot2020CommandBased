@@ -31,7 +31,7 @@ public class GatherBallsCommand extends Command {
     @Override
     protected void initialize() {
         this.imSubsystem.LowerIntake();
-        tightenMagazine = new IterativeDelay(25);
+        tightenMagazine = new IterativeDelay(100);
     }
 
     @Override
@@ -78,31 +78,31 @@ public class GatherBallsCommand extends Command {
             // POSITIVE IS DOWN
             this.imSubsystem.Loader(.8);
             // POSITIVE IS IN
-            this.imSubsystem.MagazineBelt(.4);
+            this.imSubsystem.MagazineBelt(.6);
             // POSITIVE IS IN
             this.imSubsystem.IntakeBelt(0.8);
             // POSITIVE IS IN
-            this.imSubsystem.SpinIntake(.5);
+            this.imSubsystem.SpinIntake(.55);
             break;
         case PartialIntake:
             this.imSubsystem.Loader(.8);
             this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.IntakeBelt(0.8);
-            this.imSubsystem.SpinIntake(.5);
+            this.imSubsystem.SpinIntake(.55);
             break;
         case LoadChamber:
             tightenMagazine();
             this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.Loader(-.8);
             this.imSubsystem.IntakeBelt(0.8);
-            this.imSubsystem.SpinIntake(.5);
+            this.imSubsystem.SpinIntake(.55);
             break;
         case LoadLast:
             // tightenMagazine();
             this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.Loader(0);
             this.imSubsystem.IntakeBelt(0.8);
-            this.imSubsystem.SpinIntake(.5);
+            this.imSubsystem.SpinIntake(.55);
             break;
         case Stop:
             this.tightenMagazine();
@@ -123,8 +123,8 @@ public class GatherBallsCommand extends Command {
             this.imSubsystem.IntakeBelt(0);
             finished = true;
         } else {
-            this.imSubsystem.IntakeBelt(.2);
-            this.imSubsystem.MagazineBelt(.2);
+            this.imSubsystem.IntakeBelt(.8);
+            this.imSubsystem.MagazineBelt(.8);
         }
     }
 

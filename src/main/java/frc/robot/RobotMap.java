@@ -74,7 +74,7 @@ public class RobotMap {
   public static final int NEO_LIMIT = 45;
   public static final double DRIVE_RATIO = 8;
 
-  public static final double SPEED_ADJUST = 1;
+  public static final double SPEED_ADJUST = 0.7;
 
   // PATHS
 
@@ -87,10 +87,6 @@ public class RobotMap {
   public static final double DISTANCE_I = 0; // 8
   public static final double DISTANCE_D = 0;
 
-  // public static final double ANGLE_P = 0.08;
-  // public static final double ANGLE_I = 0.025;
-  // public static final double ANGLE_D = 0.001;
-
   public static final double ANGLE_P = 0.04;
   public static final double ANGLE_I = 0.0025;
   public static final double ANGLE_D = 0.001;
@@ -99,16 +95,16 @@ public class RobotMap {
   public static final double SHOOTER_I = 0.0;
   public static final double SHOOTER_D = 0.0;
 
-  // public static final double ANGLE_P = -1;
-  // public static final double ANGLE_I = -1;
-  // public static final double ANGLE_D = -1;
+  public static final double MAG_P = 0.0;
+  public static final double MAG_I = 0.0;
+  public static final double MAG_D = 0.0;
 
   public static final double HOOK_P = 0.01;
   public static final double HOOK_I = 0.0;
   public static final double HOOK_D = 0.0;
 
-  public static final double TARGET_P = 0.03; // 0.64 0.12
-  public static final double TARGET_I = 0.0;
+  public static final double TARGET_P = 0.0125; // 0.64 0.12
+  public static final double TARGET_I = 0.001;
   public static final double TARGET_D = 0.0;
 
   // DifferentialDrive Kinematics

@@ -46,7 +46,7 @@ public class ManualShootCommand extends Command {
       }
       speed = 1.0 + (speedAdjust / 10.0);
 
-      if (joystick.getBumper(Hand.kRight)) {
+      if (joystick.getTriggerAxis(Hand.kRight) > 0.5) {
         shooterSubsystem.shoot(speed);
       } else {
         shooterSubsystem.shoot(0);

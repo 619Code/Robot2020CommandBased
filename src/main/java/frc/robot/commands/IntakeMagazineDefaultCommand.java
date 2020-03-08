@@ -14,6 +14,12 @@ public class IntakeMagazineDefaultCommand extends Command {
     requires(imSubsystem);
   }
 
+  @Override
+  public void initialize() {
+    
+  }
+  
+
   protected void execute() {
     imSubsystem.MagazineBelt(0);
     imSubsystem.Loader(0);
@@ -30,9 +36,13 @@ public class IntakeMagazineDefaultCommand extends Command {
     if (joystick.getPOV(0) == 180) {
       imSubsystem.LowerIntake();
     }
-    if (joystick.getAButton()) {
-      imSubsystem.SpinIntake(-0.5); // we could maybe change this, IDK
+    if (joystick.getPOV(0) == 90) {
+      imSubsystem.SpinIntake(0.55);
     }
+    if (joystick.getPOV(0) == 270) {
+      imSubsystem.SpinIntake(-0.55);
+    }
+
   }
 
   @Override

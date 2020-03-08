@@ -36,6 +36,8 @@ public class CurveDriveCommand extends Command {
     if (Math.abs(rotation) < 0.075) {
       rotation = 0;
     }
+    rotation = rotation * 0.6;
+
     if (joystick.getTriggerAxis(Hand.kLeft) > 0.5) {
       isLowGear = true;
     } else if (joystick.getTriggerAxis(Hand.kRight) < 0.5) {

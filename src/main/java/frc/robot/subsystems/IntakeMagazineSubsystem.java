@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.RobotMap;
 import frc.robot.helpers.BallIndex;
 
@@ -18,8 +19,10 @@ public class IntakeMagazineSubsystem extends Subsystem {
     private VictorSPX roller;
     private CANSparkMax intakeBelt;
     private Solenoid wrist;
+    private PIDController magazinePID;
 
     BallIndex[] positions;
+    boolean isIntakeDown;
 
     public IntakeMagazineSubsystem() {
 
@@ -28,6 +31,8 @@ public class IntakeMagazineSubsystem extends Subsystem {
         magazine.restoreFactoryDefaults();
         magazine.setSecondaryCurrentLimit(35);
         magazine.setIdleMode(IdleMode.kCoast);
+        
+        magazinePID = new PIDController(RobotMap.MAG_P, RobotMap.MAG_I, RobotMap.MAG_D);
 
         // Vertical loader
         loading = new CANSparkMax(RobotMap.LOADING_MOTOR, MotorType.kBrushless);
@@ -103,6 +108,11 @@ public class IntakeMagazineSubsystem extends Subsystem {
             return false;
     }
 
+    public void cycleback(){
+        
+        magazine.getEncoder().getPosition();
+    }
+
     public boolean IsMagazineFilled() {
         for (int i = 0; i < 3; i++) {
             if (!positions[i].hasBall()) {
@@ -113,12 +123,18 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public boolean IsMagazineOccupied() {
-        for (int i = 0; i < 3; i++) {
+        /* for (int i = 0; i < 3; i++) {
             if (positions[i].hasBall()) {
                 return true;
             }
         }
-        return false;
+        return false; */
+        if (positions[3].hasBall()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public boolean IsIntakePositionFilledForShooting() {
@@ -130,7 +146,11 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public void SpinIntake(double speed) {
-        roller.set(ControlMode.PercentOutput, speed);
+        if (isIntakeDown)
+            roller.set(ControlMode.PercentOutput, speed);
+        else{
+            roller.set(ControlMode.PercentOutput, 0);
+        }
     }
 
     public void IntakeBelt(double speed) {
@@ -138,10 +158,12 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public void RaiseIntake() {
+        isIntakeDown= false;
         wrist.set(false);
     }
 
     public void LowerIntake() {
+        isIntakeDown= true;
         wrist.set(true);
     }
 

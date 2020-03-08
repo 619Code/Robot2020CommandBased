@@ -27,7 +27,7 @@ public class UnjamCommand extends Command {
         this.imSubsystem.MagazineBelt(.3);
         this.imSubsystem.IntakeBelt(.3);
         this.imSubsystem.Loader(-.3);
-        this.imSubsystem.SpinIntake(-.3);
+        this.imSubsystem.RaiseIntake();
     }
 
     @Override

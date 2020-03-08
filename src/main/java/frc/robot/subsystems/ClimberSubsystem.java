@@ -27,11 +27,11 @@ public class ClimberSubsystem extends Subsystem {
     }
 
     public void setHookPosition(double position) {
-        double targetPosition = hookPID.calculate(hook.getSelectedSensorPosition(), RobotMap.CLIMB_TARGET); // put
-                                                                                                            // calculations
-                                                                                                            // here
-
-        System.out.println("Hook Position: " + hook.getSelectedSensorPosition());
+        double targetPosition = hookPID.calculate(hook.getSelectedSensorPosition(), RobotMap.CLIMB_TARGET); 
+        //System.out.println("Hook Position: " + hook.getSelectedSensorPosition());
+        if(position < 0){
+            position = position / 5;
+        }
         hook.set(ControlMode.PercentOutput, position);
     }
 
