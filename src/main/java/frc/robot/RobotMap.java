@@ -103,8 +103,8 @@ public class RobotMap {
   public static final double HOOK_I = 0.0;
   public static final double HOOK_D = 0.0;
 
-  public static final double TARGET_P = 0.0125; // 0.64 0.12
-  public static final double TARGET_I = 0.001;
+  public static final double TARGET_P = 0.02; // 0.64 0.12
+  public static final double TARGET_I = 0.0001;
   public static final double TARGET_D = 0.0;
 
   // DifferentialDrive Kinematics
@@ -119,12 +119,12 @@ public class RobotMap {
   public static final double LIMELIGHT_ANGLE = 0;
 
   // Magazine
+  public static final int MAG_POS_END = 0;
+  public static final int MAG_POS_MIDDLE = 1;
   public static final int MAG_POS_FIRST = 2;
-  public static final int MAG_POS_SECOND = 1;
-  public static final int MAG_POS_LAST = 0;
-  public static final int SHOOTER_POS = 4;
-  public static final int FEEDER_POS = 3;
-  public static final int PRE_MAG = 5;
+  public static final int MAG_POS_HIGH = 3;
+  public static final int MAG_POS_LOW = 4;
+  public static final int MAG_POS_PRE = 5;
 
   public static final double ROTATIONS_PER_INCH = 0;
 

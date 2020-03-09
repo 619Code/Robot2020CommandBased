@@ -8,6 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.IntakeMagazineSubsystem;
 
 public class GatherBallsV2Command extends Command {
@@ -33,37 +35,52 @@ public class GatherBallsV2Command extends Command {
     double loaderSpeed = 0.8;
     double intakeBeltSpeed = 0.8;
     double intakeSpeed = 0.55;
-    if (!imSubsystem.IsMagazineFilled()) {
-      if (imSubsystem.HasBallAtIndex(4) || cyclelatch) {
+    if (!imSubsystem.IsMagazineFilled() || cyclelatch) {
+      //if mag not full or cycle latch not done
+      imSubsystem.isCycleBackDone();
+      //update position
+      if (imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_LOW) || cyclelatch) {
+        //if at low pos or cycle still in progress
         cyclelatch = !imSubsystem.isCycleBackDone();
+        //update latch if not done make true
         imSubsystem.cycleback();
+        //cycle mag back
       }
 
     } else if (!imSubsystem.isFilled()) {
-      if (imSubsystem.HasBallAtIndex(3)) {
+      // if entire system not full
+      cyclelatch = false;
+      // fallback if cycle never resets
+      if (imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_HIGH)) {
+        // if ball is at top pos load bottom
         loaderSpeed = 0;
         intakeBeltSpeed = 0.8;
         intakeSpeed = 0.55;
         latch = false;
 
       } else {
-        if ((imSubsystem.HasBallAtIndex(4)) || latch) {
+        // if mag ball not at top
+        if ((imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_LOW) || latch)) {
+          // if the low pos is true load ball up and set latch.
           latch = true;
           loaderSpeed = -0.8;
           intakeBeltSpeed = 0.8;
           intakeSpeed = 0.55;
         } else {
+          //load ball in until the low pos is triggered
           loaderSpeed = 0.8;
           intakeBeltSpeed = 0.8;
           intakeSpeed = 0.55;
         }
       }
     } else if(imSubsystem.isFilled()){
+      // stop system if full
       loaderSpeed = 0.0;
       intakeBeltSpeed = 0.0;
       intakeSpeed = 0.0;
       this.imSubsystem.RaiseIntake();
     }
+    //set speeds
     imSubsystem.Loader(loaderSpeed);
     imSubsystem.IntakeBelt(intakeBeltSpeed);
     imSubsystem.SpinIntake(intakeSpeed);

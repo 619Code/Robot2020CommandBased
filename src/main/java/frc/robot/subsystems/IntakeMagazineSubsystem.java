@@ -55,10 +55,13 @@ public class IntakeMagazineSubsystem extends Subsystem {
         // [3]
         // [4][2][1][0]
         // Position sensors detecting balls
-        this.positions = new BallIndex[] { new BallIndex(RobotMap.MAG_POS_FIRST),
-                new BallIndex(RobotMap.MAG_POS_SECOND), new BallIndex(RobotMap.MAG_POS_LAST),
-                new BallIndex(RobotMap.SHOOTER_POS), new BallIndex(RobotMap.FEEDER_POS),
-                new BallIndex(RobotMap.PRE_MAG) };
+        this.positions = new BallIndex[] { 
+            new BallIndex(RobotMap.MAG_POS_END),
+            new BallIndex(RobotMap.MAG_POS_MIDDLE),
+            new BallIndex(RobotMap.MAG_POS_FIRST),
+            new BallIndex(RobotMap.MAG_POS_HIGH),
+            new BallIndex(RobotMap.MAG_POS_LOW), 
+            new BallIndex(RobotMap.MAG_POS_PRE) };
 
         // It needs to be noted that a sensor that sees the ball reads 0 and a sensor
         // that does not see a ball reads
@@ -93,7 +96,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     public boolean isFilled() {
 
         // Return false if ball is not in position 0,1,2,3
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             if (!positions[i].hasBall()) {
                 return false;
             }
@@ -102,7 +105,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
         // If either the intake position sensors are reading positive consider the
         // system
         // full
-        if (positions[4].hasBall() || positions[5].hasBall())
+        if (positions[RobotMap.MAG_POS_LOW].hasBall() /* || positions[RobotMap.MAG_POS_PRE].hasBall()*/)
             return true;
         else
             return false;
@@ -113,7 +116,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public boolean isCycleBackDone(){
-        if(Math.abs(7*RobotMap.ROTATIONS_PER_INCH-magazine.getEncoder().getPosition())>0.1){
+        if(Math.abs(7*RobotMap.ROTATIONS_PER_INCH - magazine.getEncoder().getPosition())>5){
             isDone = false;
         }
         else {
@@ -124,31 +127,20 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public boolean IsMagazineFilled() {
-        for (int i = 0; i < 3; i++) {
+        if(!positions[RobotMap.MAG_POS_END].hasBall()){
+            return false;
+        }
+        else{
+            return true;
+        }
+        /*
+        for (int i = 0; i < 2; i++) {
             if (!positions[i].hasBall()) {
                 return false;
             }
         }
         return true;
-    }
-
-    public boolean IsMagazineOccupied() {
-        /* for (int i = 0; i < 3; i++) {
-            if (positions[i].hasBall()) {
-                return true;
-            }
-        }
-        return false; */
-        if (positions[3].hasBall()){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public boolean IsIntakePositionFilledForShooting() {
-        return positions[5].hasBall();
+        */
     }
 
     public boolean IsIntakePositionFilled() {
