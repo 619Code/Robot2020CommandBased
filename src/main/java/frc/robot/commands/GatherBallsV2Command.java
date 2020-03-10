@@ -64,7 +64,7 @@ public class GatherBallsV2Command extends Command {
           // if the low pos is true load ball up and set latch.
           latch = true;
           loaderSpeed = -0.8;
-          intakeBeltSpeed = 0.8;
+          intakeBeltSpeed = 0;
           intakeSpeed = 0.55;
         } else {
           //load ball in until the low pos is triggered

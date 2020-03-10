@@ -25,7 +25,7 @@ public class TurnToVisionTarget extends Command {
   private PIDController targetPID;
   private Limelight limelight;
   private LinearFilter filter;
-  private double lastAngle;
+  private double lastShooterAngle, lastDriveAngle;
 
   public TurnToVisionTarget(ShiftingWCDSubsystem drive, Limelight limelight, AimingSubsystem aimingSubsystem) {
     this.drive = drive;
@@ -34,7 +34,7 @@ public class TurnToVisionTarget extends Command {
     // this.imSubsystem = imSubsystem;
     targetInfo = limelight.GetTargetInfo();
     targetPID = new PIDController(RobotMap.TARGET_P, RobotMap.TARGET_I, RobotMap.TARGET_D);
-    lastAngle = 0;
+    lastShooterAngle = 0;
     requires(drive);
     requires(aimingSubsystem);
   }
@@ -52,25 +52,26 @@ public class TurnToVisionTarget extends Command {
 
     // Temp always do this
     if (States.isShooting == false) {
-      double driveTargetAngle = -targetPID.calculate(targetInfo.getTargetX());
-
-      drive.curve(0, driveTargetAngle, false);
+      double currentDriveAngle = targetInfo.getTargetX();
+      double lastDriveAngle = currentDriveAngle;
+      drive.resetGyro();
+      drive.curve(0, -targetPID.calculate(currentDriveAngle, 0), false);
       if (targetInfo.HasTarget) {
-        double currentTargetAngle = this.aimingSubsystem.getAngle() + targetInfo.getTargetY();
+        double currentShooterAngle = this.aimingSubsystem.getAngle() + targetInfo.getTargetY();
 
-        lastAngle = currentTargetAngle;
+        lastShooterAngle = currentShooterAngle;
         // System.out.println(this.aimingSubsystem.getAngle() +":"+ currentTargetAngle
         // +":"+targetInfo.getTargetY());
         // Filtering data coming from the limelight
         // double currentAngle = filter.calculate(targetInfo.getTargetY());
         // System.out.println("Target Y:" + targetInfo.getTargetY());
-        aimingSubsystem.setAngle(currentTargetAngle);
+        aimingSubsystem.setAngle(currentShooterAngle);
       } else {
         aimingSubsystem.setAngle(30);
       }
     } else {
-      drive.curve(0, 0, false);
-      aimingSubsystem.setAngle(lastAngle);
+      drive.curve(0, -targetPID.calculate(drive.getHeadingDegrees(), 0), false);
+      aimingSubsystem.setAngle(lastShooterAngle);
     }
   }
 

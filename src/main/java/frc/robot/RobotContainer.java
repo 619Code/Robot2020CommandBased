@@ -9,10 +9,9 @@ import frc.robot.commands.CurveDriveCommand;
 import frc.robot.commands.GatherBallsCommand;
 import frc.robot.commands.IntakeMagazineDefaultCommand;
 import frc.robot.commands.ManualClimber;
-import frc.robot.commands.ManualShootCommand;
-import frc.robot.commands.UnloadBallsCommand;
 import frc.robot.commands.TurnToVisionTarget;
 import frc.robot.commands.UnjamCommand;
+import frc.robot.commands.UnloadBallsCommand;
 import frc.robot.helpers.JoystickAnalogButton;
 import frc.robot.helpers.Limelight;
 import frc.robot.subsystems.AimingSubsystem;
@@ -51,6 +50,7 @@ public class RobotContainer {
         limelight.TurnLightOff();
 
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
+        drive.resetGyro();
         imSubsystem.setDefaultCommand(new IntakeMagazineDefaultCommand(imSubsystem, secondaryJoystick));
         imSubsystem.RaiseIntake();
         climber.setDefaultCommand(new ManualClimber(climber, secondaryJoystick));

@@ -30,7 +30,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
         magazine = new CANSparkMax(RobotMap.MAGAZINE_MOTOR, MotorType.kBrushless);
         magazine.restoreFactoryDefaults();
         magazine.setSecondaryCurrentLimit(35);
-        magazine.setIdleMode(IdleMode.kCoast);
+        magazine.setIdleMode(IdleMode.kBrake);
         
         magazinePID = new PIDController(RobotMap.MAG_P, RobotMap.MAG_I, RobotMap.MAG_D);
 
@@ -112,14 +112,16 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public void cycleback(){
-        magazine.set(magazinePID.calculate(magazine.getEncoder().getPosition(), 7*RobotMap.ROTATIONS_PER_INCH));
+        //magazine.set(magazinePID.calculate(magazine.getEncoder().getPosition(), 7*RobotMap.ROTATIONS_PER_INCH));
+        magazine.set(0.8);
     }
 
     public boolean isCycleBackDone(){
-        if(Math.abs(7*RobotMap.ROTATIONS_PER_INCH - magazine.getEncoder().getPosition())>5){
+        if(7*RobotMap.ROTATIONS_PER_INCH > magazine.getEncoder().getPosition()){
             isDone = false;
         }
         else {
+            magazine.set(0);
             magazine.getEncoder().setPosition(0);
             isDone = true;
         }
