@@ -14,15 +14,16 @@ public class GatherBallsCommand extends Command {
     private XboxController joystick;
     public boolean loaderUp = false;
     public boolean magLoaded = false;
-    private boolean currentState = false;
-    private boolean lastState = false;
     private boolean finished = false;
     private boolean latch = false;
-    // private Timer tweakMagazine;
     private int magazineTweakInSeconds = 1;
     private IterativeDelay tightenMagazine;
+    private IterativeDelay finalTighten;
 
     public GatherBallsCommand(IntakeMagazineSubsystem intakeMagazineSubsystem, XboxController joystick) {
+        tightenMagazine = new IterativeDelay(10);
+        finalTighten = new IterativeDelay(5);
+
         this.imSubsystem = intakeMagazineSubsystem;
         this.joystick = joystick;
         this.requires(this.imSubsystem);
@@ -31,23 +32,19 @@ public class GatherBallsCommand extends Command {
     @Override
     protected void initialize() {
         this.imSubsystem.LowerIntake();
-        tightenMagazine = new IterativeDelay(100);
     }
 
     @Override
     protected void execute() {
-        // System.out.println(latch);
-        currentState = this.imSubsystem.HasBallAtIndex(4);
-        if (getRisingEdge()) {
-            RobotMap.ballCount++;
-        }
-        // System.out.println(States.GatheringState);
+        // A note on the latch: The latch is meant to make sure that the ball keeps going up
+        // This means that when LoadChamber starts it will continue until the upper chamber has a ball
+
         if (!imSubsystem.IsMagazineFilled()) {
             latch = false;
-            if (!imSubsystem.HasBallAtIndex(0)) {
+            if (!imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_FIRST)) {
                 States.GatheringState = EGatheringState.FullIntake;
             } else {
-                if (imSubsystem.HasBallAtIndex(4)) {
+                if (imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_LOW) || imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_PRE)) {
                     States.GatheringState = EGatheringState.FullIntake;
                 } else {
                     States.GatheringState = EGatheringState.PartialIntake;
@@ -55,11 +52,11 @@ public class GatherBallsCommand extends Command {
             }
         } else {
             if (!imSubsystem.isFilled()) {
-                if (imSubsystem.HasBallAtIndex(3)) {
+                if (imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_HIGH)) {
                     latch = false;
                     States.GatheringState = EGatheringState.LoadLast;
                 } else {
-                    if ((imSubsystem.HasBallAtIndex(4)) || latch) {
+                    if ((imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_LOW)) || latch) {
                         States.GatheringState = EGatheringState.LoadChamber;
                         latch = true;
                     } else {
@@ -72,64 +69,76 @@ public class GatherBallsCommand extends Command {
             }
         }
 
-        System.out.println("Gath State:" + States.GatheringState.toString());
+        printStatuses();
         switch (States.GatheringState) {
         case FullIntake:
+            this.tightenMagazine.Reset();
+            this.finalTighten.Reset();
             // POSITIVE IS DOWN
-            this.imSubsystem.Loader(.8);
+            this.imSubsystem.Loader(0.4); //wheels that move up/down
             // POSITIVE IS IN
-            this.imSubsystem.MagazineBelt(.6);
+            this.imSubsystem.MagazineBelt(0.6); //belt in magazine proper
             // POSITIVE IS IN
-            this.imSubsystem.IntakeBelt(0.8);
+            this.imSubsystem.IntakeBelt(0.8); //belt right before magazine
             // POSITIVE IS IN
-            this.imSubsystem.SpinIntake(.55);
+            this.imSubsystem.SpinIntake(0.55); //intake wheels
             break;
         case PartialIntake:
-            this.imSubsystem.Loader(.8);
-            this.imSubsystem.MagazineBelt(0);
-            this.imSubsystem.IntakeBelt(0.8);
+            this.tightenMagazineAction(this.tightenMagazine);
+            if(this.tightenMagazine.IsDone()) {
+                this.imSubsystem.MagazineBelt(0);
+                this.imSubsystem.IntakeBelt(0.8);
+            }
+            this.imSubsystem.Loader(0.8);
             this.imSubsystem.SpinIntake(.55);
             break;
         case LoadChamber:
-            tightenMagazine();
-            this.imSubsystem.MagazineBelt(0);
-            this.imSubsystem.Loader(-.8);
-            this.imSubsystem.IntakeBelt(0.8);
-            this.imSubsystem.SpinIntake(.55);
+            this.tightenMagazineAction(this.finalTighten);
+            if (this.finalTighten.IsDone()) {
+                this.imSubsystem.MagazineBelt(0);
+                this.imSubsystem.IntakeBelt(0.8);
+            }
+            this.imSubsystem.Loader(-0.8);
+            this.imSubsystem.SpinIntake(0.55);
             break;
         case LoadLast:
-            // tightenMagazine();
             this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.Loader(0);
             this.imSubsystem.IntakeBelt(0.8);
-            this.imSubsystem.SpinIntake(.55);
+            this.imSubsystem.SpinIntake(0.55);
             break;
         case Stop:
-            this.tightenMagazine();
+            this.tightenMagazine.Reset();
+            this.finalTighten.Reset();
             this.imSubsystem.Loader(0);
             this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.IntakeBelt(0);
             this.imSubsystem.SpinIntake(0);
             break;
         }
-        lastState = currentState;
     }
 
-    private void tightenMagazine() {
-        this.tightenMagazine.Cycle();
-        // Tweek the magazine to tighten up the magazine a little
-        if (this.tightenMagazine.IsDone()) {
-            this.imSubsystem.MagazineBelt(0);
+    // Tweak the magazine to tighten up a little
+    private void tightenMagazineAction(IterativeDelay delay) {
+        delay.Cycle();
+        if (delay.IsDone()) {
+            this.imSubsystem.MagazineBelt(0); //note: are these two necessary?
             this.imSubsystem.IntakeBelt(0);
-            finished = true;
+            finished = true; //note: figure out what's up with finished
         } else {
+            System.out.println("Tightening: " + delay.getCycle());
             this.imSubsystem.IntakeBelt(.8);
             this.imSubsystem.MagazineBelt(.8);
         }
     }
 
-    private boolean getRisingEdge() {
-        return currentState && !lastState;
+    private void printStatuses() {
+        System.out.println("State: " + States.GatheringState);
+        System.out.print("Sensors: ");
+        for(int i = 0; i < 6; i++) {
+            if(imSubsystem.HasBallAtIndex(i)) System.out.print(i); else System.out.print("_");
+        }
+        System.out.println(); System.out.println();
     }
 
     @Override
@@ -139,7 +148,6 @@ public class GatherBallsCommand extends Command {
 
     @Override
     public void end() {
-        // RobotMap.ballCount = 0;
         finished = true;
         super.end();
     }

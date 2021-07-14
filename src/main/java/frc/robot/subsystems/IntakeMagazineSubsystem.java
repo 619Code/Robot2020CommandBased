@@ -24,8 +24,8 @@ public class IntakeMagazineSubsystem extends Subsystem {
     BallIndex[] positions;
     boolean isIntakeDown;
     boolean isDone = false;
-    public IntakeMagazineSubsystem() {
 
+    public IntakeMagazineSubsystem() {
         // Back magazine belt holding 3 balls
         magazine = new CANSparkMax(RobotMap.MAGAZINE_MOTOR, MotorType.kBrushless);
         magazine.restoreFactoryDefaults();
@@ -52,39 +52,19 @@ public class IntakeMagazineSubsystem extends Subsystem {
         intakeBelt.setIdleMode(IdleMode.kCoast);
 
         // Magazine index diagram
-        // [3]
-        // [4][2][1][0]
+        //   [4]
+        // [5][3][2][1][0]
         // Position sensors detecting balls
         this.positions = new BallIndex[] { 
             new BallIndex(RobotMap.MAG_POS_END),
             new BallIndex(RobotMap.MAG_POS_MIDDLE),
             new BallIndex(RobotMap.MAG_POS_FIRST),
-            new BallIndex(RobotMap.MAG_POS_HIGH),
-            new BallIndex(RobotMap.MAG_POS_LOW), 
+            new BallIndex(RobotMap.MAG_POS_LOW),
+            new BallIndex(RobotMap.MAG_POS_HIGH), 
             new BallIndex(RobotMap.MAG_POS_PRE) };
-
-        // It needs to be noted that a sensor that sees the ball reads 0 and a sensor
-        // that does not see a ball reads
     }
 
-    public void LogDigitalInputs() {
-
-    }
-
-    public int nextEmptyIndex() {
-        for (int i = 0; i < 4; i++) {
-            if (this.positions[i].hasBall() == false)
-                return i;
-        }
-        // Indicates no free slots
-        return -1;
-    }
-
-    public boolean HasBallAtIndex(int index) {
-        return this.positions[index].hasBall();
-    }
-
-    // Load chamber. Provice negative values to to
+    //belts
     public void Loader(double speed) {
         loading.set(speed);
     }
@@ -93,24 +73,69 @@ public class IntakeMagazineSubsystem extends Subsystem {
         magazine.set(speed);
     }
 
-    public boolean isFilled() {
+    //intake
+    public void SpinIntake(double speed) {
+        if (isIntakeDown)
+            roller.set(ControlMode.PercentOutput, speed);
+        else{
+            roller.set(ControlMode.PercentOutput, 0);
+        }
+    }
 
-        // Return false if ball is not in position 0,1,2,3
-        for (int i = 0; i < 3; i++) {
+    public void IntakeBelt(double speed) {
+        intakeBelt.set(speed);
+    }
+
+    public void RaiseIntake() {
+        isIntakeDown = false;
+        wrist.set(false);
+    }
+
+    public void LowerIntake() {
+        isIntakeDown = true;
+        wrist.set(true);
+    }
+
+    //information
+    public boolean HasBallAtIndex(int index) {
+        return this.positions[index].hasBall();
+    }
+
+    public boolean isFilled() {
+        if(!IsMagazineFilled()) {
+            return false;
+        } else if(!positions[RobotMap.MAG_POS_HIGH].hasBall()) {
+            return false;
+        } else if(positions[RobotMap.MAG_POS_LOW].hasBall() || positions[RobotMap.MAG_POS_PRE].hasBall()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean IsMagazineFilled() {
+        for (int i = 0; i < 2; i++) {
             if (!positions[i].hasBall()) {
                 return false;
             }
         }
-
-        // If either the intake position sensors are reading positive consider the
-        // system
-        // full
-        if (positions[RobotMap.MAG_POS_LOW].hasBall() /* || positions[RobotMap.MAG_POS_PRE].hasBall()*/)
-            return true;
-        else
-            return false;
+        return true;
     }
 
+    public boolean IsIntakePositionFilled() {
+        return positions[4].hasBall() || positions[5].hasBall();
+    }
+
+    public boolean isEmpty() {
+        for (int i = 0; i < 6; i++) {
+            if (positions[i].hasBall()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //cycleback
     public void cycleback(){
         //magazine.set(magazinePID.calculate(magazine.getEncoder().getPosition(), 7*RobotMap.ROTATIONS_PER_INCH));
         magazine.set(0.8);
@@ -128,59 +153,7 @@ public class IntakeMagazineSubsystem extends Subsystem {
         return isDone;
     }
 
-    public boolean IsMagazineFilled() {
-        if(!positions[RobotMap.MAG_POS_END].hasBall()){
-            return false;
-        }
-        else{
-            return true;
-        }
-        /*
-        for (int i = 0; i < 2; i++) {
-            if (!positions[i].hasBall()) {
-                return false;
-            }
-        }
-        return true;
-        */
-    }
-
-    public boolean IsIntakePositionFilled() {
-        return positions[4].hasBall() || positions[5].hasBall();
-    }
-
-    public void SpinIntake(double speed) {
-        if (isIntakeDown)
-            roller.set(ControlMode.PercentOutput, speed);
-        else{
-            roller.set(ControlMode.PercentOutput, 0);
-        }
-    }
-
-    public void IntakeBelt(double speed) {
-        intakeBelt.set(speed);
-    }
-
-    public void RaiseIntake() {
-        isIntakeDown= false;
-        wrist.set(false);
-    }
-
-    public void LowerIntake() {
-        isIntakeDown= true;
-        wrist.set(true);
-    }
-
     @Override
     protected void initDefaultCommand() {
-    }
-
-    public boolean isEmpty() {
-        for (int i = 0; i < 6; i++) {
-            if (positions[i].hasBall()) {
-                return false;
-            }
-        }
-        return true;
     }
 }

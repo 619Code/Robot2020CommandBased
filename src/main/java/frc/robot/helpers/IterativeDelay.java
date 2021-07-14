@@ -14,8 +14,9 @@ public class IterativeDelay {
     }
 
     public void Cycle() {
-        if (!IsDone())
+        if(!IsDone()) {
             cyclesPassed++;
+        }
     }
 
     public int getCycle() {

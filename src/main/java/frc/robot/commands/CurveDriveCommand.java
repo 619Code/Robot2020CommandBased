@@ -38,6 +38,9 @@ public class CurveDriveCommand extends Command {
     }
     rotation = rotation * 0.6;
 
+    // left down = low gear
+    // left up + right down = high gear, high speed
+    // left up + right up = high gear, low speed
     if (joystick.getTriggerAxis(Hand.kLeft) > 0.5) {
       isLowGear = true;
     } else if (joystick.getTriggerAxis(Hand.kRight) < 0.5) {

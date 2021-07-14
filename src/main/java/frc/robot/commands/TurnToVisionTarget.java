@@ -49,14 +49,18 @@ public class TurnToVisionTarget extends Command {
   protected void execute() {
 
     targetInfo = limelight.GetTargetInfo();
+    //targetInfo.Show();
 
     // Temp always do this
     if (States.isShooting == false) {
       double currentDriveAngle = targetInfo.getTargetX();
       double lastDriveAngle = currentDriveAngle;
       drive.resetGyro();
-      drive.curve(0, -targetPID.calculate(currentDriveAngle, 0), false);
-      if (targetInfo.HasTarget) {
+      //drive.curve(0, -targetPID.calculate(currentDriveAngle, 0), false);
+      //System.out.println("Target: " + (targetInfo.HasTarget ? "found" : "not found"));
+      
+      //Add limit on angle
+      /*if (targetInfo.HasTarget) {
         double currentShooterAngle = this.aimingSubsystem.getAngle() + targetInfo.getTargetY();
 
         lastShooterAngle = currentShooterAngle;
@@ -65,12 +69,16 @@ public class TurnToVisionTarget extends Command {
         // Filtering data coming from the limelight
         // double currentAngle = filter.calculate(targetInfo.getTargetY());
         // System.out.println("Target Y:" + targetInfo.getTargetY());
+        currentShooterAngle = currentShooterAngle > 50 ? 50 : currentShooterAngle;
         aimingSubsystem.setAngle(currentShooterAngle);
       } else {
         aimingSubsystem.setAngle(30);
-      }
+      }*/
+
+      //remove later
+      aimingSubsystem.setAngle(30);
     } else {
-      drive.curve(0, -targetPID.calculate(drive.getHeadingDegrees(), 0), false);
+      //drive.curve(0, -targetPID.calculate(drive.getHeadingDegrees(), 0), false);
       aimingSubsystem.setAngle(lastShooterAngle);
     }
   }

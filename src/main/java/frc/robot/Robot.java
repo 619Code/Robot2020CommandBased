@@ -11,8 +11,7 @@ public class Robot extends TimedRobot {
   private Scheduler scheduler;
   private Command autoCommand;
 
-  // Sets up the robot and prints a list of information about the current state of
-  // the robot
+  // Sets up the robot
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();

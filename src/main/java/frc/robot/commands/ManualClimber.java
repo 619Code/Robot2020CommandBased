@@ -13,9 +13,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.ClimberSubsystem;
 
 public class ManualClimber extends Command {
-  /**
-   * Creates a new ManualShootCommand.
-   */
   private ClimberSubsystem climberSubsystem;
   private XboxController joystick;
 

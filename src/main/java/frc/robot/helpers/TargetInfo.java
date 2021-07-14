@@ -17,10 +17,11 @@ public class TargetInfo {
     }
 
     public void Show() {
-        SmartDashboard.putNumber("LimeLight-X", X);
-        SmartDashboard.putNumber("LimeLight-Y", Y);
-        SmartDashboard.putNumber("LimeLight-Area", Area);
-        SmartDashboard.putString("Target Present", HasTarget ? "Yes" : "No");
+        System.out.println("LimeLight-X: " + X);
+        System.out.println("LimeLight-Y: " + Y);
+        System.out.println("LimeLight-Area: " + Area);
+        System.out.println("Target Present: " + (HasTarget ? "Yes" : "No"));
+        System.out.println();
     }
 
     public double getTargetX() {

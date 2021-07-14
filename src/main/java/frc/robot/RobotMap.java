@@ -122,13 +122,9 @@ public class RobotMap {
   public static final int MAG_POS_END = 0;
   public static final int MAG_POS_MIDDLE = 1;
   public static final int MAG_POS_FIRST = 2;
-  public static final int MAG_POS_HIGH = 3;
-  public static final int MAG_POS_LOW = 4;
+  public static final int MAG_POS_LOW = 3;
+  public static final int MAG_POS_HIGH = 4;
   public static final int MAG_POS_PRE = 5;
 
   public static final double ROTATIONS_PER_INCH = 0;
-
-  public static int ballCount = 0;
-
-  // Field Elements
 }

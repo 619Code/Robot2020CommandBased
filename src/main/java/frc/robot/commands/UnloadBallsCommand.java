@@ -1,10 +1,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.States;
+import frc.robot.RobotMap;
 import frc.robot.helpers.IterativeDelay;
 import frc.robot.subsystems.IntakeMagazineSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -15,34 +14,27 @@ public class UnloadBallsCommand extends Command {
     private XboxController joystick;
 
     private ShooterSubsystem shooterSubsystem;
-    private double goodVelocity = 0;
     private IterativeDelay speedupDelay;
+    private IterativeDelay loadingDelay;
+    private boolean loadingDelayDone;
     private IterativeDelay stopDelay;
-    private Timer speedupDelayTimer;
 
     public UnloadBallsCommand(IntakeMagazineSubsystem imSubsystem, ShooterSubsystem shooterSubsystem) {
         this.imSubsystem = imSubsystem;
         this.shooterSubsystem = shooterSubsystem;
         requires(imSubsystem);
         requires(shooterSubsystem);
-        
-        // this.speedupDelayTimer = new Timer();
 
         this.speedupDelay = new IterativeDelay(100);
-        this.stopDelay = new IterativeDelay(150);
-
-        // this.speedupDelayTimer.start();
+        this.loadingDelay = new IterativeDelay(20);
+        this.loadingDelayDone = false;
+        this.stopDelay = new IterativeDelay(50);
     }
 
     @Override
     protected void initialize() {
         
-        States.isShooting = true;
-        this.speedupDelay = new IterativeDelay(100);
-        this.stopDelay = new IterativeDelay(150);
     }
-
-    boolean startedMagainzeEmptyProcess = false;
 
     @Override
     protected void execute() {
@@ -56,19 +48,34 @@ public class UnloadBallsCommand extends Command {
         }
       
         if (imSubsystem.isEmpty()) {
-            this.stopDelay.Cycle();
+            System.out.println("Emptied");
+            //this.speedupDelay.Reset();
+            //this.loadingDelay.Reset();
+            this.loadingDelayDone = false;
+            if(RobotState.isAutonomous()) {
+                this.stopDelay.Cycle();
+            }
         }
-
     }
 
     public void unloadBalls() {
+        System.out.println("Unloading started");
         imSubsystem.Loader(-0.6);
-        if (!(imSubsystem.HasBallAtIndex(3) || imSubsystem.HasBallAtIndex(4) || imSubsystem.HasBallAtIndex(5))) {
-            imSubsystem.MagazineBelt(-0.4);
+
+        if (!((imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_HIGH) || imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_LOW) || imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_PRE)))) {
+            if(!loadingDelayDone) {
+                //System.out.println(this.loadingDelay.getCycle());
+                this.loadingDelay.Cycle();
+            }
+            if(this.loadingDelay.IsDone()) {
+                loadingDelayDone = true;
+                imSubsystem.MagazineBelt(-0.4);
+            }
         } else {
             imSubsystem.MagazineBelt(0);
         }
-        if (!(imSubsystem.HasBallAtIndex(5))) {
+
+        if (!(imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_PRE))) {
             imSubsystem.IntakeBelt(-1);
         } else {
             imSubsystem.IntakeBelt(0.3);
@@ -79,15 +86,15 @@ public class UnloadBallsCommand extends Command {
     protected boolean isFinished() {
         if (RobotState.isDisabled())
         {
+            System.out.println("isFinished #1");
             shooterSubsystem.shoot(0);
             return true;
         }
 
         if (this.stopDelay.IsDone()) {
-            // States.ShooterState = EShootState.Finished;
+            System.out.println("isFinished #2");
             shooterSubsystem.shoot(0);
             return true;
-
         } else {
             return false;
         }
@@ -95,7 +102,7 @@ public class UnloadBallsCommand extends Command {
 
     @Override
     protected void end() {
-        States.isShooting = false;
+        System.out.println("end");
         imSubsystem.Loader(0);
         imSubsystem.IntakeBelt(0);
         imSubsystem.MagazineBelt(0);

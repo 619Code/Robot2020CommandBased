@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
-//This is the shooter subsystem. All methods or information related to the shooter should be accessed through this class.
 public class ShooterSubsystem extends Subsystem {
   private CANSparkMax shooterMotorLeft, shooterMotorRight;
   private CANEncoder speedEncoder;

@@ -58,8 +58,7 @@ public class PathFollower extends HelixFollower {
     
     @Override
     public boolean isFinished() {
-        var baseResult = super.isFinished();
-
+        boolean baseResult = super.isFinished();
         return baseResult || !(States.RobotState == ERobotState.Auto);
     }
 }

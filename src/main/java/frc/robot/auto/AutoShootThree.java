@@ -15,7 +15,6 @@ public class AutoShootThree extends CommandGroup {
        addSequential(new PathFollower(new SixFeet(), drive, true, true));
        addSequential(new TurnToVisionTarget(drive, limelight, aimingSubsystem), 2.5);
        addParallel(new UnloadBallsCommand(imSubsystem, shooter));
-       //addSequential(new ManualShootCommand(shooter, null));
        //addSequential(new UnloadBallsCommand(imSubsystem, shooter));
     }
 }

@@ -30,8 +30,8 @@ public class RobotContainer {
     private final XboxController primaryJoystick, secondaryJoystick;
     private final Limelight limelight;
     private final AimingSubsystem aimingSubsystem;
-
     // private final Compressor compressor;
+    
     // Initialize all subsystems and set default commands
     public RobotContainer() {
         drive = new ShiftingWCDSubsystem();
@@ -55,7 +55,6 @@ public class RobotContainer {
         imSubsystem.RaiseIntake();
         climber.setDefaultCommand(new ManualClimber(climber, secondaryJoystick));
         aimingSubsystem.setDefaultCommand(new AimingSetZeroCommand(aimingSubsystem, limelight));
-        //shooter.setDefaultCommand(new ManualShootCommand(shooter, secondaryJoystick));
         ConfigureControllers();
     }
 
@@ -69,10 +68,9 @@ public class RobotContainer {
 
         var unloadMag = new JoystickAnalogButton(secondaryJoystick, XboxController.Axis.kRightTrigger.value, 0.5);
         unloadMag.whileHeld(new UnloadBallsCommand(this.imSubsystem, shooter));
-
+        
         var unjamButton = new JoystickButton(secondaryJoystick, XboxController.Button.kX.value);
         unjamButton.whileHeld(new UnjamCommand(this.imSubsystem));
-
     }
 
     public void AllStop() {

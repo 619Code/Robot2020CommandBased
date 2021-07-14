@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.RobotMap;
 import frc.robot.hardware.LimitSwitch;
 
-//This is the shooter subsystem. All methods or information related to the shooter should be accessed through this class.
 public class AimingSubsystem extends Subsystem {
   private CANSparkMax angleMotor;
   private PIDController anglePID;

@@ -17,15 +17,12 @@ import frc.robot.helpers.SparkMaxDriveMotors;
 
 public class ShiftingWCDSubsystem extends Subsystem {
 
-  // CANSparkMax leftMaster, leftSlave0, leftSlave1, rightMaster, rightSlave0,
-  // rightSlave1;
   DifferentialDrive drive;
   DoubleSolenoid shifter;
   SparkMaxDriveMotors leftMotors;
   SparkMaxDriveMotors rightMotors;
 
   AHRS navx;
-  // CANEncoder leftEncoder, rightEncoder;
   DifferentialDriveKinematics m_kinematics;
   DifferentialDriveOdometry m_odometry;
   Pose2d pose;
@@ -39,10 +36,8 @@ public class ShiftingWCDSubsystem extends Subsystem {
 
   // Initialize the motors, drive, and sensors
   private void initMotors() {
-
-    leftMotors = new SparkMaxDriveMotors(10, 11, 12);
-    rightMotors = new SparkMaxDriveMotors(13, 14, 15);
-
+    leftMotors = new SparkMaxDriveMotors(RobotMap.LEFTMASTER, RobotMap.LEFTSLAVE0, RobotMap.LEFTSLAVE1);
+    rightMotors = new SparkMaxDriveMotors(RobotMap.RIGHTMASTER, RobotMap.RIGHTSLAVE0, RobotMap.RIGHTSLAVE1);
   }
 
   private void initDrive() {
@@ -52,8 +47,6 @@ public class ShiftingWCDSubsystem extends Subsystem {
 
   private void initSensors() {
     navx = new AHRS(SPI.Port.kMXP);
-    // leftEncoder = leftMaster.getEncoder();
-    // rightEncoder = rightMaster.getEncoder();
     resetGyro();
     resetEncoders();
     m_kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.kTrackwidthInches));
