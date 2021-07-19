@@ -114,12 +114,13 @@ public class IntakeMagazineSubsystem extends Subsystem {
     }
 
     public boolean IsMagazineFilled() {
-        for (int i = 0; i < 2; i++) {
+        /*for (int i = 0; i < 2; i++) {
             if (!positions[i].hasBall()) {
                 return false;
             }
         }
-        return true;
+        return true;*/
+        return positions[RobotMap.MAG_POS_END].hasBall();
     }
 
     public boolean IsIntakePositionFilled() {

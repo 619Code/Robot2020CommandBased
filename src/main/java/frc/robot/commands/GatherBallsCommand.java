@@ -75,9 +75,9 @@ public class GatherBallsCommand extends Command {
             this.tightenMagazine.Reset();
             this.finalTighten.Reset();
             // POSITIVE IS DOWN
-            this.imSubsystem.Loader(0.4); //wheels that move up/down
+            this.imSubsystem.Loader(0.3); //wheels that move up/down
             // POSITIVE IS IN
-            this.imSubsystem.MagazineBelt(0.6); //belt in magazine proper
+            this.imSubsystem.MagazineBelt(0.6); //belt in magazine proper //0.6
             // POSITIVE IS IN
             this.imSubsystem.IntakeBelt(0.8); //belt right before magazine
             // POSITIVE IS IN
@@ -89,7 +89,7 @@ public class GatherBallsCommand extends Command {
                 this.imSubsystem.MagazineBelt(0);
                 this.imSubsystem.IntakeBelt(0.8);
             }
-            this.imSubsystem.Loader(0.8);
+            this.imSubsystem.Loader(0.3);
             this.imSubsystem.SpinIntake(.55);
             break;
         case LoadChamber:
