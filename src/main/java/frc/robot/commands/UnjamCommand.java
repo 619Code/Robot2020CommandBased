@@ -23,18 +23,7 @@ public class UnjamCommand extends Command {
 
     @Override
     protected void execute() {
-        //magazineStageOne.Cycle();
-        /*this.imSubsystem.MagazineBelt(.3);
-        this.imSubsystem.IntakeBelt(.3);
-        this.imSubsystem.Loader(-.3);
-        this.imSubsystem.RaiseIntake();*/
-
-        imSubsystem.SpinIntake(-0.55);
-        imSubsystem.IntakeBelt(-1);
-        if(!imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_HIGH)) {
-            imSubsystem.Loader(0.2);
-            imSubsystem.MagazineBelt(-0.4);
-        }
+        
     }
 
     @Override

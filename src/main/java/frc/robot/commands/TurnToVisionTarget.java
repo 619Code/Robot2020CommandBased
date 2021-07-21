@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.LinearFilter;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -24,7 +23,6 @@ public class TurnToVisionTarget extends Command {
   private TargetInfo targetInfo;
   private PIDController targetPID;
   private Limelight limelight;
-  private LinearFilter filter;
   private double lastShooterAngle, lastDriveAngle;
 
   public TurnToVisionTarget(ShiftingWCDSubsystem drive, Limelight limelight, AimingSubsystem aimingSubsystem) {
@@ -32,9 +30,11 @@ public class TurnToVisionTarget extends Command {
     this.limelight = limelight;
     this.aimingSubsystem = aimingSubsystem;
     // this.imSubsystem = imSubsystem;
+    
     targetInfo = limelight.GetTargetInfo();
     targetPID = new PIDController(RobotMap.TARGET_P, RobotMap.TARGET_I, RobotMap.TARGET_D);
     lastShooterAngle = 0;
+
     requires(drive);
     requires(aimingSubsystem);
   }
@@ -42,26 +42,23 @@ public class TurnToVisionTarget extends Command {
   @Override
   protected void initialize() {
     limelight.TurnLightOn();
-    filter = LinearFilter.singlePoleIIR(.1, .02);
   }
 
   @Override
   protected void execute() {
 
     targetInfo = limelight.GetTargetInfo();
-    targetInfo.Show();
+    //targetInfo.Show();
 
     if (States.isShooting == false) {
       double currentDriveAngle = targetInfo.getTargetX();
       double lastDriveAngle = currentDriveAngle;
       drive.resetGyro();
       drive.curve(0, -targetPID.calculate(currentDriveAngle, 0), false);
-      //System.out.println("Target: " + (targetInfo.HasTarget ? "found" : "not found"));
       
       if (targetInfo.HasTarget) {
         double currentShooterAngle = this.aimingSubsystem.getAngle() + targetInfo.getTargetY();
-        System.out.println("Current angle: " + this.aimingSubsystem.getAngle());
-        //System.out.println("Target Y: " + targetInfo.getTargetY());
+        //System.out.println("Current angle: " + this.aimingSubsystem.getAngle());
 
         lastShooterAngle = currentShooterAngle;
         currentShooterAngle = currentShooterAngle > 50 ? 50 : currentShooterAngle;
@@ -70,7 +67,6 @@ public class TurnToVisionTarget extends Command {
         aimingSubsystem.setAngle(30);
       }
 
-      //aimingSubsystem.setAngle(30); //remove later
     } else {
       drive.curve(0, -targetPID.calculate(drive.getHeadingDegrees(), 0), false);
       aimingSubsystem.setAngle(lastShooterAngle);
@@ -79,11 +75,7 @@ public class TurnToVisionTarget extends Command {
 
   @Override
   protected boolean isFinished() {
-
-    if (RobotState.isDisabled())
-      return true;
-
-    return false;
+    return RobotState.isDisabled();
   }
 
   @Override

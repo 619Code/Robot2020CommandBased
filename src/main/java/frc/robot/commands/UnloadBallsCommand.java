@@ -15,6 +15,7 @@ public class UnloadBallsCommand extends Command {
 
     private ShooterSubsystem shooterSubsystem;
     private IterativeDelay speedupDelay;
+    //private IterativeDelay secondDelay;
     private IterativeDelay loadingDelay;
     private boolean loadingDelayDone;
     private boolean firstCycle;
@@ -26,8 +27,9 @@ public class UnloadBallsCommand extends Command {
         requires(imSubsystem);
         requires(shooterSubsystem);
 
-        this.speedupDelay = new IterativeDelay(100); //lower?
-        this.loadingDelay = new IterativeDelay(10); //formerly 20
+        this.speedupDelay = new IterativeDelay(80); //formerly 100
+        //this.secondDelay = new IterativeDelay(10);
+        this.loadingDelay = new IterativeDelay(30); //formerly 20
         this.loadingDelayDone = false;
         this.firstCycle = true;
         this.stopDelay = new IterativeDelay(50);
@@ -52,6 +54,7 @@ public class UnloadBallsCommand extends Command {
         if (imSubsystem.isEmpty()) {
             System.out.println("Emptied");
             this.speedupDelay.Reset();
+            //this.secondDelay.Reset();
             this.loadingDelay.Reset();
             this.loadingDelayDone = false;
             this.firstCycle = true;
@@ -62,7 +65,12 @@ public class UnloadBallsCommand extends Command {
     }
 
     public void unloadBalls() {
-        imSubsystem.Loader(-0.45);
+        if(!imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_HIGH)) {
+            imSubsystem.Loader(-0.45);
+        } else {
+            imSubsystem.Loader(-0.35);
+        }
+        //imSubsystem.Loader(-0.35); //formerly -0.45
 
         if (!((imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_HIGH) || imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_LOW) || imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_PRE)))) {
             if(firstCycle) {
@@ -74,7 +82,7 @@ public class UnloadBallsCommand extends Command {
             if(!loadingDelayDone) {
                 this.loadingDelay.Cycle();
             } else {
-                imSubsystem.MagazineBelt(-0.4);
+                imSubsystem.MagazineBelt(-0.4); //-0.4.5
             }
         } else {
             imSubsystem.MagazineBelt(0);
@@ -107,6 +115,13 @@ public class UnloadBallsCommand extends Command {
 
     @Override
     protected void end() {
+        this.speedupDelay.Reset();
+        //this.secondDelay.Reset();
+        this.loadingDelay.Reset();
+        this.loadingDelayDone = false;
+        this.firstCycle = true;
+        System.out.println("END");
+        
         imSubsystem.Loader(0);
         imSubsystem.IntakeBelt(0);
         imSubsystem.MagazineBelt(0);

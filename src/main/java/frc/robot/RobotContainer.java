@@ -30,7 +30,6 @@ public class RobotContainer {
     private final XboxController primaryJoystick, secondaryJoystick;
     private final Limelight limelight;
     private final AimingSubsystem aimingSubsystem;
-    // private final Compressor compressor;
     
     // Initialize all subsystems and set default commands
     public RobotContainer() {
@@ -44,17 +43,15 @@ public class RobotContainer {
 
         limelight = new Limelight();
         aimingSubsystem = new AimingSubsystem();
-        // compressor = new Compressor(RobotMap.PCM_CAN_ID);
 
-        // compressor.setClosedLoopControl(true);
         limelight.TurnLightOff();
-
         drive.setDefaultCommand(new CurveDriveCommand(drive, primaryJoystick));
         drive.resetGyro();
         imSubsystem.setDefaultCommand(new IntakeMagazineDefaultCommand(imSubsystem, secondaryJoystick));
         imSubsystem.RaiseIntake();
         climber.setDefaultCommand(new ManualClimber(climber, secondaryJoystick));
         aimingSubsystem.setDefaultCommand(new AimingSetZeroCommand(aimingSubsystem, limelight));
+
         ConfigureControllers();
     }
 
@@ -80,7 +77,5 @@ public class RobotContainer {
     // Auto command(s) should be accessed from this method
     public Command getAutoCommand() {
         return new AutoShootThree(this.aimingSubsystem, this.drive, this.imSubsystem, this.limelight, this.shooter);
-        // return new TurnToVisionTarget(drive, limelight, aimingSubsystem);
-
     }
 }

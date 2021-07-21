@@ -77,20 +77,27 @@ public class GatherBallsCommand extends Command {
             // POSITIVE IS DOWN
             this.imSubsystem.Loader(0.3); //wheels that move up/down
             // POSITIVE IS IN
-            this.imSubsystem.MagazineBelt(0.6); //belt in magazine proper //0.6
+            this.imSubsystem.MagazineBelt(0.4); //belt in magazine proper //0.6
             // POSITIVE IS IN
             this.imSubsystem.IntakeBelt(0.8); //belt right before magazine
             // POSITIVE IS IN
-            this.imSubsystem.SpinIntake(0.55); //intake wheels
+            this.imSubsystem.SpinIntake(0.45); //intake wheels //0.4
             break;
         case PartialIntake:
             this.tightenMagazineAction(this.tightenMagazine);
             if(this.tightenMagazine.IsDone()) {
-                this.imSubsystem.MagazineBelt(0);
+                if(!imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_FIRST) && 
+                (imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_MIDDLE) || imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_END))) {
+                    this.imSubsystem.MagazineBelt(-0.6);
+                } else {
+                    this.imSubsystem.MagazineBelt(0);
+                }
+
+                //this.imSubsystem.MagazineBelt(0);
                 this.imSubsystem.IntakeBelt(0.8);
             }
             this.imSubsystem.Loader(0.3);
-            this.imSubsystem.SpinIntake(.55);
+            this.imSubsystem.SpinIntake(.45); //0.4
             break;
         case LoadChamber:
             this.tightenMagazineAction(this.finalTighten);
@@ -110,6 +117,7 @@ public class GatherBallsCommand extends Command {
         case Stop:
             this.tightenMagazine.Reset();
             this.finalTighten.Reset();
+
             this.imSubsystem.Loader(0);
             this.imSubsystem.MagazineBelt(0);
             this.imSubsystem.IntakeBelt(0);
