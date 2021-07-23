@@ -8,7 +8,6 @@ import frc.robot.RobotMap;
 public class UnjamCommand extends Command {
 
     private IntakeMagazineSubsystem imSubsystem;
-    //private IterativeDelay magazineStageOne;
 
     public UnjamCommand(IntakeMagazineSubsystem intakeMagazineSubsystem) {
         this.imSubsystem = intakeMagazineSubsystem;
@@ -17,23 +16,28 @@ public class UnjamCommand extends Command {
 
     @Override
     protected void initialize() {
-        //magazineStageOne = new IterativeDelay(10);
         this.imSubsystem.LowerIntake();
     }
 
     @Override
     protected void execute() {
-        
+        System.out.println("Unjam");
+        this.imSubsystem.IntakeBelt(-0.8);
+        this.imSubsystem.SpinIntake(-0.55);
+
+        if(!imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_HIGH)) {
+            this.imSubsystem.Loader(0.4);
+        }
     }
 
     @Override
     protected boolean isFinished() {
-        //return this.magazineStageOne.IsDone();
-        return true;
+        return false;
     }
 
     @Override
     public void end() {
+        this.imSubsystem.SpinIntake(0);
         this.imSubsystem.Loader(0);
         this.imSubsystem.MagazineBelt(0);
         this.imSubsystem.IntakeBelt(0);

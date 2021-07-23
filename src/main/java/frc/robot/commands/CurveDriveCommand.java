@@ -23,7 +23,7 @@ public class CurveDriveCommand extends Command {
 
   @Override
   protected void execute() {
-    speed = joystick.getY(Hand.kLeft);
+    speed = -joystick.getY(Hand.kLeft); //currently reversed
     rotation = joystick.getX(Hand.kRight);
     setVals();
     drive.curve(speed, rotation, isLowGear);

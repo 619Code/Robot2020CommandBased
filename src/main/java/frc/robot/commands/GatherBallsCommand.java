@@ -17,11 +17,11 @@ public class GatherBallsCommand extends Command {
     private boolean finished = false;
     private boolean latch = false;
     private int magazineTweakInSeconds = 1;
-    private IterativeDelay tightenMagazine;
+    //private IterativeDelay tightenMagazine;
     private IterativeDelay finalTighten;
 
     public GatherBallsCommand(IntakeMagazineSubsystem intakeMagazineSubsystem, XboxController joystick) {
-        tightenMagazine = new IterativeDelay(10);
+        //tightenMagazine = new IterativeDelay(10);
         finalTighten = new IterativeDelay(5);
 
         this.imSubsystem = intakeMagazineSubsystem;
@@ -72,10 +72,10 @@ public class GatherBallsCommand extends Command {
         printStatuses();
         switch (States.GatheringState) {
         case FullIntake:
-            this.tightenMagazine.Reset();
+            //this.tightenMagazine.Reset();
             this.finalTighten.Reset();
             // POSITIVE IS DOWN
-            this.imSubsystem.Loader(0.3); //wheels that move up/down
+            this.imSubsystem.Loader(0.3); //wheels that move up/down //increase?
             // POSITIVE IS IN
             this.imSubsystem.MagazineBelt(0.4); //belt in magazine proper //0.6
             // POSITIVE IS IN
@@ -84,18 +84,14 @@ public class GatherBallsCommand extends Command {
             this.imSubsystem.SpinIntake(0.45); //intake wheels //0.4
             break;
         case PartialIntake:
-            this.tightenMagazineAction(this.tightenMagazine);
+            /*this.tightenMagazineAction(this.tightenMagazine);
             if(this.tightenMagazine.IsDone()) {
-                if(!imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_FIRST) && 
-                (imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_MIDDLE) || imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_END))) {
-                    this.imSubsystem.MagazineBelt(-0.6);
-                } else {
-                    this.imSubsystem.MagazineBelt(0);
-                }
-
-                //this.imSubsystem.MagazineBelt(0);
+                this.imSubsystem.MagazineBelt(0);
                 this.imSubsystem.IntakeBelt(0.8);
-            }
+            }*/
+            this.imSubsystem.MagazineBelt(0);
+            this.imSubsystem.IntakeBelt(0.8);
+
             this.imSubsystem.Loader(0.3);
             this.imSubsystem.SpinIntake(.45); //0.4
             break;
@@ -115,7 +111,7 @@ public class GatherBallsCommand extends Command {
             this.imSubsystem.SpinIntake(0.55);
             break;
         case Stop:
-            this.tightenMagazine.Reset();
+            //this.tightenMagazine.Reset();
             this.finalTighten.Reset();
 
             this.imSubsystem.Loader(0);

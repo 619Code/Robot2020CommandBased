@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.RobotMap;
+import frc.robot.States;
 import frc.robot.helpers.IterativeDelay;
 import frc.robot.subsystems.IntakeMagazineSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -15,7 +16,6 @@ public class UnloadBallsCommand extends Command {
 
     private ShooterSubsystem shooterSubsystem;
     private IterativeDelay speedupDelay;
-    //private IterativeDelay secondDelay;
     private IterativeDelay loadingDelay;
     private boolean loadingDelayDone;
     private boolean firstCycle;
@@ -27,8 +27,7 @@ public class UnloadBallsCommand extends Command {
         requires(imSubsystem);
         requires(shooterSubsystem);
 
-        this.speedupDelay = new IterativeDelay(80); //formerly 100
-        //this.secondDelay = new IterativeDelay(10);
+        this.speedupDelay = new IterativeDelay(60); //formerly 80
         this.loadingDelay = new IterativeDelay(30); //formerly 20
         this.loadingDelayDone = false;
         this.firstCycle = true;
@@ -43,6 +42,8 @@ public class UnloadBallsCommand extends Command {
     @Override
     protected void execute() {
         super.execute();
+
+        States.isShooting = true;
 
         this.speedupDelay.Cycle();
         shooterSubsystem.shoot(0.95);
@@ -66,11 +67,10 @@ public class UnloadBallsCommand extends Command {
 
     public void unloadBalls() {
         if(!imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_HIGH)) {
-            imSubsystem.Loader(-0.45);
+            imSubsystem.Loader(-0.6); //-0.45
         } else {
             imSubsystem.Loader(-0.35);
         }
-        //imSubsystem.Loader(-0.35); //formerly -0.45
 
         if (!((imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_HIGH) || imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_LOW) || imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_PRE)))) {
             if(firstCycle) {
@@ -82,7 +82,7 @@ public class UnloadBallsCommand extends Command {
             if(!loadingDelayDone) {
                 this.loadingDelay.Cycle();
             } else {
-                imSubsystem.MagazineBelt(-0.4); //-0.4.5
+                imSubsystem.MagazineBelt(-0.8); //-0.65
             }
         } else {
             imSubsystem.MagazineBelt(0);
@@ -91,7 +91,7 @@ public class UnloadBallsCommand extends Command {
         if (!(imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_PRE))) {
             imSubsystem.IntakeBelt(-1);
         } else {
-            imSubsystem.IntakeBelt(0.3);
+            imSubsystem.IntakeBelt(0.5); //0.3
         }
 
         firstCycle = false;
@@ -116,11 +116,11 @@ public class UnloadBallsCommand extends Command {
     @Override
     protected void end() {
         this.speedupDelay.Reset();
-        //this.secondDelay.Reset();
         this.loadingDelay.Reset();
         this.loadingDelayDone = false;
         this.firstCycle = true;
-        System.out.println("END");
+        
+        States.isShooting = false;
         
         imSubsystem.Loader(0);
         imSubsystem.IntakeBelt(0);

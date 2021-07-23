@@ -103,8 +103,8 @@ public class RobotMap {
   public static final double HOOK_I = 0.0;
   public static final double HOOK_D = 0.0;
 
-  public static final double TARGET_P = 0.02; // 0.64 0.12
-  public static final double TARGET_I = 0.0001;
+  public static final double TARGET_P = 0.02; // 0.02
+  public static final double TARGET_I = 0.0001; //0.0001
   public static final double TARGET_D = 0.0;
 
   // DifferentialDrive Kinematics
