@@ -48,13 +48,13 @@ public class TurnToVisionTarget extends Command {
   protected void execute() {
 
     targetInfo = limelight.GetTargetInfo();
-    //targetInfo.Show();
+    targetInfo.Show();
 
     if (States.isShooting == false) {
       double currentDriveAngle = targetInfo.getTargetX();
       double lastDriveAngle = currentDriveAngle;
       drive.resetGyro();
-      drive.curve(0, -targetPID.calculate(currentDriveAngle, 0), false);
+      //drive.curve(0, -targetPID.calculate(currentDriveAngle, 0), false); //temp
       
       if (targetInfo.HasTarget) {
         double currentShooterAngle = this.aimingSubsystem.getAngle() + targetInfo.getTargetY();
@@ -68,7 +68,7 @@ public class TurnToVisionTarget extends Command {
       }
 
     } else {
-      drive.curve(0, -targetPID.calculate(drive.getHeadingDegrees(), 0), false);
+      //drive.curve(0, -targetPID.calculate(drive.getHeadingDegrees(), 0), false); //temp
       aimingSubsystem.setAngle(lastShooterAngle);
     }
   }
