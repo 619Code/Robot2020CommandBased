@@ -10,11 +10,11 @@ public class BallIndex {
 
     public BallIndex(int channel) {
         input = new DigitalInput(channel);
-    }
+    } 
 
     public boolean hasBall() {
 
-        // This is the oppisite logic of what you would think, but when
+        // This is the opposite logic of what you would think, but when
         // the sensor sees a ball it reads false and when the sensor
         // does not see the ball it reads 1.
         if (input.get())

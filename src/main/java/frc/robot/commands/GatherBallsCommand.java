@@ -44,10 +44,14 @@ public class GatherBallsCommand extends Command {
             if (!imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_FIRST)) {
                 States.GatheringState = EGatheringState.FullIntake;
             } else {
-                if (imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_LOW) || imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_PRE)) {
+                if(imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_FIRST) && imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_MIDDLE)) {
                     States.GatheringState = EGatheringState.FullIntake;
                 } else {
-                    States.GatheringState = EGatheringState.PartialIntake;
+                    if (imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_LOW) || imSubsystem.HasBallAtIndex(RobotMap.MAG_POS_PRE)) {
+                        States.GatheringState = EGatheringState.FullIntake;
+                    } else {
+                        States.GatheringState = EGatheringState.PartialIntake;
+                    }
                 }
             }
         } else {
@@ -77,7 +81,7 @@ public class GatherBallsCommand extends Command {
             // POSITIVE IS DOWN
             this.imSubsystem.Loader(0.3); //wheels that move up/down //increase?
             // POSITIVE IS IN
-            this.imSubsystem.MagazineBelt(0.4); //belt in magazine proper //0.6
+            this.imSubsystem.MagazineBelt(0.4); //belt in magazine proper //0.4
             // POSITIVE IS IN
             this.imSubsystem.IntakeBelt(0.8); //belt right before magazine
             // POSITIVE IS IN
